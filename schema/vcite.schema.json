@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vcite.pub/schema/v1/vcite.schema.json",
+  "title": "VCITE Citation Object",
+  "description": "Verified Citation with Inline Text Evidence (VCITE) v1.0. A passage-level, cryptographically verifiable citation object per the VCITE specification §4.",
+  "type": "object",
+  "required": ["vcite", "id", "source", "target", "relation", "captured_at", "captured_by"],
+  "properties": {
+    "vcite": {
+      "type": "string",
+      "const": "1.0",
+      "description": "VCITE specification version. MUST be \"1.0\" for objects conforming to this schema."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^vcite-[a-f0-9]{8}$",
+      "description": "Unique identifier for this citation object. Format: \"vcite-\" followed by 8 lowercase hex characters."
+    },
+    "source": {
+      "$ref": "#/$defs/Source"
+    },
+    "target": {
+      "$ref": "#/$defs/Target"
+    },
+    "relation": {
+      "$ref": "#/$defs/Relation"
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of when this citation was captured."
+    },
+    "captured_by": {
+      "type": "string",
+      "enum": ["author", "model"],
+      "description": "Whether this citation was created by a human author or an AI model."
+    },
+    "enrichment": {
+      "$ref": "#/$defs/Enrichment"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "Source": {
+      "type": "object",
+      "description": "Metadata about the source document being cited (§4.2).",
+      "required": ["title"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Title of the source document."
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Authors of the source document. Format: \"Last, First\" per bibliographic convention."
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Publication year of the source document."
+        },
+        "doi": {
+          "type": "string",
+          "pattern": "^10\\.\\d{4,9}/[^\\s]+$",
+          "description": "Digital Object Identifier. Format: 10.prefix/suffix."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL where the source document can be accessed."
+        },
+        "archive_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Archived URL (e.g., Perma.cc, Internet Archive) providing a persistent copy."
+        },
+        "venue": {
+          "type": "string",
+          "description": "Publication venue (journal, conference, outlet)."
+        },
+        "source_type": {
+          "type": "string",
+          "enum": ["academic", "journalism", "web", "grey", "ai_output"],
+          "description": "Classification of the source document type."
+        }
+      },
+      "additionalProperties": false
+    },
+    "Target": {
+      "type": "object",
+      "description": "Passage location and fingerprint within the source document (§4.3). Extends W3C Web Annotation TextQuoteSelector.",
+      "required": ["text_exact", "hash"],
+      "properties": {
+        "text_before": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Up to 50 Unicode code points of context immediately before the cited passage."
+        },
+        "text_exact": {
+          "type": "string",
+          "description": "The verbatim cited passage. Whitespace is preserved as-is; normalization occurs only during hash computation."
+        },
+        "text_after": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Up to 50 Unicode code points of context immediately after the cited passage."
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "SHA-256 fingerprint of the passage computed per §5. Format: \"sha256:\" followed by 64 lowercase hex characters."
+        },
+        "char_start": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Zero-based Unicode code point offset of the passage start within the source document."
+        },
+        "char_end": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Zero-based Unicode code point offset of the passage end (exclusive) within the source document."
+        },
+        "page_ref": {
+          "type": "string",
+          "description": "Human-readable page reference (e.g., \"p. 4\", \"pp. 12-15\")."
+        },
+        "section": {
+          "type": "string",
+          "description": "Section of the source document containing the passage."
+        },
+        "fragment_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL with fragment identifier pointing to the passage (e.g., text fragment URL)."
+        }
+      },
+      "additionalProperties": false,
+      "dependentRequired": {
+        "char_end": ["char_start"]
+      }
+    },
+    "Relation": {
+      "type": "string",
+      "description": "Semantic relationship between the citing document and the cited passage (§4.4). Core vocabulary of 7 values plus extension mechanism via \"x-\" prefix.",
+      "oneOf": [
+        {
+          "enum": [
+            "supports",
+            "contradicts",
+            "defines",
+            "quantifies",
+            "contextualizes",
+            "method",
+            "cautions"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^x-.+$",
+          "description": "Extension relation prefixed with \"x-\"."
+        }
+      ]
+    },
+    "Enrichment": {
+      "type": "object",
+      "description": "Optional third-party enrichment data (§4.5). Properties are extensible; common enrichments listed here.",
+      "properties": {
+        "scite_classification": {
+          "type": "string",
+          "enum": ["supporting", "mentioning", "contrasting"],
+          "description": "Scite.ai citation classification."
+        },
+        "scite_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Scite.ai confidence score."
+        },
+        "semantic_scholar_id": {
+          "type": "string",
+          "description": "Semantic Scholar corpus ID."
+        },
+        "openalex_id": {
+          "type": "string",
+          "pattern": "^W\\d+$",
+          "description": "OpenAlex work ID."
+        },
+        "retraction_watch": {
+          "type": "boolean",
+          "description": "Whether the source appears in the Retraction Watch database."
+        },
+        "verified_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the enrichment data was last verified."
+        }
+      },
+      "additionalProperties": true
+    },
+    "ConformanceL2": {
+      "description": "Level 2 conformance: L1 plus context windows and at least one resolvable URL.",
+      "allOf": [
+        { "$ref": "#" },
+        {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "object",
+              "required": ["text_exact", "hash", "text_before", "text_after"]
+            },
+            "source": {
+              "type": "object",
+              "anyOf": [
+                { "required": ["title", "url"] },
+                { "required": ["title", "archive_url"] }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ConformanceL3": {
+      "description": "Level 3 conformance: L2 plus archive URL and fragment URL.",
+      "allOf": [
+        { "$ref": "#/$defs/ConformanceL2" },
+        {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "object",
+              "required": ["text_exact", "hash", "text_before", "text_after", "fragment_url"]
+            },
+            "source": {
+              "type": "object",
+              "required": ["title", "archive_url"]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "vcite": "1.0",
+  "id": "vcite-d2ba5887",
+  "source": {
+    "title": "Perma: Scoping and Addressing the Problem of Link Rot",
+    "authors": ["Zittrain, Jonathan", "Albert, Kendra", "Lessig, Lawrence"],
+    "year": 2014,
+    "doi": "10.2139/ssrn.2329161",
+    "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2329161",
+    "archive_url": "https://perma.cc/XR4K-2329",
+    "venue": "Harvard Law Review Forum",
+    "source_type": "academic"
+  },
+  "target": {
+    "text_before": "As documented by Zittrain et al., ",
+    "text_exact": "over 70% of the URLs provided in articles published in the Harvard Law Review did not lead to originally cited information",
+    "text_after": ". This rate of decay accelerates",
+    "hash": "sha256:d2ba5887d4456199ce37a7860ce011485519925dc75c3564f50d1ffa1e1dc933",
+    "char_start": 1204,
+    "char_end": 1441,
+    "page_ref": "p. 4",
+    "section": "\u00a7 2. Scope of the Problem",
+    "fragment_url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2329161#:~:text=over+70%25+of+the+URLs"
+  },
+  "relation": "supports",
+  "captured_at": "2026-03-30T12:00:00Z",
+  "captured_by": "author"
+}

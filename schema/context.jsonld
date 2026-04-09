@@ -1,0 +1,106 @@
+{
+  "@context": {
+    "vcite": "https://vcite.pub/ns/v1/",
+    "oa": "http://www.w3.org/ns/oa#",
+    "schema": "http://schema.org/",
+    "dc": "http://purl.org/dc/terms/",
+    "prism": "http://prismstandard.org/namespaces/basic/2.0/",
+
+    "VCiteCitation": "vcite:VCiteCitation",
+    "VCiteSource": "vcite:VCiteSource",
+    "VCiteTarget": "vcite:VCiteTarget",
+    "TextQuoteSelector": "oa:TextQuoteSelector",
+
+    "id": "@id",
+    "type": "@type",
+
+    "source": {
+      "@id": "vcite:source",
+      "@type": "@id"
+    },
+    "target": {
+      "@id": "vcite:target",
+      "@type": "@id"
+    },
+
+    "title": "dc:title",
+    "authors": {
+      "@id": "dc:creator",
+      "@container": "@list"
+    },
+    "year": {
+      "@id": "prism:publicationDate",
+      "@type": "http://www.w3.org/2001/XMLSchema#gYear"
+    },
+    "doi": {
+      "@id": "prism:doi",
+      "@type": "@id"
+    },
+    "url": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "archive_url": {
+      "@id": "vcite:archiveUrl",
+      "@type": "@id"
+    },
+    "venue": "prism:publicationName",
+    "source_type": "vcite:sourceType",
+
+    "text_exact": "oa:exact",
+    "text_before": "oa:prefix",
+    "text_after": "oa:suffix",
+    "hash": "vcite:passageFingerprint",
+    "char_start": {
+      "@id": "oa:start",
+      "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger"
+    },
+    "char_end": {
+      "@id": "oa:end",
+      "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger"
+    },
+    "page_ref": "vcite:pageRef",
+    "section": "vcite:section",
+    "fragment_url": {
+      "@id": "vcite:fragmentUrl",
+      "@type": "@id"
+    },
+
+    "relation": {
+      "@id": "vcite:relation",
+      "@type": "@vocab"
+    },
+    "supports": "vcite:supports",
+    "contradicts": "vcite:contradicts",
+    "defines": "vcite:defines",
+    "quantifies": "vcite:quantifies",
+    "contextualizes": "vcite:contextualizes",
+    "method": "vcite:method",
+    "cautions": "vcite:cautions",
+
+    "captured_at": {
+      "@id": "vcite:capturedAt",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "captured_by": "vcite:capturedBy",
+
+    "enrichment": "vcite:enrichment",
+    "scite_classification": "vcite:sciteClassification",
+    "scite_score": {
+      "@id": "vcite:sciteScore",
+      "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+    },
+    "semantic_scholar_id": "vcite:semanticScholarId",
+    "openalex_id": "vcite:openAlexId",
+    "retraction_watch": {
+      "@id": "vcite:retractionWatch",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "verified_at": {
+      "@id": "vcite:verifiedAt",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+
+    "conformance_level": "vcite:conformanceLevel"
+  }
+}

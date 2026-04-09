@@ -1,0 +1,254 @@
+## VCITE Test Vectors
+## Spec: VCITE v0.1 DRAFT, §5.3
+## Computed: 2026-04-08
+## Generator: Reference implementation (spec §5.2), Python 3.12.7
+## All hashes verified via compute_hash() from shared/methods/vcite/hash.py
+
+metadata:
+  spec_version: "0.1-draft"
+  computed_at: "2026-04-08"
+  python_version: "3.12.7"
+  generator: "VCITE reference implementation (spec §5.2)"
+  context_len: 50
+  hash_algorithm: "SHA-256"
+  notes: |
+    Context windows count Unicode code points, not UTF-8 bytes.
+    Whitespace regex covers U+0009/000A/000D/0020 only.
+    Non-breaking space (U+00A0) is intentionally NOT collapsed.
+
+# ═══════════════════════════════════════════════════════
+#  MANDATORY SPEC VECTORS (§5.3)
+# ═══════════════════════════════════════════════════════
+
+spec_vectors:
+  - id: SV1
+    category: spec-mandatory
+    description: Basic ASCII, short context
+    text_before: "The rate is "
+    text_exact: "exactly 42%"
+    text_after: " as measured"
+    expected_hash: "sha256:f2d30080cf6f2dd31c4e160673b427742c132bd7fe6b014e0b5026daea80bbf5"
+
+  - id: SV2
+    category: spec-mandatory
+    description: Unicode accented characters (NFC precomposed)
+    text_before: "café au lait "
+    text_exact: "résumé complet"
+    text_after: " du rapport"
+    expected_hash: "sha256:c9ac6f27318e7f3a7d27b85a9823ac7644e6a02d2f58c2abd1801ae99a9a53e4"
+
+  - id: SV3
+    category: spec-mandatory
+    description: Whitespace collapse (tabs, newlines, runs of spaces)
+    text_before: "  multiple   "
+    text_exact: "  spaces  here  "
+    text_after: "  trimmed  "
+    expected_hash: "sha256:ad4c8f44cc63c1d34451eab399094657961632d044a29c9c852d2bac064f3948"
+
+  - id: SV4
+    category: spec-mandatory
+    description: Minimal L1 — no context windows
+    text_before: ""
+    text_exact: "Only exact, no context"
+    text_after: ""
+    expected_hash: "sha256:d8ea2d1c308a3d38328362479c1a97dbdf5a9a87ca64a6a4b3fdd430853edd8b"
+
+# ═══════════════════════════════════════════════════════
+#  APPENDIX A EXAMPLES
+# ═══════════════════════════════════════════════════════
+
+appendix_vectors:
+  - id: A1
+    category: appendix
+    description: "Academic source (L3) — Zittrain et al. link rot study"
+    text_before: "As documented by Zittrain et al., "
+    text_exact: "over 70% of the URLs provided in articles published in the Harvard Law Review did not lead to originally cited information"
+    text_after: ". This rate of decay accelerates"
+    expected_hash: "sha256:d2ba5887d4456199ce37a7860ce011485519925dc75c3564f50d1ffa1e1dc933"
+    notes: "Appendix A.1. text_exact in docx had embedded newlines from word-wrap; normalized to spaces by the algorithm."
+
+  - id: A2
+    category: appendix
+    description: "Journalism source (L2) — CJR AI search audit"
+    text_before: "The CJR found that "
+    text_exact: "eight major AI search tools provided incorrect or inaccurate answers to more than 60% of 1,600 test queries"
+    text_after: ", with error rates ranging"
+    expected_hash: "sha256:26c71181069e54c4d776f2a03de838c81aab3eff1a64a71ecde920f629367707"
+    notes: "Appendix A.2."
+
+  - id: A3
+    category: appendix
+    description: "Plain text / AI output (L1) — no context"
+    text_before: ""
+    text_exact: "AI-generated text often cannot be verified or retrieved by anyone other than the original author"
+    text_after: ""
+    expected_hash: "sha256:b8ba02cbee19230434c6a5b1431c0f8bfab8e00eb13b670875faa874959fb298"
+    notes: "Appendix A.3. L1 conformant — no context windows."
+
+# ═══════════════════════════════════════════════════════
+#  EDGE CASE VECTORS
+# ═══════════════════════════════════════════════════════
+
+edge_case_vectors:
+  - id: EC01
+    category: edge-empty-context
+    description: Empty context windows with simple text
+    text_before: ""
+    text_exact: "Hello, world!"
+    text_after: ""
+    expected_hash: "sha256:cad437fb7351553fe2d565e4b67e59713e063222a2c65a2f768cce73352a1586"
+
+  - id: EC02
+    category: edge-whitespace
+    description: Whitespace normalization — tabs, newlines, multiple spaces
+    text_before: ""
+    text_exact: "Hello,   world!\n\ttest"
+    text_after: ""
+    expected_hash: "sha256:f97fd0de4198f3a6ba7dbfb83e7cc1c45b23905f9fa4330c12c15a260f1a1542"
+
+  - id: EC03
+    category: edge-nfc
+    description: "NFD input (decomposed: e + combining acute)"
+    text_before: ""
+    text_exact: "cafe\u0301"
+    text_after: ""
+    expected_hash: "sha256:b433ffec5f0511a6d43881e4fb8bed86ba6616a16608477478c0cdd872b48285"
+    notes: "MUST produce same hash as EC04 (NFC equivalence)."
+
+  - id: EC04
+    category: edge-nfc
+    description: "NFC input (precomposed: é)"
+    text_before: ""
+    text_exact: "caf\u00e9"
+    text_after: ""
+    expected_hash: "sha256:b433ffec5f0511a6d43881e4fb8bed86ba6616a16608477478c0cdd872b48285"
+    notes: "MUST produce same hash as EC03 (NFC equivalence)."
+
+  - id: EC05
+    category: edge-unicode
+    description: CJK characters (4 code points, 12 UTF-8 bytes)
+    text_before: ""
+    text_exact: "\u4f60\u597d\u4e16\u754c"
+    text_after: ""
+    expected_hash: "sha256:784d8327eb064ca62d2bfbfd5542f42336d154c885bfe98dda565b76606065ed"
+    notes: "Verifies code point counting, not byte counting."
+
+  - id: EC06
+    category: edge-unicode
+    description: Emoji (2 code points, 8 UTF-8 bytes)
+    text_before: ""
+    text_exact: "\U0001F600\U0001F4A1"
+    text_after: ""
+    expected_hash: "sha256:313603505a6cde53ee7148c3bfadb403e10036c2612be9783dac874d4c70fc6d"
+    notes: "Astral plane characters — tests surrogate pair handling."
+
+  - id: EC07
+    category: edge-context-length
+    description: Exact 50-character context (no padding, no truncation)
+    text_before: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    text_exact: "test"
+    text_after: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    expected_hash: "sha256:deb6e1e50d10560c7e65a4c48c1e7d7c58bf212935c091043b735fbefb317d4c"
+    notes: "50 'A' chars in each context. Boundary case — no padding or truncation."
+
+  - id: EC08
+    category: edge-context-length
+    description: Over-length context (100 chars truncated to 50)
+    text_before: "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+    text_exact: "test"
+    text_after: "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+    expected_hash: "sha256:86309984bf5222c0dbdb2611a75ad25df73e852f7f8d697414b880be6a97d4b4"
+    notes: "100 'B' chars truncated to first 50. Verifies truncation, not hashing of full context."
+
+  - id: EC09
+    category: edge-context-length
+    description: Short context (space-padded to 50)
+    text_before: "short"
+    text_exact: "test"
+    text_after: "ctx"
+    expected_hash: "sha256:a16f3204c5229ddd197e60ad3cfeefe38ce956ec586825f83671bcabbb329980"
+    notes: "'short' (5 chars) padded with 45 spaces. 'ctx' (3 chars) padded with 47 spaces."
+
+  - id: EC10
+    category: edge-empty
+    description: Completely empty input (empty exact, empty context)
+    text_before: ""
+    text_exact: ""
+    text_after: ""
+    expected_hash: "sha256:da6f851a04676cd01c5e80335da666433c880012982d53cb022336bf565acfbd"
+    notes: "Degenerate case. Same hash as EC15 (whitespace-only exact)."
+
+  - id: EC11
+    category: edge-delimiter
+    description: Pipe character in exact text
+    text_before: ""
+    text_exact: "a|b|c"
+    text_after: ""
+    expected_hash: "sha256:277e31e19888f6d24cd513dcd3b4850518c0fc55966ebc52dd87288863ca421a"
+    notes: "Pipe is the delimiter but NOT escaped. Fixed-length context makes parsing unambiguous."
+
+  - id: EC12
+    category: edge-nfc
+    description: "Angstrom sign (U+212B) → NFC canonical equivalent (U+00C5)"
+    text_before: ""
+    text_exact: "\u212B"
+    text_after: ""
+    expected_hash: "sha256:e89cc1c9076e00a3ec13fd451c04aef915732b0cf25cc3d26478552198ab2c6e"
+    notes: "U+212B (Angstrom) normalizes to U+00C5 (Latin A with ring above) under NFC."
+
+  - id: EC13
+    category: edge-nfc
+    description: "Hangul Jamo composition (U+1100 U+1161 → U+AC00 under NFC)"
+    text_before: ""
+    text_exact: "\u1100\u1161"
+    text_after: ""
+    expected_hash: "sha256:17a436bf3abdb0060ee3ba7e6c0208d688354386a8042679a22fb660740066cf"
+    notes: "Hangul Jamo leading consonant + vowel compose to a syllable block under NFC."
+
+  - id: EC14
+    category: edge-whitespace
+    description: "Non-breaking space (U+00A0) is NOT collapsed"
+    text_before: ""
+    text_exact: "hello\u00a0world"
+    text_after: ""
+    expected_hash: "sha256:2eceb2ef315fb702311c91140076a43159d6e99b5b738f035cff65d08daeab1f"
+    notes: "NBSP is NOT in the whitespace regex. This hash differs from 'hello world' (with U+0020)."
+
+  - id: EC15
+    category: edge-empty
+    description: Whitespace-only exact text (normalizes to empty)
+    text_before: ""
+    text_exact: "   \t\n  "
+    text_after: ""
+    expected_hash: "sha256:da6f851a04676cd01c5e80335da666433c880012982d53cb022336bf565acfbd"
+    notes: "After normalization and strip, exact text is empty. MUST equal EC10."
+
+  - id: EC16
+    category: edge-context-length
+    description: "49-character context (padded with 1 space)"
+    text_before: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    text_exact: "test"
+    text_after: ""
+    expected_hash: "sha256:ec71a933caf02232061eaec28ba101e856d1a97a9ba1232acb77223beb1fa1ac"
+    notes: "49 'X' chars + 1 space padding. Empty after context = 50 spaces."
+
+# ═══════════════════════════════════════════════════════
+#  INVARIANT TESTS
+# ═══════════════════════════════════════════════════════
+
+invariants:
+  - id: INV1
+    description: "NFC equivalence: EC03 (NFD) == EC04 (NFC)"
+    assertion: "EC03.expected_hash == EC04.expected_hash"
+
+  - id: INV2
+    description: "Whitespace normalization to empty: EC10 (empty) == EC15 (ws-only)"
+    assertion: "EC10.expected_hash == EC15.expected_hash"
+
+  - id: INV3
+    description: "Truncation equivalence: 100-char context produces same result as 50-char prefix"
+    assertion: "compute_hash('test', 'A'*100, 'A'*100) == compute_hash('test', 'A'*50, 'A'*50)"
+
+  - id: INV4
+    description: "Determinism: same inputs always produce same hash"
+    assertion: "1000 calls to compute_hash('test') all return the same value"

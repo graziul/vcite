@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VCITE Embedding Example</title>
+
+  <!-- VCITE JSON-LD: machine-readable citation metadata in document head -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://vcite.pub/schema/v1/context.jsonld",
+    "@type": "VCiteCitation",
+    "vcite": "1.0",
+    "id": "vcite-d2ba5887",
+    "source": {
+      "@type": "VCiteSource",
+      "title": "Perma: Scoping and Addressing the Problem of Link Rot",
+      "authors": ["Zittrain, Jonathan", "Albert, Kendra", "Lessig, Lawrence"],
+      "year": 2014,
+      "doi": "10.2139/ssrn.2329161",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2329161",
+      "archive_url": "https://perma.cc/XR4K-2329",
+      "venue": "Harvard Law Review Forum",
+      "source_type": "academic"
+    },
+    "target": {
+      "@type": "TextQuoteSelector",
+      "text_before": "As documented by Zittrain et al., ",
+      "text_exact": "over 70% of the URLs provided in articles published in the Harvard Law Review did not lead to originally cited information",
+      "text_after": ". This rate of decay accelerates",
+      "hash": "sha256:d2ba5887d4456199ce37a7860ce011485519925dc75c3564f50d1ffa1e1dc933",
+      "char_start": 1204,
+      "char_end": 1441,
+      "page_ref": "p. 4",
+      "section": "\u00a7 2. Scope of the Problem",
+      "fragment_url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2329161#:~:text=over+70%25+of+the+URLs"
+    },
+    "relation": "supports",
+    "captured_at": "2026-03-30T12:00:00Z",
+    "captured_by": "author"
+  }
+  </script>
+
+  <!-- Second VCITE object: journalism source -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://vcite.pub/schema/v1/context.jsonld",
+    "@type": "VCiteCitation",
+    "vcite": "1.0",
+    "id": "vcite-26c71181",
+    "source": {
+      "@type": "VCiteSource",
+      "title": "AI Search Engines Are Frequently Wrong",
+      "authors": ["Lim, Gabrielle"],
+      "year": 2025,
+      "url": "https://www.cjr.org/tow_center/ai-search-audit.php",
+      "archive_url": "https://web.archive.org/web/20250315/https://www.cjr.org/tow_center/ai-search-audit.php",
+      "venue": "Columbia Journalism Review",
+      "source_type": "journalism"
+    },
+    "target": {
+      "@type": "TextQuoteSelector",
+      "text_before": "The CJR found that ",
+      "text_exact": "eight major AI search tools provided incorrect or inaccurate answers to more than 60% of 1,600 test queries",
+      "text_after": ", with error rates ranging",
+      "hash": "sha256:26c71181069e54c4d776f2a03de838c81aab3eff1a64a71ecde920f629367707",
+      "page_ref": "para. 3",
+      "section": "Key Findings"
+    },
+    "relation": "quantifies",
+    "captured_at": "2026-03-30T14:30:00Z",
+    "captured_by": "author"
+  }
+  </script>
+
+  <style>
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      max-width: 40em;
+      margin: 2em auto;
+      line-height: 1.6;
+      color: #222;
+    }
+    h1 { font-size: 1.4em; }
+    span[data-vcite] {
+      background-color: #fef9e7;
+      border-bottom: 2px solid #d4a017;
+      cursor: pointer;
+      position: relative;
+    }
+    span[data-vcite]:hover {
+      background-color: #fdf2d0;
+    }
+    span[data-vcite]::after {
+      content: attr(data-vcite-relation);
+      position: absolute;
+      bottom: -1.8em;
+      left: 0;
+      font-size: 0.7em;
+      color: #888;
+      background: #fff;
+      padding: 0.1em 0.3em;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      display: none;
+      white-space: nowrap;
+    }
+    span[data-vcite]:hover::after {
+      display: block;
+    }
+    .footnotes { font-size: 0.85em; color: #555; margin-top: 2em; border-top: 1px solid #ccc; padding-top: 1em; }
+    .footnotes a { color: #1a5276; }
+    code { font-size: 0.9em; background: #f4f4f4; padding: 0.1em 0.3em; }
+  </style>
+</head>
+<body>
+
+<h1>The Link Rot Problem in Scholarly Communication</h1>
+
+<p>
+  Digital scholarship depends on stable references, but the web's
+  mutability undermines this assumption. As documented by Zittrain et al.,
+  <span data-vcite="vcite-d2ba5887"
+        data-vcite-hash="sha256:d2ba5887d4456199ce37a7860ce011485519925dc75c3564f50d1ffa1e1dc933"
+        data-vcite-relation="supports"
+        data-vcite-captured-by="author">over
+  70% of the URLs provided in articles published in the Harvard Law
+  Review did not lead to originally cited information</span>.
+  This rate of decay accelerates over time, raising questions about the
+  long-term integrity of the scholarly record.
+</p>
+
+<p>
+  The problem extends beyond traditional scholarship. The Columbia
+  Journalism Review found that
+  <span data-vcite="vcite-26c71181"
+        data-vcite-hash="sha256:26c71181069e54c4d776f2a03de838c81aab3eff1a64a71ecde920f629367707"
+        data-vcite-relation="quantifies"
+        data-vcite-captured-by="author">eight
+  major AI search tools provided incorrect or inaccurate answers to more
+  than 60% of 1,600 test queries</span>, with error rates ranging across
+  tools and query types. When AI systems themselves cannot reliably
+  retrieve factual information, the citation chain breaks at both ends.
+</p>
+
+<div class="footnotes">
+  <p>
+    This document embeds VCITE citation objects as JSON-LD in
+    <code>&lt;head&gt;</code> and marks cited passages with
+    <code>&lt;span data-vcite&gt;</code> in the body. Hover over
+    highlighted passages to see the relation type. Machine readers
+    can extract the full citation metadata from the JSON-LD blocks.
+  </p>
+  <p>
+    VCITE spec: <a href="https://vcite.pub">https://vcite.pub</a>
+  </p>
+</div>
+
+</body>
+</html>

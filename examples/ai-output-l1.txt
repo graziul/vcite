@@ -1,0 +1,26 @@
+The problem of verifiable AI output is growing. As one analysis noted,
+[vcite-b8ba02cb | "AI-generated text often cannot be verified or retrieved
+by anyone other than the original author" | sha256:b8ba02cbee19230434c6a5b1431c0f8bfab8e00eb13b670875faa874959fb298
+| model]. This creates a fundamental accountability gap in scholarly
+communication, where citations to AI-generated passages cannot be
+independently checked by reviewers or readers.
+
+---
+VCITE Plain-Text Notation (Spec §6.4)
+
+Format: [<id> | "<text_exact>" | <hash> | <captured_by>]
+
+Fields:
+  id           vcite-b8ba02cb
+  text_exact   AI-generated text often cannot be verified or retrieved
+               by anyone other than the original author
+  hash         sha256:b8ba02cbee19230434c6a5b1431c0f8bfab8e00eb13b670875faa874959fb298
+  captured_by  model
+
+Conformance: L1 (text_exact + hash only; no context windows or URLs).
+
+Source metadata (not embedded in plain text; carried in sidecar or header):
+  title        Considerations for AI-Generated Scholarly Content
+  source_type  ai_output
+  relation     cautions
+  captured_at  2026-03-30T16:00:00Z

@@ -1,0 +1,24 @@
+{
+  "vcite": "1.0",
+  "id": "vcite-26c71181",
+  "source": {
+    "title": "AI Search Engines Are Frequently Wrong",
+    "authors": ["Lim, Gabrielle"],
+    "year": 2025,
+    "url": "https://www.cjr.org/tow_center/ai-search-audit.php",
+    "archive_url": "https://web.archive.org/web/20250315/https://www.cjr.org/tow_center/ai-search-audit.php",
+    "venue": "Columbia Journalism Review",
+    "source_type": "journalism"
+  },
+  "target": {
+    "text_before": "The CJR found that ",
+    "text_exact": "eight major AI search tools provided incorrect or inaccurate answers to more than 60% of 1,600 test queries",
+    "text_after": ", with error rates ranging",
+    "hash": "sha256:26c71181069e54c4d776f2a03de838c81aab3eff1a64a71ecde920f629367707",
+    "page_ref": "para. 3",
+    "section": "Key Findings"
+  },
+  "relation": "quantifies",
+  "captured_at": "2026-03-30T14:30:00Z",
+  "captured_by": "author"
+}

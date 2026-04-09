@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vcite"
+version = "0.1.0"
+description = "VCITE: Verified Citation with Inline Text Evidence -- Python reference implementation"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Chris Graziul" },
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pyyaml>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/graziul/vcite"
+
+[tool.setuptools.packages.find]
+include = ["vcite*"]
