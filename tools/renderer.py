@@ -55,13 +55,24 @@ def render_enhanced_html(
     if not has_head and not has_body:
         original_html = _wrap_fragment(original_html)
 
+    # Strip any existing VCITE markup from the input (allows re-enhancement)
+    body_html = _strip_existing_vcite(original_html)
+
     # Work backwards so earlier positions remain stable after insertion.
     pairs = list(zip(quotes, vcite_objects))
     pairs.sort(key=lambda pair: pair[0].position, reverse=True)
 
-    body_html = original_html
+    # Step 1: Insert inline marks (span + badge) only — no panels yet.
     for quote, vcite_obj in pairs:
         body_html = _inject_one(body_html, quote, vcite_obj)
+
+    # Step 2: Collect all panels into a single container placed before </body>.
+    # This avoids invalid <div> inside <p> nesting entirely.
+    panels_html = '\n<div class="vcite-panels-container" style="display:contents">\n'
+    for quote, vcite_obj in zip(quotes, vcite_objects):
+        panels_html += build_evidence_panel(vcite_obj, quote) + "\n"
+    panels_html += "</div>\n"
+    body_html = _inject_before_close_body(body_html, panels_html)
 
     # Inject banner after <body> (or first <main>/<article>).
     body_html = _inject_banner(body_html, len(vcite_objects))
@@ -251,66 +262,45 @@ def _verify_url(vcite_obj) -> str:
 
 
 def _inject_one(body_html: str, quote, vcite_obj) -> str:
-    """Find quote.text_exact in *body_html* and wrap it with VCITE markup.
+    """Find quote.text_exact in *body_html* and wrap it with VCITE inline marks.
 
-    Strategy: search for the literal text inside the HTML body content.
-    We use a regex that tolerates inline HTML tags within the passage
-    (e.g., <em>, <strong>) by allowing optional tag sequences between
-    words.
+    Only inserts the <span> + <sup> wrapper — panels are collected
+    separately into a container at the end of the document to avoid
+    <div>-inside-<p> nesting issues.
     """
     target_text = quote.text_exact
+
+    def _wrap(match_text: str, start: int, end: int) -> str:
+        inline_mark = (
+            f'<span class="vcite-mark" data-vcite="{vcite_obj.id}" '
+            f'onclick="toggleVcite(this)">{match_text}</span>'
+            f'<sup class="vcite-badge" '
+            f'onclick="toggleVcite(this.previousElementSibling)">v</sup>'
+        )
+        return body_html[:start] + inline_mark + body_html[end:]
 
     # First attempt: exact literal match.
     idx = body_html.find(target_text)
     if idx >= 0:
-        panel = build_evidence_panel(vcite_obj, quote)
-        wrapped = (
-            f'<span class="vcite-mark" data-vcite="{vcite_obj.id}" '
-            f'onclick="toggleVcite(this)">{target_text}</span>'
-            f'<sup class="vcite-badge" '
-            f'onclick="toggleVcite(this.previousElementSibling)">v</sup>\n'
-            + panel
-        )
-        return body_html[:idx] + wrapped + body_html[idx + len(target_text) :]
+        return _wrap(target_text, idx, idx + len(target_text))
 
     # Second attempt: match with HTML entities decoded.
     escaped_target = html.escape(target_text)
     idx = body_html.find(escaped_target)
     if idx >= 0:
-        panel = build_evidence_panel(vcite_obj, quote)
-        wrapped = (
-            f'<span class="vcite-mark" data-vcite="{vcite_obj.id}" '
-            f'onclick="toggleVcite(this)">{escaped_target}</span>'
-            f'<sup class="vcite-badge" '
-            f'onclick="toggleVcite(this.previousElementSibling)">v</sup>\n'
-            + panel
-        )
-        return (
-            body_html[:idx] + wrapped + body_html[idx + len(escaped_target) :]
-        )
+        return _wrap(escaped_target, idx, idx + len(escaped_target))
 
-    # Third attempt: build a regex that allows inline tags between words
-    # and tolerates &mdash; / -- / — variations.
+    # Third attempt: regex tolerating inline tags between words.
     words = target_text.split()
     if len(words) >= 3:
-        # Escape each word for regex, allow tags + whitespace between them
         tag_gap = r"(?:\s*<[^>]+>\s*)*\s+"
         pattern_parts = [re.escape(w) for w in words]
         pattern = tag_gap.join(pattern_parts)
         match = re.search(pattern, body_html)
         if match:
-            original_span = match.group(0)
-            panel = build_evidence_panel(vcite_obj, quote)
-            wrapped = (
-                f'<span class="vcite-mark" data-vcite="{vcite_obj.id}" '
-                f'onclick="toggleVcite(this)">{original_span}</span>'
-                f'<sup class="vcite-badge" '
-                f'onclick="toggleVcite(this.previousElementSibling)">v</sup>\n'
-                + panel
-            )
-            return body_html[: match.start()] + wrapped + body_html[match.end() :]
+            return _wrap(match.group(0), match.start(), match.end())
 
-    # Could not locate — return unchanged (caller may log a warning).
+    # Could not locate — return unchanged.
     return body_html
 
 
@@ -362,3 +352,90 @@ def _wrap_fragment(fragment: str) -> str:
         + "\n</body>\n"
         "</html>"
     )
+
+
+def _strip_existing_vcite(html_str: str) -> str:
+    """Remove all existing VCITE markup so the article can be re-enhanced.
+
+    Strips:
+    - <span class="vcite-mark" ...>text</span> → keeps text
+    - <sup class="vcite-badge" ...>v</sup> → removed
+    - <div class="vcite-panel" ...>...</div> → removed (nested-div aware)
+    - <div class="vcite-banner" ...>...</div> → removed
+    - <div class="vcite-panels-container" ...>...</div> → removed
+    - <script type="application/ld+json"> containing VCiteCitation → removed
+    - <style> containing vcite- classes → removed
+    - <script> containing toggleVcite → removed
+    """
+    # Remove vcite-badge sup elements
+    html_str = re.sub(
+        r'<sup\s+class="vcite-badge"[^>]*>.*?</sup>', "", html_str, flags=re.DOTALL
+    )
+
+    # Unwrap vcite-mark spans (keep inner text)
+    html_str = re.sub(
+        r'<span\s+class="vcite-mark"[^>]*>(.*?)</span>',
+        r"\1",
+        html_str,
+        flags=re.DOTALL,
+    )
+
+    # Remove vcite div blocks (panels, banner, container) — handle nesting
+    for cls in ("vcite-panel", "vcite-banner", "vcite-panels-container"):
+        pattern = re.compile(rf'<div\s+[^>]*class="[^"]*{cls}[^"]*"[^>]*>')
+        while True:
+            m = pattern.search(html_str)
+            if not m:
+                break
+            start = m.start()
+            pos = m.end()
+            depth = 1
+            while pos < len(html_str) and depth > 0:
+                open_m = re.search(r"<div[\s>]", html_str[pos:])
+                close_m = re.search(r"</div>", html_str[pos:])
+                if close_m is None:
+                    break
+                if open_m and open_m.start() < close_m.start():
+                    depth += 1
+                    pos += open_m.end()
+                else:
+                    depth -= 1
+                    if depth == 0:
+                        html_str = html_str[:start] + html_str[pos + close_m.end() :]
+                        break
+                    pos += close_m.end()
+
+    # Remove JSON-LD blocks containing VCiteCitation
+    html_str = re.sub(
+        r'<script\s+type="application/ld\+json">\s*\[?\s*\{[^}]*VCiteCitation.*?</script>',
+        "",
+        html_str,
+        flags=re.DOTALL,
+    )
+
+    # Remove <style> blocks containing vcite- classes
+    html_str = re.sub(
+        r"<style>\s*/\*.*?VCITE.*?\*/.*?</style>",
+        "",
+        html_str,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    html_str = re.sub(
+        r"<style>[^<]*\.vcite-[^<]*</style>",
+        "",
+        html_str,
+        flags=re.DOTALL,
+    )
+
+    # Remove <script> blocks containing toggleVcite
+    html_str = re.sub(
+        r"<script>[^<]*toggleVcite[^<]*</script>",
+        "",
+        html_str,
+        flags=re.DOTALL,
+    )
+
+    # Clean up extra blank lines
+    html_str = re.sub(r"\n{3,}", "\n\n", html_str)
+
+    return html_str

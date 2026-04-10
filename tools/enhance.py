@@ -185,20 +185,10 @@ def _render_enhanced_html(
     vcite_objects: list[VCiteCitation],
     output_path: Path,
 ):
-    """Inject a JSON-LD script block with VCITE data into the HTML."""
-    jsonld = [c.to_jsonld() for c in vcite_objects]
-    script_block = (
-        '<script type="application/ld+json">\n'
-        + json.dumps(jsonld, indent=2, ensure_ascii=False)
-        + "\n</script>"
-    )
+    """Render full VCITE-enhanced HTML with inline marks, panels, CSS, and JS."""
+    from renderer import render_enhanced_html
 
-    # Insert before </head> if present, otherwise prepend
-    if "</head>" in original_html:
-        result = original_html.replace("</head>", script_block + "\n</head>", 1)
-    else:
-        result = script_block + "\n" + original_html
-
+    result = render_enhanced_html(original_html, quotes, vcite_objects)
     output_path.write_text(result, encoding="utf-8")
 
 
