@@ -290,7 +290,35 @@ def _inject_one(body_html: str, quote, vcite_obj) -> str:
     if idx >= 0:
         return _wrap(escaped_target, idx, idx + len(escaped_target))
 
-    # Third attempt: regex tolerating inline tags between words.
+    # Third attempt: anchor-based matching with fuzzy boundaries.
+    # The parser may extract text with slightly different boundaries
+    # (e.g., including/excluding punctuation near quote marks).
+    # Use interior words as anchors — skip first/last word boundary issues.
+    words = target_text.split()
+    if len(words) >= 4:
+        # Use words 1-3 (skipping word 0 which may have boundary issues)
+        # and words -4 to -2 (skipping last word)
+        start_anchor = " ".join(words[0:4])
+        # Try progressively shorter end anchors
+        for trim in range(0, min(4, len(words) - 4)):
+            end_words = words[-(4 - trim):] if trim == 0 else words[-(4 - trim):-trim]
+            end_anchor = " ".join(end_words)
+
+            start_idx = body_html.find(start_anchor)
+            if start_idx < 0:
+                continue
+
+            # Search for end anchor after start
+            search_region = body_html[start_idx:start_idx + len(target_text) + 200]
+            end_idx_rel = search_region.find(end_anchor)
+            if end_idx_rel >= 0:
+                end_pos = start_idx + end_idx_rel + len(end_anchor)
+                matched = body_html[start_idx:end_pos]
+                # Sanity check: matched text should be roughly same length
+                if abs(len(matched) - len(target_text)) < len(target_text) * 0.3:
+                    return _wrap(matched, start_idx, end_pos)
+
+    # Fourth attempt: regex tolerating inline tags between words.
     words = target_text.split()
     if len(words) >= 3:
         tag_gap = r"(?:\s*<[^>]+>\s*)*\s+"
@@ -302,6 +330,32 @@ def _inject_one(body_html: str, quote, vcite_obj) -> str:
 
     # Could not locate — return unchanged.
     return body_html
+
+
+def _map_decoded_pos_to_encoded(encoded: str, decoded: str, decoded_pos: int) -> int:
+    """Map a character position in html.unescape()'d text back to the encoded HTML.
+
+    Walks both strings in parallel, consuming HTML entities as single
+    decoded characters, to find the encoded position corresponding to
+    decoded_pos.
+    """
+    enc_i = 0
+    dec_i = 0
+    while dec_i < decoded_pos and enc_i < len(encoded):
+        if encoded[enc_i] == "&":
+            # Find the end of the entity
+            semi = encoded.find(";", enc_i)
+            if semi > enc_i:
+                entity = encoded[enc_i : semi + 1]
+                decoded_char = html.unescape(entity)
+                # This entity corresponds to len(decoded_char) decoded characters
+                dec_i += len(decoded_char)
+                enc_i = semi + 1
+                continue
+        # Regular character — same in both strings
+        enc_i += 1
+        dec_i += 1
+    return enc_i
 
 
 def _inject_banner(body_html: str, count: int) -> str:
