@@ -1,0 +1,140 @@
+/* VCITE evidence panel styles — extracted from the VCITE specification.
+ *
+ * CSS custom properties allow host pages to theme VCITE overlays.
+ * All classes are prefixed with "vcite-" to avoid collisions.
+ */
+
+:root {
+  --vcite-bg: #f0f4ff;
+  --vcite-border: #2563eb;
+  --vcite-hover: #e8eeff;
+  --vcite-muted: #666;
+}
+
+/* ── Highlighted passage ────────────────────────────────────────────── */
+
+.vcite-mark {
+  background: var(--vcite-bg);
+  border-bottom: 2px solid var(--vcite-border);
+  padding: 1px 3px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.vcite-mark:hover {
+  background: var(--vcite-hover);
+}
+
+/* ── Superscript badge ──────────────────────────────────────────────── */
+
+.vcite-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--vcite-border);
+  vertical-align: super;
+  margin-left: 2px;
+  cursor: pointer;
+  font-family: -apple-system, system-ui, sans-serif;
+}
+
+/* ── Evidence panel ─────────────────────────────────────────────────── */
+
+.vcite-panel {
+  display: none;
+  background: #f8fafc;
+  border: 1px solid #d0d8e8;
+  border-left: 3px solid var(--vcite-border);
+  border-radius: 0 6px 6px 0;
+  padding: 14px 16px;
+  margin: 8px 0 16px;
+  font-family: -apple-system, system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.vcite-panel.open {
+  display: block;
+}
+
+.vcite-panel-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--vcite-border);
+  margin-bottom: 6px;
+}
+
+/* ── Passage block inside panel ─────────────────────────────────────── */
+
+.vcite-passage {
+  background: #fff;
+  border-radius: 4px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  font-style: italic;
+  color: #333;
+}
+
+.vcite-passage .ctx {
+  color: #aaa;
+  font-style: normal;
+}
+
+/* ── Metadata row (relation pill + hash) ────────────────────────────── */
+
+.vcite-meta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  color: var(--vcite-muted);
+}
+
+.vcite-relation {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: #e8eeff;
+  color: var(--vcite-border);
+}
+
+.vcite-hash {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 10px;
+  color: #888;
+}
+
+/* ── Verify link ────────────────────────────────────────────────────── */
+
+.vcite-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--vcite-border);
+  text-decoration: none;
+}
+
+.vcite-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Banner ─────────────────────────────────────────────────────────── */
+
+.vcite-banner {
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+  border: 1px solid #d0d8e8;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  font-family: -apple-system, system-ui, sans-serif;
+  font-size: 13px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.vcite-banner strong {
+  color: var(--vcite-border);
+}
