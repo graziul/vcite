@@ -9,6 +9,7 @@ Usage:
 
 import argparse
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -67,20 +68,45 @@ def _build_vcite_object(
 
 
 def infer_relation(quote: ExtractedQuote) -> str:
-    """Infer relation type from context keywords."""
-    ctx = quote.paragraph_context.lower()
-    if any(w in ctx for w in ("define", "describes", "refers to", "means", "termed")):
+    """Infer relation type from the cited passage and its immediate context.
+
+    Uses the quote text itself (not the full paragraph) to avoid false
+    triggers from rhetorical contrast words in surrounding prose.
+    'contradicts' requires explicit disagreement language in the quote itself.
+    Default is 'supports' — the most common citation relation.
+    """
+    # Use the quote text + short surrounding context, not full paragraph
+    text = quote.text_exact.lower()
+    ctx = (quote.text_before + " " + quote.text_after).lower()
+
+    # defines: the quote IS a definition
+    if any(w in text for w in ("defined as", "refers to", "means", "is termed")):
         return "defines"
-    if any(w in ctx for w in ("however", "but", "contrast", "disagree", "challenge")):
+    if any(w in ctx for w in ("define", "definition of")):
+        return "defines"
+
+    # contradicts: only if the quote itself expresses disagreement
+    if any(w in text for w in ("disagree", "challenge", "refute", "contrary to", "not supported")):
         return "contradicts"
-    if any(w in ctx for w in ("found", "show", "demonstrate", "report", "percent", "%")):
+
+    # quantifies: the quote contains numbers or measurements
+    if any(w in text for w in ("percent", "%", "rate", "proportion", "number of", "million")):
         return "quantifies"
-    if any(w in ctx for w in ("warn", "caution", "risk", "concern", "difficult")):
+    if re.search(r"\d+[.,]?\d*\s*%", text):
+        return "quantifies"
+
+    # cautions: the quote warns about risks or limitations
+    if any(w in text for w in ("warn", "caution", "risk", "concern", "difficult", "harm")):
         return "cautions"
-    if any(w in ctx for w in ("method", "approach", "technique", "framework")):
+
+    # method: the quote describes a methodology
+    if any(w in text for w in ("method", "approach", "technique", "framework", "model", "protocol")):
         return "method"
-    if any(w in ctx for w in ("context", "background", "history", "tradition")):
+
+    # contextualizes: background information
+    if any(w in text for w in ("history", "tradition", "background", "context", "evolution of")):
         return "contextualizes"
+
     return "supports"
 
 
