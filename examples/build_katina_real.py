@@ -260,11 +260,14 @@ def main():
     source = Path("/home/cgraziul/Documents/Confronting the Challenges of Sensitive Open Data _ Katina Magazine.html")
     output = Path(__file__).parent / "katina-article.html"
 
-    # Read and decode the source
-    raw = source.read_text(encoding="utf-8")
-    content = html_mod.unescape(raw)
+    # Use clean article-only HTML for BOTH extraction and rendering
+    clean_article = Path("/tmp/katina-clean-article.html")
+    if not clean_article.exists():
+        print("ERROR: Run the article extraction first to create /tmp/katina-clean-article.html")
+        sys.exit(1)
+    content = clean_article.read_text()
 
-    # Extract article body
+    # Extract quotes from the clean article (not the full browser page)
     from parsers.html_parser import extract_quotes_html
     quotes = extract_quotes_html(content)
     print(f"Extracted {len(quotes)} cited passages")
@@ -339,10 +342,7 @@ def main():
         )
         vc_objs.append(vc)
 
-    # Read the DECODED source as base HTML
-    base_html = Path("/tmp/katina-decoded.html").read_text() if Path("/tmp/katina-decoded.html").exists() else content
-
-    result = render_enhanced_html(base_html, quotes, vc_objs)
+    result = render_enhanced_html(content, quotes, vc_objs)
 
     # Remove the banner
     result = re.sub(
