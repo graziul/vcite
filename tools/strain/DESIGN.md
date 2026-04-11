@@ -277,41 +277,186 @@ Document-level (global) strain:
    misleading in context? (Yes — this is the "accurate but misleading"
    problem.)
 
-## 8. Prior Art
+## 8. Strain Decomposition
+
+Drawing from the literature survey, strain decomposes into at least
+four distinct dimensions:
+
+1. **Fidelity strain**: Does the citation accurately represent the
+   source's claims? (Chen et al., 2025)
+2. **Completeness strain**: Does the citation omit critical qualifiers
+   or context? (Martella et al., 2021 — found ~19% of citations to
+   Freeman et al.'s active-learning meta-analysis misrepresented findings
+   by attributing efficacy to activities the meta-analysis never evaluated)
+3. **Directional strain**: Does the citation reverse the valence of the
+   source? (Scite's supporting/contrasting classification)
+4. **Contextual strain**: Is the citation used for a purpose the source
+   doesn't support? (Jurgens et al., 2018 — citation frame analysis)
+
+These dimensions are not independent. High completeness strain (dropping
+a qualifier) often produces high directional strain (reversing valence).
+The strain score should ideally capture all four, though the baseline
+lexical scorer primarily measures fidelity.
+
+## 9. The Telephone Effect and Strain Propagation
+
+Chen, Teplitskiy & Jurgens (2025) — "The Noisy Path from Source to
+Citation" (ACL 2025) — established the **telephone effect**: low-fidelity
+citations propagate, causing downstream citations to have even lower
+fidelity to the original source. Their analysis of ~13 million citation
+pairs found:
+
+- Fidelity is higher when citing more recent, intellectually proximate,
+  and accessible papers
+- Lower fidelity when first author has a higher H-index
+- Strain compounds through citation chains: A cites B (low strain),
+  C cites A's claim about B (higher strain), D cites C's claim about
+  A's claim about B (highest strain)
+
+This directly validates Greenberg's (2009) "amplification" mechanism
+and has implications for the sheaf formalization: strain is not just
+a local property of individual citations but a network property that
+propagates along paths in the citation graph.
+
+**Implication for VCITE**: The `text_exact` field in a VCITE citation
+anchors to a specific passage, which prevents fidelity loss at the
+first hop. But if downstream authors cite the VCITE-enhanced document
+without propagating the VCITE anchors, the telephone effect resumes.
+A strain-aware VCITE tool should flag citations of secondary sources
+when the primary source is available.
+
+## 10. Empirical Base Rates
+
+Quotation error rates from systematic reviews establish the ground truth
+that a strain metric should approximately reproduce:
+
+| Discipline | Error Rate | Source |
+|-----------|-----------|--------|
+| General medicine | ~20% (range 0–50%) | Cochrane meta-analyses |
+| Psychology | ~19% | Discipline-specific studies |
+| General science | ~25% | Cross-disciplinary review |
+| Ecology | ~11% | Field-specific audit |
+| Education | ~26% | Martella et al. 2021 |
+| Marine biology | ~10.6% | Field-specific audit |
+| Physical geography | ~19% | Field-specific audit |
+
+Wakeling et al. (2025) surveyed 2,648 authors evaluating real citations
+of their own work: 16.6% quotation error rate with no significant
+disciplinary differences. 24% said citations overgeneralized their work.
+Only 11.3% ever took action when encountering inaccurate citations.
+
+These rates establish calibration targets: a well-calibrated strain
+metric should flag approximately 15–25% of citations as "high strain"
+in a representative corpus.
+
+## 11. Prior Art (Full Survey)
+
+### Citation Fidelity Measurement (Most Relevant)
+- **Chen, Teplitskiy & Jurgens (2025)**: "The Noisy Path from Source
+  to Citation" (ACL 2025) — **closest existing work to citation strain**.
+  Computational pipeline quantifying "citation fidelity" at scale across
+  ~13M citation pairs. Established the telephone effect. Pipeline:
+  citation context extraction → claim alignment → supervised fidelity
+  scoring. Provides directly applicable architecture.
+- **Sarol, Schneider & Kilicoglu (2024–2025)**: Automatic identification
+  of citation distortions in biomedical literature. Annotated corpus of
+  100 highly-cited biomedical papers. NLP models classify citations as
+  ACCURATE, NOT_ACCURATE, or IRRELEVANT. Also tested LLMs (Gemini 1.5,
+  GPT-4o, LLaMA-3.1) on a 3-step pipeline: extract, retrieve, verify.
+  [GitHub](https://github.com/ScienceNLP-Lab/Citation-Integrity)
+- **SemanticCite — Haan (2025)**: "Citation Verification with AI-Powered
+  Full-Text Analysis" (arXiv). 4-class system: Supported, Partially
+  Supported, Unsupported, Uncertain. Cross-disciplinary dataset of 1,000+
+  citations across 8 disciplines. Hybrid retrieval (sparse + dense).
+  [GitHub](https://github.com/sebhaan/semanticcite)
 
 ### Citation Intent Classification
 - Jurgens et al. (2018): "Measuring the Evolution of a Scientific Field
-  through Citation Frames" — 6 citation functions
+  through Citation Frames" — 6 citation functions (Background, Motivation,
+  Uses, Extension, Comparison/Contrast, Future). Largest behavioral
+  citation study at time. Found citation framing evolves as fields mature.
 - Cohan et al. (2019): "Structural Scaffolds for Citation Intent
-  Classification in Scientific Publications" — Background, Method,
-  Result Comparison
+  Classification" (NAACL) — SciCite dataset (11K+ annotations), multitask
+  scaffolds using section structure. 13.3% F1 improvement.
 - Lauscher et al. (2022): MultiCite — multi-label citation intent
+- GraphCite (Balalau et al., 2022): GAT + SciBERT for graph-aware intent
+- CitePrompt (Lahiri et al., 2023): prompt-based learning, SOTA on SciCite
 
 ### Citation Distortion
-- Greenberg (2009): "How citation distortions create unfounded authority"
-  — measured claim mutation across citation chains in medical literature
+- **Greenberg (2009)**: "How citation distortions create unfounded
+  authority" (BMJ) — foundational. Traced 242 papers, 675 citations,
+  220K citation paths. Three mechanisms: citation bias (selective citing),
+  amplification (citing reviews instead of primary data), invention
+  (altering claims through citation). The telephone effect avant la lettre.
+- Martella et al. (2021): "Quotation Accuracy Matters" (Review of
+  Educational Research) — 19% of citations misrepresented findings
+- Wakeling et al. (2025): "How Do Authors Perceive the Way Their Work
+  Is Cited?" (JASIST) — 16.6% error rate from author surveys
+- Bornmann & Leibel (2025): Framework distinguishing citation noise
+  (stochastic) from citation bias (systematic directional error)
 - De Lacey et al. (1985): early study of citation accuracy rates
 - Mogull (2017): citation error and distortion in pharmacy literature
 
+### Smart Citation Classification
+- Nicholson et al. (2021): "scite: A smart citation index" (QSS) —
+  production-scale (880M+ classified statements). 92.6% Mentioning,
+  6.5% Supporting, 0.8% Contrasting. Coarse but scalable.
+
 ### Semantic Similarity for Scientific Text
-- SPECTER (Cohan et al., 2020): citation-informed document embeddings
-- SciNCL (Ostendorff et al., 2022): improved scientific embeddings
+- **SPECTER (Cohan et al., 2020)**: citation-informed document embeddings.
+  Papers close in citation graph → close in embedding space. Useful for
+  "topical distance" component of strain.
+- SPECTER2 (Singh et al., 2023): 6M triplets, task-specific adapters.
+  A "strain adapter" could be trained for fidelity assessment.
 - SciBERT (Beltagy et al., 2019): domain-adapted BERT for science
+- SciNCL (Ostendorff et al., 2022): improved scientific embeddings
 
 ### Sheaf Theory in Data Science
-- Robinson (2014): "Topological Signal Processing" — sheaf-theoretic
-  framework for data integration and consistency
-- Robinson (2017): "Sheaves are the canonical data structure for sensor
-  integration" — formalization relevant to citation network analysis
+- **Robinson (2014)**: "Topological Signal Processing" — foundational
+  sheaf framework for data consistency
+- **Robinson (2017)**: "Sheaves are the canonical data structure for
+  sensor integration" — introduced consistency radius and consistency
+  filtration. The consistency radius IS a strain metric for sensor
+  networks; directly applicable to citations as "sensors" reporting
+  on source papers.
+- **Hansen & Ghrist (2021)**: "Opinion Dynamics on Discourse Sheaves"
+  (SIAM J. Appl. Math.) — sheaf Laplacian measures "discord" in
+  opinion networks. Directly applicable: replace agents with papers,
+  opinions with claims about sources. Strain = norm of sheaf coboundary.
+- Bodnar et al. (2022): "Neural Sheaf Diffusion" (NeurIPS) — sheaves
+  can be learned from data, not just specified. A citation strain sheaf
+  could be learned end-to-end from annotated data.
 - Curry (2014): "Sheaves, Cosheaves and Applications" — computational
   sheaf theory
 
 ### Fact Verification via NLI
-- Thorne et al. (2018): FEVER — fact extraction and verification dataset
-- Wadden et al. (2020): SciFact — scientific claim verification
+- Thorne et al. (2018): FEVER — 185K claims, 3-class verification
+- **Wadden et al. (2020)**: SciFact — 1,409 scientific claims paired with
+  5,183 abstracts. 3-step pipeline: retrieve, select rationale, classify
+  entailment. Architecture directly transferable to strain.
+- Wadden et al. (2022): MultiVerS — full-document context via Longformer,
+  0.72 F1 on SciFact
 - Schuster et al. (2021): evidence-based fact checking
 
 ### Legal Citation Analysis
 - Spriggs & Hansford (2000): citation practice in Supreme Court opinions
 - Shapiro (1992): "Origins of the Serial Citation" — evolution of
   legal citation signals and their semantic functions
+
+## 12. Recommended Architecture (Informed by Survey)
+
+Based on the literature, the most promising strain architecture combines:
+
+1. **Citation context extraction** (existing VCITE tooling)
+2. **Evidence retrieval from source** (full-text, not just abstract —
+   following MultiVerS and SemanticCite)
+3. **NLI-based entailment classification** (SciFact pipeline)
+4. **Continuous score mapping** (going beyond 3–4 class systems)
+5. **Sheaf-theoretic aggregation** (consistency radius from Robinson 2017,
+   discourse sheaf dynamics from Hansen & Ghrist 2021)
+6. **Discipline calibration** (Bluebook signals for legal, error rate
+   base rates for sciences, author survey data from Wakeling et al.)
+
+The Chen et al. (2025) pipeline (citation context → claim alignment →
+supervised fidelity scoring) provides the most directly applicable
+end-to-end architecture. Their "fidelity" is our inverse-strain.
