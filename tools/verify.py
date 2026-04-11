@@ -361,6 +361,10 @@ def verify_citation(citation: VCiteCitation) -> VerificationResult:
             warnings=warnings,
         )
 
+    # Stash fetched text for optional drift tracking (not serialized)
+    _fetched_text = fetch_result.text
+    _fetched_url = fetch_result.url
+
     # Step 3: Find the passage in the source
     match = find_passage(fetch_result.text, citation)
     if not match.found:
@@ -416,7 +420,7 @@ def verify_citation(citation: VCiteCitation) -> VerificationResult:
     else:
         status = "hash_mismatch"
 
-    return VerificationResult(
+    result = VerificationResult(
         citation_id=citation.id,
         source_title=citation.source.title,
         status=status,
@@ -431,6 +435,9 @@ def verify_citation(citation: VCiteCitation) -> VerificationResult:
         captured_by=citation.captured_by,
         warnings=warnings,
     )
+    # Attach fetched text for drift tracking (private, not serialized)
+    result._source_text = _fetched_text
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -631,6 +638,11 @@ def main():
         action="store_true",
         help="Only print summary, not individual results",
     )
+    parser.add_argument(
+        "--db",
+        default=None,
+        help="SQLite database path for storing results and tracking source drift",
+    )
     args = parser.parse_args()
 
     input_path = Path(args.input)
@@ -679,6 +691,19 @@ def main():
         # Summary
         print("=" * 60)
         print(format_summary(results))
+
+    # Store results in database if --db provided
+    if args.db:
+        from hashdb import HashDB
+        with HashDB(args.db) as db:
+            for result in results:
+                db.store_result(result, input_file=str(input_path))
+                source_text = getattr(result, "_source_text", None)
+                if source_text and result.source_url:
+                    is_drift, _ = db.record_source(result.source_url, source_text)
+                    if is_drift:
+                        _log(f"  Source drift detected: {result.source_url}")
+            _log(f"\nStored {len(results)} result(s) in {args.db}")
 
     # Exit code: 0 if all verified/passage_verified, 1 otherwise
     all_ok = all(r.status in ("verified", "passage_verified") for r in results)
