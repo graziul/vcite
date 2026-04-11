@@ -67,6 +67,7 @@ cd implementations/javascript && npm test
 - `tools/enhance.py` — CLI to upgrade existing HTML/MD citations to VCITE objects
 - `tools/verify.py` — reverse-lookup verification: fetch source, locate passage, recompute hash
 - `tools/source_fetch.py` — fetch source documents via URL/DOI/archive_url, extract plain text
+- `tools/hashdb.py` — SQLite verification database: persist results, track source drift
 - `tools/renderer.py` — inject VCITE evidence panels + highlighting into HTML
 - `tools/parsers/` — HTML and Markdown citation extractors
 - `tools/metadata.py` — DOI/CrossRef metadata resolution for source enrichment
