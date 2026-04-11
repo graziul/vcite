@@ -14,6 +14,9 @@ Author: Chris Graziul / IDEP. **NOT** a University of Chicago project.
 | JavaScript Ref Impl | `implementations/javascript/src/` |
 | Examples | `examples/` |
 | Enhance CLI | `tools/enhance.py` |
+| Verify CLI | `tools/verify.py` |
+| Source Fetcher | `tools/source_fetch.py` |
+| Strain Analysis | `tools/strain/` |
 | Contributing | `CONTRIBUTING.md` |
 | Changelog | `CHANGELOG.md` |
 
@@ -34,8 +37,11 @@ Author: Chris Graziul / IDEP. **NOT** a University of Chicago project.
 
 ## Running Tests
 ```bash
-# Python (60 tests)
+# Python reference impl (60 tests)
 cd implementations/python && pip install -e ".[dev]" && pytest tests/ -v
+
+# Python verification pipeline (41 tests)
+pytest tools/tests/ -v
 
 # JavaScript
 cd implementations/javascript && npm test
@@ -59,10 +65,13 @@ cd implementations/javascript && npm test
 
 ## Tools
 - `tools/enhance.py` — CLI to upgrade existing HTML/MD citations to VCITE objects
+- `tools/verify.py` — reverse-lookup verification: fetch source, locate passage, recompute hash
+- `tools/source_fetch.py` — fetch source documents via URL/DOI/archive_url, extract plain text
 - `tools/renderer.py` — inject VCITE evidence panels + highlighting into HTML
 - `tools/parsers/` — HTML and Markdown citation extractors
 - `tools/metadata.py` — DOI/CrossRef metadata resolution for source enrichment
 - `tools/templates/` — CSS, JS, and panel HTML for rendered evidence displays
+- `tools/strain/` — **RESEARCH PROTOTYPE**: citation strain measurement (lexical scoring, sheaf consistency, discipline calibration)
 
 ## Architecture
 ```
@@ -72,7 +81,8 @@ test-suite/                ← Canonical test vectors (YAML)
 implementations/
   python/                  ← Reference implementation (pip-installable)
   javascript/              ← Cross-platform implementation (ESM)
-tools/                     ← Enhancement CLI + rendering pipeline
+tools/                     ← Enhancement, verification, and strain analysis
+  strain/                  ← Research prototype: citation strain measurement
 examples/                  ← Working examples in all formats
 ```
 
