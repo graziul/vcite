@@ -3,408 +3,466 @@
     "vcite": "1.0",
     "id": "vcite-001",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "Police body worn cameras and privacy",
+      "authors": [
+        "Lin, R."
+      ],
+      "year": 2015,
+      "url": "https://scholarship.law.duke.edu/dltr/vol14/iss1/15/"
     },
     "target": {
-      "text_exact": "data containing private information about individuals that becomes available to the public through a range of mechanisms, from court orders to statutory mandates .",
-      "hash": "sha256:22cfecf16ec7bcd2620785147dc48d467a9e2ab7a19fedc40c9e17734b8dc684",
-      "text_before": "18).\n\nThe authors define \"sensitive open data\" as ",
-      "text_after": " This concept illuminates how open data can both h"
+      "text_exact": "Some even argue this approach has led to  excessive openness that may compromise police operations .",
+      "hash": "sha256:6abca2be2e0fe44806c7bd087e15b6941222c7e4b1de3a95f78448aedc275c81",
+      "text_before": "operates in practice  or the data rights at stake.",
+      "text_after": "\n\nFurthermore, officer interactions with the publi"
     },
-    "relation": "defines",
-    "captured_at": "2026-04-10T15:12:17Z",
-    "captured_by": "model"
+    "relation": "method",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-002",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "European data protection regulation, journalism, and traditional publishers",
+      "authors": [
+        "Erdos, D."
+      ],
+      "year": 2019
     },
     "target": {
-      "text_exact": "anyone can access such data given a relevant legal statute enabling access and approval of an access request, all without the victim's knowledge .",
-      "hash": "sha256:2c07ba97c3b7a80576295ac8dfba2daf27f2588cdf3cd9b69e8d1c9d12604a2d",
-      "text_before": "e victim owns the resulting data. Yet in reality, ",
-      "text_after": "\n\nThe authors have spent three years examining how"
+      "text_exact": "2010), a principle  that has continued under GDPR, but this approach has led to predictable  concerns about transparency vis-à-vis journalistic access",
+      "hash": "sha256:b35644c10fe463c5411a4b4991644b33ab7d24b3ee4edbacdb9d7b454da439f9",
+      "text_before": "European Commission v. The Bavarian Lager Co. Ltd.",
+      "text_after": "  as well as highlighted inconsistency across memb"
     },
-    "relation": "contradicts",
-    "captured_at": "2026-04-10T15:12:17Z",
-    "captured_by": "model"
+    "relation": "cautions",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-003",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "European Union data protection law and media expression: Fundamentally off balance",
+      "authors": [
+        "Erdos, D."
+      ],
+      "year": 2016,
+      "doi": "10.1017/S0020589315000512"
     },
     "target": {
-      "text_exact": "policing is often boring: officers patrol streets, do paperwork, assist motorists .",
-      "hash": "sha256:9b22ff00436adc7d0ab6d7331c5535f5833dc3bc7efb6449b91c8f142bf718d8",
-      "text_before": "Act.\n\nWhile television often dramatizes policing, ",
-      "text_after": " Media coverage tends to focus on dramatic events,"
+      "text_exact": "2010), a principle  that has continued under GDPR, but this approach has led to predictable  concerns about transparency vis-à-vis journalistic access (Erdos, 2019)  as well as highlighted inconsistency across member states .",
+      "hash": "sha256:d2513999e4e595df3222e06ac156049db13252dbd3345a6681485bc8b40106d9",
+      "text_before": "European Commission v. The Bavarian Lager Co. Ltd.",
+      "text_after": "\n\nWhile  the GDPR reflects a substantial differenc"
     },
-    "relation": "supports",
-    "captured_at": "2026-04-10T15:12:17Z",
-    "captured_by": "model"
+    "relation": "cautions",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-004",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "The differential privacy frontier",
+      "authors": [
+        "Dwork, C."
+      ],
+      "year": 2009,
+      "doi": "10.1145/1557019.1557079"
     },
     "target": {
-      "text_exact": "Access to sensitive open data about policing is now normal, even if technology complicates the status quo .",
-      "hash": "sha256:0a3d38629e2381afd10bd873ffde89a1267b9e5d48191d1b106f7e12dc6a5089",
-      "text_before": "ta publicly accessible for transparency purposes. ",
-      "text_after": "\n\nWhile such transparency serves clear purposes in"
+      "text_exact": "The  risks associated with sensitive open data require identifying and  justifying a strategy for negotiating the privacy/utility tradeoff  .",
+      "hash": "sha256:a40d91dbaf8c836160f8128a369e8fc70ebf3f3d7e779808fac6d763e43f60d7",
+      "text_before": " contexts.\n\nThe Challenge of Sensitive Open Data\n\n",
+      "text_after": " The first challenge: for information subject to o"
     },
-    "relation": "supports",
-    "captured_at": "2026-04-10T15:12:17Z",
-    "captured_by": "model"
+    "relation": "quantifies",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-005",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "Meeting unique requirements: Community consultation and public disclosure for EFIC research",
+      "authors": [
+        "Dickert, N. W.",
+        "Metz, K.",
+        "Fetters, M. D.",
+        "Haggins, A. N.",
+        "Harney, D. K.",
+        "Speight, C. D.",
+        "Silbergleit, R."
+      ],
+      "year": 2021,
+      "doi": "10.1111/acem.14264"
     },
     "target": {
-      "text_exact": "reactive transparency does not support scientific research about police systems as organizations, let alone provide an accurate picture of how policing operates in practice or the data rights at stake .",
-      "hash": "sha256:edd6fc79573933bfca8cb3ee41e7918f230ee01b335ec03903a7476003d07217",
-      "text_before": "rency serves clear purposes in legal proceedings, ",
-      "text_after": "\n\nOfficer interactions involve individuals who may"
+      "text_exact": "Public research presentations are the most  common method of community consultation and are associated with high  acceptance rates of EFIC studies by community members .",
+      "hash": "sha256:8525eb10eebc4df17f88b828dbb6171b42bb5e7a61fb44f7d83c27b672a3c606",
+      "text_before": "nsent Requirements for  Emergency Research, 1996).",
+      "text_after": " Other approaches, like surveys, focus groups,  an"
     },
-    "relation": "supports",
-    "captured_at": "2026-04-10T15:12:17Z",
-    "captured_by": "model"
+    "relation": "quantifies",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-006",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "Meeting unique requirements: Community consultation and public disclosure for EFIC research",
+      "authors": [
+        "Dickert, N. W.",
+        "Metz, K.",
+        "Fetters, M. D.",
+        "Haggins, A. N.",
+        "Harney, D. K.",
+        "Speight, C. D.",
+        "Silbergleit, R."
+      ],
+      "year": 2021,
+      "doi": "10.1111/acem.14264"
     },
     "target": {
-      "text_exact": "a special confluence of identifiers and interested parties. When that data becomes open, victims, suspects, bystanders, and officers collectively experience a loss of privacy that may be mandated by law, whose potential harms can only be mitigated .",
-      "hash": "sha256:e42585a8e101ace1823fa03a2a07e5456135b4aeac0055b55372bc0d953e5750",
-      "text_before": "s information about individual officers, creating ",
-      "text_after": "\n\nDifferent jurisdictions balance openness and pri"
+      "text_exact": "Other approaches, like surveys, focus groups,  and interviews, have also been used .",
+      "hash": "sha256:d08c31456ab10a696bfb3493eb8d6f2913d33fcbca4517060dbe9d0c568451d9",
+      "text_before": "embers (Dickert et al.,  2021; Fehr et al., 2015).",
+      "text_after": "\n\nSimilar  mechanisms for community engagement cou"
     },
-    "relation": "contradicts",
-    "captured_at": "2026-04-10T15:12:17Z",
-    "captured_by": "model"
+    "relation": "method",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-007",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "Data trusts in 2021",
+      "authors": [
+        "Hardinges, J.",
+        "Tennison, J.",
+        "Shore, H.",
+        "Scott, A."
+      ],
+      "year": 2021,
+      "url": "https://www.adalovelaceinstitute.org/report/legal-mechanisms-data-stewardship/"
     },
     "target": {
-      "text_exact": "reflects significant disagreement in how to responsibly provide access to sensitive data .",
-      "hash": "sha256:469f4b857aab1ea209c2e52add7f17fdacb85f76e3a26fcfd68ec2accbca33ee",
-      "text_before": " scanner communication encryption. This variation ",
-      "text_after": "\n\nThese challenges are not unique to policing. \"Al"
+      "text_exact": "While data  trusts and similar entities have gained traction as vehicles designed  for responsible data stewardship",
+      "hash": "sha256:9da1c30e155d22954250de95a792b1dd179203351510e052c0e181c5a6dd56fa",
+      "text_before": "ture, enable communal ownership of such data. How?",
+      "text_after": ", securing  community buy-in to these solutions is"
     },
-    "relation": "contradicts",
-    "captured_at": "2026-04-10T15:12:17Z",
-    "captured_by": "model"
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-008",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "The datafication of the public sector",
+      "authors": [
+        "Micheli, M.",
+        "Jarke, J.",
+        "Heiberg, M."
+      ],
+      "year": 2021,
+      "doi": "10.1145/3442188.3445923"
     },
     "target": {
-      "text_exact": "Almost any government service — from public housing, to child welfare services, to public health initiatives — involves members of the public, government employees, and record keeping that may be subject to future public scrutiny .",
-      "hash": "sha256:11f1d7545ee931a1a0851a1e0d8638bcb2dacffac508efca32c329953e4cc939",
-      "text_before": " .\"\n\nThese challenges are not unique to policing. ",
-      "text_after": "\n\nIn the European Union, the GDPR provides more ro"
+      "text_exact": "2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation .",
+      "hash": "sha256:37a54c90aca85799fc24094acc02d1ae3e0611f435df64a143c19e6403f71bbf",
+      "text_before": "for responsible data stewardship (Hardinges et al.",
+      "text_after": " Proven models  for community consultation offer a"
     },
-    "relation": "contradicts",
-    "captured_at": "2026-04-10T15:12:17Z",
-    "captured_by": "model"
+    "relation": "cautions",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-009",
     "source": {
-      "title": "EUROPEAN UNION DATA PROTECTION LAW AND MEDIA EXPRESSION: FUNDAMENTALLY OFF BALANCE",
+      "title": "Indigenous data sovereignty: Toward an agenda",
       "authors": [
-        "Erdos, David"
+        "Kukutai, T.",
+        "Taylor, J."
       ],
       "year": 2016,
-      "doi": "10.1017/s0020589315000512",
-      "url": "https://doi.org/10.1017/s0020589315000512",
-      "venue": "International and Comparative Law Quarterly",
-      "source_type": "academic"
+      "url": "https://www.jstor.org/stable/j.ctt1q1crgf"
     },
     "target": {
-      "text_exact": "For at least the last fifteen years, European jurisprudence has favored the protection of personal privacy ,",
-      "hash": "sha256:35fd76175f83e28ece8e6d3ebdb4757561916c0adf3ab141d1a9452278dcd0bb",
-      "text_before": "ted States but still requires weighing interests. ",
-      "text_after": " though this has created concerns about journalist"
+      "text_exact": "Data  sovereignty is a critical issue for indigenous communities wary of  extractive practices, a conversation that predates current debates  .",
+      "hash": "sha256:b328f04551a62f14d58c1a5338d4f2649a5f172f67041a96bc4301ce4aa47c8f",
+      "text_before": "open data.\n\nLearning from Indigenous Communities\n\n",
+      "text_after": " We speak about the American context here,  which "
     },
-    "relation": "contradicts",
-    "captured_at": "2026-04-10T15:12:18Z",
-    "captured_by": "model"
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-010",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "The CARE Principles for Indigenous Data Governance",
+      "authors": [
+        "Carroll, S. R.",
+        "Garba, I.",
+        "et al."
+      ],
+      "year": 2020,
+      "url": "https://openscholarshippress.pubpub.org/pub/xx3kj9rv"
     },
     "target": {
-      "text_exact": "If organizations must provide access to sensitive information, then just knowing what information is accessible (i.e., the names of data elements) can place individuals at risk, as it identifies data that must be made available on request. This means access to metadata can be just as harmful as access to the data .",
-      "hash": "sha256:0f701f5eb6d331573f5c666b45cd515d57883253945ddabc288e82001444ad70",
-      "text_before": "ot prevent the release of sensitive information.\n\n",
-      "text_after": "\n\nData providers must ensure clarity about why sen"
+      "text_exact": "We speak about the American context here,  which is influenced by Canadian efforts to support First Nations",
+      "hash": "sha256:0a5ff025c2e50685fb3166da39bc8686fb29d581ec57c153c048ecc7cc8c374c",
+      "text_before": "dates current debates  (Kukutai and Taylor, 2016).",
+      "text_after": ", but the tensions involved emerge in multiple  co"
     },
-    "relation": "defines",
-    "captured_at": "2026-04-10T15:12:18Z",
-    "captured_by": "model"
+    "relation": "contextualizes",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-011",
     "source": {
-      "title": "Gestational hypertension and pre-eclampsia",
+      "title": "The FAIR guiding principles for scientific data management and stewardship",
       "authors": [
-        "Amon, Erol",
-        "Dickert, Erin"
+        "Wilkinson, M. D.",
+        "et al."
       ],
-      "year": 2021,
-      "doi": "10.1201/9781003222590-6",
-      "url": "https://doi.org/10.1201/9781003222590-6",
-      "venue": "Clinical Maternal-Fetal Medicine Online",
-      "source_type": "academic"
+      "year": 2016,
+      "doi": "10.1038/sdata.2016.18"
     },
     "target": {
-      "text_exact": "Public research presentations are the most common method of community consultation and are associated with high acceptance rates of EFIC studies by community members .",
-      "hash": "sha256:024e2df68fc9940fcfbb9a3cc63c9fc0ad239ef07afda6044e0adf6a51e2bf82",
-      "text_before": "ation and public disclosure of research outcomes. ",
-      "text_after": " Surveys, focus groups, and interviews have also b"
+      "text_exact": "Findable, Accessible, Interoperable, and Reusable",
+      "hash": "sha256:3b773ddaecdb21db47a45be68f695aebe2c035f0015c5439751c184afb568157",
+      "text_before": "cientific data sharing—are designed to make data  ",
+      "text_after": " (Wilkinson et al.,  2016). A complementary set of"
     },
-    "relation": "method",
-    "captured_at": "2026-04-10T15:12:20Z",
-    "captured_by": "model"
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-012",
     "source": {
-      "title": "Enabling data sharing for social\\nbenefit through data trusts",
+      "title": "The FAIR guiding principles for scientific data management and stewardship",
       "authors": [
-        "Kappor, Astha",
-        "Sridharan, Soujanya",
-        "Massey, Joe",
-        "Hardinges, Jack"
+        "Wilkinson, M. D.",
+        "et al."
       ],
-      "year": 2021,
-      "doi": "10.61557/jynr5107",
-      "url": "https://doi.org/10.61557/jynr5107",
-      "source_type": "grey"
+      "year": 2016,
+      "doi": "10.1038/sdata.2016.18"
     },
     "target": {
-      "text_exact": "securing community buy-in to these solutions is difficult, especially in light of the potential for exploitation",
-      "hash": "sha256:8a0b18dde70a83a011884a3b9e2d1af235aec92d69c84dfa9c6d245c1f498888",
-      "text_before": "ion as vehicles for responsible data stewardship, ",
-      "text_after": " (Hardinges et al., 2021).\n\nLearning from Indigeno"
+      "text_exact": "Collective Benefit, Authority to Control, Responsibility,  and Ethics",
+      "hash": "sha256:7060a73d5de27ce5c72fef08c0570efd54dd32ddf39bb8c5a82bd606a9a7e667",
+      "text_before": "lementary set of principles, the CARE  Principles—",
+      "text_after": "—were developed by the International Indigenous Da"
     },
-    "relation": "cautions",
-    "captured_at": "2026-04-10T15:12:21Z",
-    "captured_by": "model"
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-013",
     "source": {
-      "title": "The Arctic seas",
+      "title": "The CARE Principles for Indigenous Data Governance",
       "authors": [
-        "Carroll, Michael L.",
-        "Carroll, JoLynn"
+        "Carroll, S. R.",
+        "Garba, I.",
+        "et al."
       ],
       "year": 2020,
-      "doi": "10.1201/9780367812423-5",
-      "url": "https://doi.org/10.1201/9780367812423-5",
-      "venue": "Biogeochemistry of Marine Systems",
-      "source_type": "academic"
+      "url": "https://openscholarshippress.pubpub.org/pub/xx3kj9rv"
     },
     "target": {
-      "text_exact": "Findable, Accessible, Interoperable, and Reusable .",
-      "hash": "sha256:644d3a263ebd1dce6b59f692a50fb14736def443dfc3552a4d922bb8cdb6e12c",
-      "text_before": "ata-sharing best practices, designed to make data ",
-      "text_after": " The CARE Principles — \"Collective Benefit, Author"
+      "text_exact": "According to  their authors, the CARE Principles integrate Indigenous worldviews that  center “people” and “purpose” to address critical gaps in conventional  data frameworks by ensuring that Indigenous Peoples benefit from data  activities and maintain control over their data .",
+      "hash": "sha256:c31a4e5671cfc8b200c2bfe238d643f1c6a0497539fb8b631b70e917965fe1c2",
+      "text_before": "y use of data belonging to Indigenous communities.",
+      "text_after": "\n\nJoin our community!Subscribe to the Katina Newsl"
     },
-    "relation": "supports",
-    "captured_at": "2026-04-10T15:12:21Z",
-    "captured_by": "model"
+    "relation": "quantifies",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-014",
     "source": {
-      "title": "The Arctic seas",
+      "title": "Indigenous data governance: Strategies from United States Native nations",
       "authors": [
-        "Carroll, Michael L.",
-        "Carroll, JoLynn"
+        "Carroll, S. R.",
+        "Rodriguez-Lonebear, D.",
+        "Martinez, A."
       ],
-      "year": 2020,
-      "doi": "10.1201/9780367812423-5",
-      "url": "https://doi.org/10.1201/9780367812423-5",
-      "venue": "Biogeochemistry of Marine Systems",
-      "source_type": "academic"
+      "year": 2019,
+      "doi": "10.5334/dsj-2019-031"
     },
     "target": {
-      "text_exact": "Collective Benefit, Authority to Control, Responsibility, and Ethics",
-      "hash": "sha256:e66be59028d2e3fb44dd691ead2a26793f66662f43f9bb64eefe161309fcb7e7",
-      "text_before": "eroperable, and Reusable .\" The CARE Principles — ",
-      "text_after": " — were developed by the International Indigenous "
+      "text_exact": "In turn, tribes developed and adapted governance mechanisms for  improved data stewardship.",
+      "hash": "sha256:fbed1408b7de87e676e748f0e4759bd94471551be868f986f8cbbb5dc9c06195",
+      "text_before": " Rainie et al., 2017; NCAIPRC, 2017; NCAI,  2018).",
+      "text_after": " describe several case  studies of tribal data gov"
     },
     "relation": "supports",
-    "captured_at": "2026-04-10T15:12:23Z",
-    "captured_by": "model"
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-015",
     "source": {
-      "title": "The Arctic seas",
+      "title": "Recommendations from tribal experiences with tribal censuses and surveys",
       "authors": [
-        "Carroll, Michael L.",
-        "Carroll, JoLynn"
+        "NCAIPRC"
       ],
-      "year": 2020,
-      "doi": "10.1201/9780367812423-5",
-      "url": "https://doi.org/10.1201/9780367812423-5",
-      "venue": "Biogeochemistry of Marine Systems",
-      "source_type": "academic"
+      "year": 2017
     },
     "target": {
-      "text_exact": "integrate Indigenous worldviews that center 'people' and 'purpose' to address critical gaps in conventional data frameworks by ensuring that Indigenous Peoples benefit from data activities and maintain control over their data .",
-      "hash": "sha256:9842828845ba58e89dd630dd5d105e86b8fc8520c4ad45ff85208503290981fb",
-      "text_before": "t Group (Carroll et al., 2020).\n\nThese principles ",
-      "text_after": "\n\nIn 2014, the NCAIPRC organized five tribes to pi"
+      "text_exact": "In  2014, the National Congress of American Indians Policy Research Center  (NCAIPRC) organized for five tribes to each pilot a unique  community-based data project .",
+      "hash": "sha256:131fba81f5c5218c8d3040089f628bbe891a56c795b8a979fc3a2ca08bd61e8f",
+      "text_before": "ata governance. We highlight two relevant cases:\n\n",
+      "text_after": " One community, the Pueblo  of Laguna, developed p"
     },
-    "relation": "method",
-    "captured_at": "2026-04-10T15:12:24Z",
-    "captured_by": "model"
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-016",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "Recommendations from tribal experiences with tribal censuses and surveys",
+      "authors": [
+        "NCAIPRC"
+      ],
+      "year": 2017
     },
     "target": {
-      "text_exact": "tribes can independently manage data and utilize external expertise to develop technology that reflects their priorities",
-      "hash": "sha256:62ca69b45293c48c59f7e7729325f62d4b53bd2232933893d36484c5ee1f28ed",
-      "text_before": " University of New Mexico. This demonstrates that ",
-      "text_after": " (NCAIPRC, 2017).\n\nThe Navajo Nation Human Researc"
+      "text_exact": "The  software remains tribe owned and will support future data collections  .",
+      "hash": "sha256:3a88cf13fa50f7ed488b49e33b7077f9881294588655b002e9ed4f6cbacd79cb",
+      "text_before": "the project led to increased census participation.",
+      "text_after": " As Carroll et al. (2019) explain, this example  d"
     },
-    "relation": "quantifies",
-    "captured_at": "2026-04-10T15:12:25Z",
-    "captured_by": "model"
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-017",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "Earth science data repositories: Implementing the CARE principles",
+      "authors": [
+        "O'Brien, M.",
+        "et al."
+      ],
+      "year": 2024,
+      "doi": "10.5334/dsj-2024-037"
     },
     "target": {
-      "text_exact": "Notably, all research data conducted under this IRB's authority belongs to the Navajo Nation .",
-      "hash": "sha256:de15123b041a0c3fce37d77df6f596e60f1200f72a880309d8bc3c63ab9b69bb",
-      "text_before": "l human research activities in the Navajo Nation. ",
-      "text_after": " Today, 11 Indian Health Service IRBs exist alongs"
+      "text_exact": "The  application of the CARE Principles has been proposed across various  domains, such as earth science , ecology (Jennings  et al.",
+      "hash": "sha256:6da626eacc9a80667e76a764287c0a78eb6c4137d621fd9ddeb84864f1e7f8fa",
+      "text_before": " Board reviews local community research studies.\n\n",
+      "text_after": ", 2023) and archeology (Gupta et al., 2023). Initi"
     },
     "relation": "supports",
-    "captured_at": "2026-04-10T15:12:25Z",
-    "captured_by": "model"
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-018",
     "source": {
-      "title": "End of the Year Members' Meeting Kerrie Jennings: Rescuing a Distressed Whistling Kite",
+      "title": "The CARE Principles and the reuse, sharing, and curation of Indigenous data in Canadian archaeology",
       "authors": [
-        "Jennings, Kerrie"
+        "Gupta, N.",
+        "et al."
       ],
       "year": 2023,
-      "doi": "10.5962/p.402309",
-      "url": "https://doi.org/10.5962/p.402309",
-      "venue": "Castlemaine Naturalist",
-      "source_type": "academic"
+      "doi": "10.1017/aap.2022.33"
     },
     "target": {
-      "text_exact": "Initiatives to integrate these principles into research infrastructure not only highlight the importance of Indigenous community governance in enhancing the quality and reproducibility of research and data; they also align research with community values and facilitate responsible data stewardship",
-      "hash": "sha256:bb2856e3d637ed8e2208d1f8c5f380ad58b7496ca0dae08277587ccf102b2343",
-      "text_before": "side growing numbers of independent tribal IRBs.\n\n",
-      "text_after": " (Jennings et al., 2023; O'Brien et al., 2024).\n\nW"
+      "text_exact": "2023) and archeology .",
+      "hash": "sha256:ee9128347c288be7cb9a1a8bcb0fce7d749656eab62b961972b44b99d3061464",
+      "text_before": " (O’Brien et al., 2024), ecology (Jennings  et al.",
+      "text_after": " Initiatives to  integrate these principles into r"
     },
     "relation": "supports",
-    "captured_at": "2026-04-10T15:12:26Z",
-    "captured_by": "model"
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-019",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "The Swakopmund protocol for the protection of expressions of folklore",
+      "authors": [
+        "Costantine, J."
+      ],
+      "year": 2022,
+      "doi": "10.1093/jiplp/jpac088"
     },
     "target": {
-      "text_exact": "reflect ongoing global efforts to balance the ethical tensions identified in CARE principles between open data ideals and Indigenous data sovereignty .",
-      "hash": "sha256:92b7acc11a2f3190c7b0847237a04d2bce62dc05b01cdc4b9e402c269bea7037",
-      "text_before": "ently across the Global South. These developments ",
-      "text_after": "\n\nData Sovereignty as a Mechanism for Communal Sel"
+      "text_exact": "The Swakopmund Protocol established collective ownership and  benefit-sharing requirements for traditional knowledge across nine  African nations .",
+      "hash": "sha256:e4147142a3528a2fbd81da720659645503a7f690495e4a401cd0d157faf2c501",
+      "text_before": " developed independently across the Global  South.",
+      "text_after": " India’s Traditional Knowledge  Digital Library, o"
     },
     "relation": "method",
-    "captured_at": "2026-04-10T15:12:26Z",
-    "captured_by": "model"
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   },
   {
     "vcite": "1.0",
     "id": "vcite-020",
     "source": {
-      "title": "Unknown",
-      "authors": [],
-      "source_type": "academic"
+      "title": "The decolonial turn in data and technology research",
+      "authors": [
+        "Couldry, N.",
+        "Mejias, U. A."
+      ],
+      "year": 2021,
+      "doi": "10.1080/1369118X.2021.1986102"
     },
     "target": {
-      "text_exact": "a system that centralizes sensitive open data in ways that parallel what Couldry and Mejias (2021) call 'data colonialism' in corporate contexts, extracting value from peoples' information while withholding its benefits from data rights holders .",
-      "hash": "sha256:b93b5005b7a14850492d09b9c8fbcc0545eee0d9b2343639307f1f2ab1d64206",
-      "text_before": "fficult. However, failing to act would perpetuate ",
-      "text_after": " Given the unique public value of sensitive open d"
+      "text_exact": "But failing to act would leave in place a system  that centralizes sensitive open data in ways that parallel what Couldry  and",
+      "hash": "sha256:826f7bcb82a78758290974bb1b139ea0e6226dc322eaa4751c1999cb8fa1ea08",
+      "text_before": "thing suggests making these  changes will be easy.",
+      "text_after": " call “data colonialism” in corporate contexts,  e"
     },
-    "relation": "contradicts",
-    "captured_at": "2026-04-10T15:12:26Z",
-    "captured_by": "model"
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "author",
+    "_resolution": "curated"
   }
 ]
