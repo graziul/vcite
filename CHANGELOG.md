@@ -2,6 +2,80 @@
 
 All notable changes to the VCITE specification and reference implementations.
 
+## [Unreleased]
+
+Post-0.1-STABLE MVP work closing the seven delta-to-MVP items identified
+in the project assessment. All changes are additive and preserve the
+FROZEN commitments of 0.1-STABLE.
+
+### Added
+
+- **Enrichment contract** (`enrichment.verification`, `enrichment.strain`).
+  Additive optional sub-objects carrying reverse-lookup and strain
+  results in-band on the citation, consumed by the renderer. Status
+  vocabulary: `verified`, `internal-only`, `partial`, `source-drift`,
+  `internal-mismatch`, `unreachable`.
+- **`tools/enrich.py`** — orchestrator that runs `verify.py` (and
+  optionally strain analysis) and writes results into each citation's
+  enrichment field. Distinguishes offline (internal-only) from online
+  (source-consulted) so panels never claim "source-verified" when the
+  source was not fetched.
+- **In-browser fingerprint re-verification**. JavaScript impl now ships
+  `src/models.mjs` and `src/verify.mjs` alongside the existing
+  `src/hash.mjs`; `tools/templates/vcite.js` includes a bundled IIFE
+  that attaches a "Verify fingerprint" button to every rendered panel.
+  Clicking re-computes the SHA-256 in the reader's browser and reports
+  pass/fail plus the recomputed hash. `node --test` suite of 73 tests
+  including SV1–SV4 interop against Python.
+- **LaTeX citation extraction** (`tools/parsers/latex_parser.py`).
+  Supports `\begin{quote}` / `\begin{quotation}` / `\begin{displayquote}`,
+  `\enquote`, TeX `` `'/``'' `` quotes, and the `\textquote*` family.
+  Strips common inline macros, handles TeX escapes, and skips
+  verbatim / lstlisting / math / footnote regions. 36 unit tests.
+  `tools/enhance.py` auto-routes `.tex` / `.latex` inputs.
+- **W3C Text Fragment URL generation** (`tools/fragment_url.py`).
+  `build_text_fragment_url` produces `#:~:text=prefix-,start,end,-suffix`
+  URLs at enhance time; enhance.py populates `target.fragment_url`
+  automatically with `--no-fragment-url` as an escape hatch. Rendered
+  panels surface these as `Open passage ↗` deep-links alongside the
+  document-level `Open source ↗`. 26 unit tests.
+- **Wayback Machine archival integration** (`tools/archive.py`).
+  `enhance.py --archive` queries `/wayback/available` and falls back
+  to Save Page Now, populating `source.archive_url` (L3 upgrade).
+  `--archive-lookup-only` skips SPN for CI-safe runs. Anonymous /
+  rate-limited / best-effort. 20 unit tests, all network mocked.
+- **README FAQ** distinguishing hash integrity from claim validity,
+  with eight questions covering offline/online verification, source
+  drift, client-side recompute trust model, AI-generated citations,
+  and composability with Scite/Perma.cc/DOIs.
+
+### Fixed
+
+- `captured_by` validation in the Python reference impl now accepts
+  `"tool"` as required by SPEC §4.1 (was: `{"author", "model"}` only).
+  Matching JS validation introduced at the same time.
+- `tools/renderer.py` `_strip_existing_vcite` regression: the previous
+  `<script>[^<]*toggleVcite[^<]*</script>` regex failed on any script
+  body containing `<` (comparisons, arrow functions, bundled IIFEs),
+  causing successive re-renders to accumulate duplicate script blocks.
+  Replaced with a stateful scanner covering both `toggleVcite` and
+  `attachVerifyButtons` IIFEs. Locked with two regression tests.
+
+### Documented
+
+- **Strain semantic gap**: `tools/strain/DESIGN.md` now notes that the
+  `target.text_exact` field in current `enhance.py` output is the
+  citing-article sentence, not the source passage the strain model
+  assumes, so strain numbers from the current pipeline measure
+  "context divergence within the citing article" rather than
+  source-versus-claim distance. Two paths forward documented.
+
+### Tests
+
+- Python suite: 232 passing (from 60 at session start).
+- JavaScript suite: 73 passing (from 33).
+- SV1–SV4 interop enforced in the JS test suite against Python.
+
 ## [0.1-STABLE] - 2026-04-22
 
 Documentation-only release. No code, schema, or test-vector changes. The 0.1

@@ -69,15 +69,18 @@ cd implementations/javascript && npm test
 - SHA-256 with NFC normalization (no custom crypto)
 
 ## Tools
-- `tools/enhance.py` — CLI to upgrade existing HTML/MD citations to VCITE objects
+- `tools/enhance.py` — CLI to upgrade existing HTML/MD/LaTeX citations to VCITE objects (flags: `--archive`, `--archive-lookup-only`, `--no-fragment-url`, `--no-metadata`)
 - `tools/verify.py` — reverse-lookup verification: fetch source, locate passage, recompute hash
+- `tools/enrich.py` — orchestrator that runs verify + optional strain and writes results into `enrichment.verification` / `enrichment.strain` on each citation
 - `tools/source_fetch.py` — fetch source documents via URL/DOI/archive_url, extract plain text
 - `tools/hashdb.py` — SQLite verification database: persist results, track source drift
-- `tools/renderer.py` — inject VCITE evidence panels + highlighting into HTML
-- `tools/parsers/` — HTML and Markdown citation extractors
+- `tools/fragment_url.py` — build W3C Text Fragment URLs (`#:~:text=`) from passage + context for L3 deep-linking
+- `tools/archive.py` — Wayback Machine integration: query `/wayback/available`, fall back to Save Page Now (anonymous, rate-limited, best-effort)
+- `tools/renderer.py` — inject VCITE evidence panels + highlighting + enrichment badges into HTML
+- `tools/parsers/` — HTML, Markdown, and LaTeX citation extractors
 - `tools/metadata.py` — DOI/CrossRef metadata resolution for source enrichment
-- `tools/templates/` — CSS, JS, and panel HTML for rendered evidence displays
-- `tools/strain/` — **RESEARCH PROTOTYPE**: citation strain measurement (lexical scoring, sheaf consistency, discipline calibration)
+- `tools/templates/` — CSS, JS (incl. in-browser verify-fingerprint button), and panel HTML for rendered evidence displays
+- `tools/strain/` — **RESEARCH PROTOTYPE**: citation strain measurement (lexical scoring, sheaf consistency, discipline calibration). Note: `text_exact` semantic mismatch between extractor and strain model — see `tools/strain/DESIGN.md`.
 
 ## Architecture
 ```
