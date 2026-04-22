@@ -23,11 +23,101 @@ what the author claims.
 ## What VCITE does
 
 VCITE embeds the exact cited passage plus a SHA-256 fingerprint directly in
-the document. A reader — or a machine — can independently verify the
-citation by recomputing the hash, without network access and without trusting
-the citing author. VCITE works in LaTeX, Markdown, HTML, plain text, and AI
-outputs, with three conformance levels from minimal offline use (L1) to full
-archival permanence (L3).
+the document. A reader — or a machine — can independently verify that the
+embedded passage wording matches the source by recomputing the hash, without
+network access and without trusting the citing author. Hash integrity is not
+claim validity: whether the source actually substantiates the author's claim
+remains the reader's judgment. VCITE works in LaTeX, Markdown, HTML, plain
+text, and AI outputs, with three conformance levels from minimal offline use
+(L1) to full archival permanence (L3).
+
+---
+
+## FAQ
+
+### What does the hash actually prove?
+
+Integrity and provenance of the cited passage text and its two 50-code-point
+context windows. If the hash in a VCITE object matches the recomputed hash
+over the embedded `text_before`, `text_exact`, and `text_after`, then the
+passage wording has not been altered since the author captured it
+([SPEC §2, P3](SPEC.md#2-design-principles)). If the source document is
+retrievable, a match also confirms that the passage appears in the source at
+that wording.
+
+### What does the hash NOT prove?
+
+It does not prove that the author's claim is accurate, that the source
+itself is trustworthy, that the passage wasn't taken out of context, or
+that the passage means what the author implies. It does not prove that the
+embedded passage even appears in the source unless a verifier fetches the
+source and checks — anyone with a source document can paste arbitrary text
+into a VCITE object and publish a self-consistent hash. Meaning-level
+verification is an open research direction tracked in
+[tools/strain/DESIGN.md](tools/strain/DESIGN.md).
+
+### How do I verify a citation offline?
+
+Take `text_exact`, `text_before`, and `text_after` from the VCITE object.
+Apply NFC normalization, collapse `[\t\n\r ]+` to a single space, and strip
+each segment. Pad the two context windows to exactly 50 Unicode code points.
+Concatenate as `text_before | text_exact | text_after` (pipe delimiters),
+UTF-8 encode, SHA-256, prepend `sha256:`. Compare to the embedded hash. The
+canonical procedure is [SPEC §5](SPEC.md#5-hash-algorithm); the reference
+function is
+[`implementations/python/vcite/hash.py`](implementations/python/vcite/hash.py);
+canonical inputs and outputs are in
+[test-suite/vectors.yaml](test-suite/vectors.yaml).
+
+### How do I verify a citation against the source (online)?
+
+Run `python tools/verify.py article.html`. The verifier fetches the source
+(via URL, DOI, or archive), locates the passage, and recomputes the hash.
+For batch enrichment of existing citation files, use
+`python tools/enrich.py <file> --verify`, which annotates each citation with
+a status of `verified`, `source-drift`, `partial`, or `unreachable`.
+
+### What if the source changes (link rot, text edits)?
+
+L3 conformance requires `archive_url` (Perma.cc or self-hosted WACZ) so a
+timestamped copy of the source survives link rot ([SPEC §4.2](SPEC.md#42-source-object),
+[§7.2](SPEC.md#72-permacc-archiving)). When the live source drifts from the
+captured wording, `tools/verify.py` reports the mismatch and `tools/enrich.py`
+writes a `source-drift` status. `captured_at` records when the author saw
+the passage, which is the reference point for resolving drift against an
+archived copy.
+
+### Why should I trust a hash from an untrusted publisher?
+
+You don't. The point of the hash is that the reader recomputes it locally
+from the embedded passage — server-side claims are only as trustworthy as
+the server. Today the Python reference implementation
+([`implementations/python`](implementations/python/)) is the path for
+offline recompute; the JavaScript implementation currently ships `hash.mjs`
+only ([`implementations/javascript/src/hash.mjs`](implementations/javascript/src/hash.mjs)),
+so a browser-side recompute requires wiring that function into your own
+page. An in-browser verifier UI is not yet provided.
+
+### What about AI-generated citations?
+
+VCITE supports `captured_by: "model"` to mark model-generated citations
+([SPEC §4.1](SPEC.md#41-top-level-structure)). The hash verifies that the
+passage text the model asserted is internally consistent and, if the source
+is retrievable, that the text appears there. It does not detect the harder
+fabrication mode where a real passage is cited but does not support the
+claim the model attaches to it. [SPEC §B5](SPEC.md#appendix-b-open-questions-for-comment)
+notes that model-captured citations should prefer L3 (with `archive_url`)
+so a fixed reference point exists.
+
+### Is VCITE a replacement for Scite, Perma.cc, or DOIs?
+
+No. VCITE is the evidence layer; Scite, Perma.cc, CrossRef, and Text
+Fragment URLs are enrichment, archival, and discovery layers that compose
+with it. [SPEC §P4](SPEC.md#2-design-principles) makes service-independence
+a design principle — L1 and L2 citations are conformant without any
+third-party service — and [§P6](SPEC.md#2-design-principles) and
+[§7](SPEC.md#7-integration-protocol) define how those services plug in as
+optional enrichment.
 
 ---
 
