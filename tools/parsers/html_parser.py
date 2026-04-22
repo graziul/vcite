@@ -30,11 +30,11 @@ MIN_QUOTE_LEN = 20
 _NAME_CHAR = r"[A-Za-z\u00c0-\u024f'\u2019\-]"
 _AUTHOR_YEAR_RE = re.compile(
     r"\(("
-    rf"[A-Z]{_NAME_CHAR}+(?:\s(?:&|and)\s[A-Z]{_NAME_CHAR}+)*"
-    r"(?:\s(?:et\s+al\.?))?"
+    rf"[A-Z]{_NAME_CHAR}+(?:\s+(?:&|and)\s+[A-Z]{_NAME_CHAR}+)*"
+    r"(?:\s+(?:et\s+al\.?))?"
     r",?\s*\d{4}[a-z]?"
-    rf"(?:;\s*(?:[A-Z]{_NAME_CHAR}+(?:\s(?:&|and)\s[A-Z]{_NAME_CHAR}+)*"
-    r"(?:\s(?:et\s+al\.?))?"
+    rf"(?:;\s*(?:[A-Z]{_NAME_CHAR}+(?:\s+(?:&|and)\s+[A-Z]{_NAME_CHAR}+)*"
+    r"(?:\s+(?:et\s+al\.?))?"
     r",?\s*)?\d{4}[a-z]?)*"
     r")\)"
 )
@@ -43,8 +43,8 @@ _DOI_RE = re.compile(r"10\.\d{4,}/[^\s,;)\"'\u201d]+")
 # Inline citation: "Author (Year)" or "Author (Year; Year)" without outer parens
 _INLINE_CITE_RE = re.compile(
     rf"(?<!\()"  # not preceded by open paren (avoid matching inside parenthetical cites)
-    rf"([A-Z]{_NAME_CHAR}+(?:\s(?:&|and)\s[A-Z]{_NAME_CHAR}+)*"
-    rf"(?:\s(?:et\s+al\.?))?)"
+    rf"([A-Z]{_NAME_CHAR}+(?:\s+(?:&|and)\s+[A-Z]{_NAME_CHAR}+)*"
+    rf"(?:\s+(?:et\s+al\.?))?)"
     r"\s*\((\d{4}[a-z]?(?:;\s*\d{4}[a-z]?)*)\)"
 )
 
@@ -53,6 +53,20 @@ _INLINE_CITE_RE = re.compile(
 # Exclude \n from matches to prevent cross-paragraph grabs.
 _STRAIGHT_QUOTE_RE = re.compile(r'"([^"\n]{%d,}?)"' % MIN_QUOTE_LEN)
 _CURLY_QUOTE_RE = re.compile(r"\u201c([^\u201d\n]{%d,}?)\u201d" % MIN_QUOTE_LEN)
+def _split_multicite(hint_inner: str) -> list[str]:
+    """Split a multi-cite like 'Lin, 2015; Newell, 2021' into components.
+
+    Each component is one Author(,/et al.) Year reference. Single citations
+    pass through unchanged. Handles whitespace normalization.
+    """
+    # Normalize internal whitespace (the regex can match across line breaks)
+    hint = re.sub(r"\s+", " ", hint_inner).strip()
+    if ";" not in hint:
+        return [hint]
+    parts = [p.strip() for p in hint.split(";")]
+    # A valid component must contain a 4-digit year
+    return [p for p in parts if re.search(r"\d{4}", p)]
+
 
 # Regex patterns for VCITE annotation elements to remove before parsing.
 _VCITE_BADGE_RE = re.compile(
@@ -194,16 +208,16 @@ def _find_citation_hint(text: str, quote_start: int, quote_end: int) -> str:
     if doi_match:
         return doi_match.group(0)
 
-    # Check for (Author, Year) pattern
+    # Check for (Author, Year) pattern — return inner group (no parens)
     cite_match = _AUTHOR_YEAR_RE.search(search_region)
     if cite_match:
-        return cite_match.group(0)
+        return cite_match.group(1)
 
     # Also check a small window before the quote
     before_region = text[max(0, quote_start - 100) : quote_start]
     cite_match = _AUTHOR_YEAR_RE.search(before_region)
     if cite_match:
-        return cite_match.group(0)
+        return cite_match.group(1)
 
     return ""
 
@@ -327,36 +341,53 @@ def extract_quotes_html(html_content: str) -> list[ExtractedQuote]:
 
         if not claim_text or len(claim_text) < 15:
             continue
-        if claim_text in seen_texts:
-            continue
-        seen_texts.add(claim_text)
 
         before, after = _extract_context(plain_text, sent_start, sent_end)
         paragraph = _find_paragraph(plain_text, cite_start)
 
-        quotes.append(
-            ExtractedQuote(
-                text_exact=claim_text,
-                text_before=before,
-                text_after=after,
-                citation_hint=match.group(1),  # inner text without parens
-                paragraph_context=paragraph,
-                position=sent_start,
-            )
-        )
+        # Split multi-cites like "Lin, 2015; Newell, 2021" into one
+        # ExtractedQuote per component so each source gets its own VCITE.
+        hint_inner = match.group(1)
+        components = _split_multicite(hint_inner)
 
-    # --- Pass 3: Inline citations like "Erdos (2016)" or "Lamdan (2022)" ---
-    # Rebuild covered ranges to include Pass 2 results
-    covered_ranges = []
-    for q in quotes:
-        covered_ranges.append((q.position - 50, q.position + len(q.text_exact) + 200))
+        for ci, component in enumerate(components):
+            # Dedupe on (claim_text, component) — the same claim cited to
+            # different sources is two genuine citations, not a duplicate.
+            key = (claim_text, component)
+            if key in seen_texts:
+                continue
+            seen_texts.add(key)
+
+            quotes.append(
+                ExtractedQuote(
+                    text_exact=claim_text,
+                    text_before=before,
+                    text_after=after,
+                    citation_hint=component,
+                    paragraph_context=paragraph,
+                    # offset position slightly per component so render order is stable
+                    position=sent_start + ci,
+                )
+            )
+
+    # --- Pass 3: Inline citations like "Erdos (2016)" or "Carroll et al. (2019)" ---
+    # Only skip if the EXACT citation location was already captured by Pass 1
+    # (inside a direct quote). Pass 2 parenthetical citations near inline
+    # citations should not block inline extraction — they are separate citations.
+    pass1_ranges = []
+    for q in quotes[:len(quotes)]:  # snapshot of all Pass 1+2 quotes
+        pass1_ranges.append((q.position, q.position + len(q.text_exact)))
+
+    def _inside_pass1_quote(pos):
+        return any(lo <= pos <= hi for lo, hi in pass1_ranges
+                   if hi - lo > 40)  # only direct-quote ranges
 
     for match in _INLINE_CITE_RE.finditer(plain_text):
         author_name = match.group(1)
         years = match.group(2)
         cite_start = match.start()
 
-        if is_covered(cite_start):
+        if _inside_pass1_quote(cite_start):
             continue
 
         sentence, sent_start, sent_end = _extract_claim_sentence(plain_text, cite_start)
@@ -367,23 +398,31 @@ def extract_quotes_html(html_content: str) -> list[ExtractedQuote]:
         claim_text = re.sub(r"\s*[,;]\s*$", "", claim_text)
         claim_text = claim_text.strip()
 
-        if not claim_text or len(claim_text) < 15 or claim_text in seen_texts:
+        if not claim_text or len(claim_text) < 15:
             continue
-        seen_texts.add(claim_text)
 
+        # Handle "Author (2019; 2021)" as multi-cite too
+        year_list = [y.strip() for y in years.split(";") if re.match(r"\d{4}", y.strip())]
         before, after = _extract_context(plain_text, sent_start, sent_end)
         paragraph = _find_paragraph(plain_text, cite_start)
 
-        quotes.append(
-            ExtractedQuote(
-                text_exact=claim_text,
-                text_before=before,
-                text_after=after,
-                citation_hint=f"{author_name}, {years}",
-                paragraph_context=paragraph,
-                position=sent_start,
+        for yi, year in enumerate(year_list):
+            component = f"{author_name}, {year}"
+            key = (claim_text, component)
+            if key in seen_texts:
+                continue
+            seen_texts.add(key)
+
+            quotes.append(
+                ExtractedQuote(
+                    text_exact=claim_text,
+                    text_before=before,
+                    text_after=after,
+                    citation_hint=component,
+                    paragraph_context=paragraph,
+                    position=sent_start + yi,
+                )
             )
-        )
 
     # Sort by position in the document
     quotes.sort(key=lambda q: q.position)

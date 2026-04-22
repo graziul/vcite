@@ -69,6 +69,34 @@ class TestAuthorYearRegex:
         # The full multi-cite is captured
         assert "Lin" in m.group(1)
 
+    def test_multi_space_between_authors(self):
+        """Regression: 'Couldry  and Mejias' (double space) was failing."""
+        text = "what Couldry  and Mejias (2021) call"
+        m = _INLINE_CITE_RE.search(text)
+        assert m is not None
+        # Must capture BOTH authors, not just Mejias
+        assert "Couldry" in m.group(1) and "Mejias" in m.group(1)
+
+
+class TestMultiCiteSplitting:
+    """Multi-cite groups must produce one citation per source."""
+
+    def test_extract_splits_multicite(self):
+        from parsers.html_parser import extract_quotes_html
+        html = "<p>A valid claim here (Smith, 2020; Jones, 2021; Lee, 2022).</p>"
+        quotes = extract_quotes_html(html)
+        hints = [q.citation_hint for q in quotes]
+        assert "Smith, 2020" in hints
+        assert "Jones, 2021" in hints
+        assert "Lee, 2022" in hints
+
+    def test_extract_preserves_single_cite(self):
+        from parsers.html_parser import extract_quotes_html
+        html = "<p>A claim here (Smith, 2020) is good.</p>"
+        quotes = extract_quotes_html(html)
+        hints = [q.citation_hint for q in quotes]
+        assert hints == ["Smith, 2020"]
+
 
 class TestKatinaExtraction:
     """End-to-end test on the Katina article."""

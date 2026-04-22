@@ -50,6 +50,29 @@
     "vcite": "1.0",
     "id": "vcite-003",
     "source": {
+      "title": "Body cameras help monitor police but can invade people's privacy",
+      "authors": [
+        "Newell, B."
+      ],
+      "year": 2021,
+      "url": "https://theconversation.com/body-cameras-help-monitor-police-but-can-invade-peoples-privacy-160846",
+      "source_type": "academic"
+    },
+    "target": {
+      "text_exact": "Some even argue this approach has led to  excessive openness that may compromise police operations .",
+      "text_before": "operates in practice  or the data rights at stake.",
+      "text_after": "\n\nFurthermore, officer interactions with the publi",
+      "hash": "sha256:6abca2be2e0fe44806c7bd087e15b6941222c7e4b1de3a95f78448aedc275c81"
+    },
+    "relation": "method",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "model",
+    "_resolution": "matched"
+  },
+  {
+    "vcite": "1.0",
+    "id": "vcite-004",
+    "source": {
       "title": "European data protection regulation, journalism, and traditional publishers",
       "authors": [
         "Erdos, D."
@@ -70,7 +93,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-004",
+    "id": "vcite-005",
     "source": {
       "title": "European Union data protection law and media expression: Fundamentally off balance",
       "authors": [
@@ -93,7 +116,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-005",
+    "id": "vcite-006",
     "source": {
       "title": "The differential privacy frontier",
       "authors": [
@@ -116,7 +139,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-006",
+    "id": "vcite-007",
     "source": {
       "title": "Meeting unique requirements: Community consultation and public disclosure for EFIC research",
       "authors": [
@@ -145,7 +168,31 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-007",
+    "id": "vcite-008",
+    "source": {
+      "title": "Learning from experience: A systematic review of community consultation acceptance data",
+      "authors": [
+        "Fehr, A. E.",
+        "Pentz, R. D.",
+        "Dickert, N. W."
+      ],
+      "year": 2015,
+      "source_type": "academic"
+    },
+    "target": {
+      "text_exact": "Public research presentations are the most  common method of community consultation and are associated with high  acceptance rates of EFIC studies by community members .",
+      "text_before": "nsent Requirements for  Emergency Research, 1996).",
+      "text_after": " Other approaches, like surveys, focus groups,  an",
+      "hash": "sha256:8525eb10eebc4df17f88b828dbb6171b42bb5e7a61fb44f7d83c27b672a3c606"
+    },
+    "relation": "quantifies",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "model",
+    "_resolution": "matched"
+  },
+  {
+    "vcite": "1.0",
+    "id": "vcite-009",
     "source": {
       "title": "Meeting unique requirements: Community consultation and public disclosure for EFIC research",
       "authors": [
@@ -174,7 +221,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-008",
+    "id": "vcite-010",
     "source": {
       "title": "Data trusts in 2021",
       "authors": [
@@ -200,7 +247,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-009",
+    "id": "vcite-011",
     "source": {
       "title": "The datafication of the public sector",
       "authors": [
@@ -225,7 +272,84 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-010",
+    "id": "vcite-012",
+    "source": {
+      "title": "A case for rejection",
+      "authors": [
+        "Chouldechova, A.",
+        "Black, E.",
+        "Wolf, C. T.",
+        "Opoku-Agyemang, K."
+      ],
+      "year": 2023,
+      "doi": "10.1145/3593013.3594093",
+      "source_type": "academic"
+    },
+    "target": {
+      "text_exact": "2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation .",
+      "text_before": "for responsible data stewardship (Hardinges et al.",
+      "text_after": " Proven models  for community consultation offer a",
+      "hash": "sha256:37a54c90aca85799fc24094acc02d1ae3e0611f435df64a143c19e6403f71bbf"
+    },
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "model",
+    "_resolution": "matched"
+  },
+  {
+    "vcite": "1.0",
+    "id": "vcite-013",
+    "source": {
+      "title": "The last mile: Where language, culture, and technology meet in data work",
+      "authors": [
+        "Irani, L.",
+        "Vertesi, J.",
+        "Dourish, P."
+      ],
+      "year": 2023,
+      "doi": "10.1145/3617694.3623261",
+      "source_type": "academic"
+    },
+    "target": {
+      "text_exact": "2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation .",
+      "text_before": "for responsible data stewardship (Hardinges et al.",
+      "text_after": " Proven models  for community consultation offer a",
+      "hash": "sha256:37a54c90aca85799fc24094acc02d1ae3e0611f435df64a143c19e6403f71bbf"
+    },
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "model",
+    "_resolution": "matched"
+  },
+  {
+    "vcite": "1.0",
+    "id": "vcite-014",
+    "source": {
+      "title": "Re-imagining algorithmic fairness in India and beyond",
+      "authors": [
+        "Sambasivan, N.",
+        "Arnesen, E.",
+        "Hutchinson, B.",
+        "Prabhakaran, V."
+      ],
+      "year": 2023,
+      "doi": "10.1145/3593013.3593989",
+      "source_type": "academic"
+    },
+    "target": {
+      "text_exact": "2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation .",
+      "text_before": "for responsible data stewardship (Hardinges et al.",
+      "text_after": " Proven models  for community consultation offer a",
+      "hash": "sha256:37a54c90aca85799fc24094acc02d1ae3e0611f435df64a143c19e6403f71bbf"
+    },
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "model",
+    "_resolution": "matched"
+  },
+  {
+    "vcite": "1.0",
+    "id": "vcite-015",
     "source": {
       "title": "Indigenous data sovereignty: Toward an agenda",
       "authors": [
@@ -249,7 +373,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-011",
+    "id": "vcite-016",
     "source": {
       "title": "The CARE Principles for Indigenous Data Governance",
       "authors": [
@@ -274,7 +398,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-012",
+    "id": "vcite-017",
     "source": {
       "title": "The FAIR guiding principles for scientific data management and stewardship",
       "authors": [
@@ -298,7 +422,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-013",
+    "id": "vcite-018",
     "source": {
       "title": "The FAIR guiding principles for scientific data management and stewardship",
       "authors": [
@@ -322,7 +446,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-014",
+    "id": "vcite-019",
     "source": {
       "title": "The CARE Principles for Indigenous Data Governance",
       "authors": [
@@ -347,7 +471,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-015",
+    "id": "vcite-020",
     "source": {
       "title": "Indigenous data governance: Strategies from United States Native nations",
       "authors": [
@@ -372,7 +496,123 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-016",
+    "id": "vcite-021",
+    "source": {
+      "title": "Building a data revolution in Indian country",
+      "authors": [
+        "Rodriguez-Lonebear, D."
+      ],
+      "year": 2016,
+      "doi": "10.22459/CAEPR38.11.2016.1",
+      "source_type": "academic"
+    },
+    "target": {
+      "text_exact": "Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing .",
+      "text_before": "our community!Subscribe to the Katina Newsletter\n\n",
+      "text_after": " In turn, tribes developed and adapted governance ",
+      "hash": "sha256:6a90c8101358cb75740b04b4fefd3827d972f03bd9c580c5cf33059b28f847fa"
+    },
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "model",
+    "_resolution": "matched"
+  },
+  {
+    "vcite": "1.0",
+    "id": "vcite-022",
+    "source": {
+      "title": "Data as strategic resource: Self-determination and the data challenge for US Indigenous nations",
+      "authors": [
+        "Rainie, S. C.",
+        "et al."
+      ],
+      "year": 2017,
+      "doi": "10.18584/iipj.2017.8.2.1",
+      "source_type": "academic"
+    },
+    "target": {
+      "text_exact": "Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing .",
+      "text_before": "our community!Subscribe to the Katina Newsletter\n\n",
+      "text_after": " In turn, tribes developed and adapted governance ",
+      "hash": "sha256:6a90c8101358cb75740b04b4fefd3827d972f03bd9c580c5cf33059b28f847fa"
+    },
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "model",
+    "_resolution": "matched"
+  },
+  {
+    "vcite": "1.0",
+    "id": "vcite-023",
+    "source": {
+      "title": "Recommendations from tribal experiences with tribal censuses and surveys",
+      "authors": [
+        "NCAIPRC"
+      ],
+      "year": 2017,
+      "source_type": "academic"
+    },
+    "target": {
+      "text_exact": "Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing .",
+      "text_before": "our community!Subscribe to the Katina Newsletter\n\n",
+      "text_after": " In turn, tribes developed and adapted governance ",
+      "hash": "sha256:6a90c8101358cb75740b04b4fefd3827d972f03bd9c580c5cf33059b28f847fa"
+    },
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "model",
+    "_resolution": "matched"
+  },
+  {
+    "vcite": "1.0",
+    "id": "vcite-024",
+    "source": {
+      "title": "Resolution KAN-18-011: Support of US Indigenous data sovereignty",
+      "authors": [
+        "NCAI"
+      ],
+      "year": 2018,
+      "source_type": "academic"
+    },
+    "target": {
+      "text_exact": "Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing .",
+      "text_before": "our community!Subscribe to the Katina Newsletter\n\n",
+      "text_after": " In turn, tribes developed and adapted governance ",
+      "hash": "sha256:6a90c8101358cb75740b04b4fefd3827d972f03bd9c580c5cf33059b28f847fa"
+    },
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "model",
+    "_resolution": "matched"
+  },
+  {
+    "vcite": "1.0",
+    "id": "vcite-025",
+    "source": {
+      "title": "Indigenous data governance: Strategies from United States Native nations",
+      "authors": [
+        "Carroll, S. R.",
+        "Rodriguez-Lonebear, D.",
+        "Martinez, A."
+      ],
+      "year": 2019,
+      "doi": "10.5334/dsj-2019-031",
+      "source_type": "academic"
+    },
+    "target": {
+      "text_exact": "In turn, tribes developed and adapted governance mechanisms for  improved data stewardship.",
+      "text_before": " Rainie et al., 2017; NCAIPRC, 2017; NCAI,  2018).",
+      "text_after": " describe several case  studies of tribal data gov",
+      "hash": "sha256:fbed1408b7de87e676e748f0e4759bd94471551be868f986f8cbbb5dc9c06195"
+    },
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "model",
+    "_resolution": "matched"
+  },
+  {
+    "vcite": "1.0",
+    "id": "vcite-026",
     "source": {
       "title": "Recommendations from tribal experiences with tribal censuses and surveys",
       "authors": [
@@ -394,7 +634,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-017",
+    "id": "vcite-027",
     "source": {
       "title": "Recommendations from tribal experiences with tribal censuses and surveys",
       "authors": [
@@ -416,7 +656,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-018",
+    "id": "vcite-028",
     "source": {
       "title": "Earth science data repositories: Implementing the CARE principles",
       "authors": [
@@ -440,7 +680,31 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-019",
+    "id": "vcite-029",
+    "source": {
+      "title": "Applying the CARE Principles for Indigenous Data Governance to ecology and biodiversity research",
+      "authors": [
+        "Jennings, L.",
+        "et al."
+      ],
+      "year": 2023,
+      "doi": "10.1038/s41559-023-02161-2",
+      "source_type": "academic"
+    },
+    "target": {
+      "text_exact": "2024), ecology  and archeology (Gupta et al.",
+      "text_before": "us  domains, such as earth science (O’Brien et al.",
+      "text_after": ", 2023). Initiatives to  integrate these principle",
+      "hash": "sha256:f835b8ad2799bf50f662944672ebdc9c2b02ffdb9862501fb009712c922c4ef3"
+    },
+    "relation": "supports",
+    "captured_at": "2026-04-11T00:00:00Z",
+    "captured_by": "model",
+    "_resolution": "matched"
+  },
+  {
+    "vcite": "1.0",
+    "id": "vcite-030",
     "source": {
       "title": "The CARE Principles and the reuse, sharing, and curation of Indigenous data in Canadian archaeology",
       "authors": [
@@ -464,7 +728,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-020",
+    "id": "vcite-031",
     "source": {
       "title": "The Swakopmund protocol for the protection of expressions of folklore",
       "authors": [
@@ -487,7 +751,7 @@
   },
   {
     "vcite": "1.0",
-    "id": "vcite-021",
+    "id": "vcite-032",
     "source": {
       "title": "The decolonial turn in data and technology research",
       "authors": [
@@ -499,10 +763,10 @@
       "source_type": "academic"
     },
     "target": {
-      "text_exact": "But failing to act would leave in place a system  that centralizes sensitive open data in ways that parallel what Couldry  and",
+      "text_exact": "But failing to act would leave in place a system  that centralizes sensitive open data in ways that parallel what",
       "text_before": "thing suggests making these  changes will be easy.",
       "text_after": " call “data colonialism” in corporate contexts,  e",
-      "hash": "sha256:826f7bcb82a78758290974bb1b139ea0e6226dc322eaa4751c1999cb8fa1ea08"
+      "hash": "sha256:cdcb2da5666e56bd97e898e643e8953058336bb449ec4c97fd23da1a9e9a961a"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
