@@ -58,13 +58,23 @@ def render_enhanced_html(
     # Strip any existing VCITE markup from the input (allows re-enhancement)
     body_html = _strip_existing_vcite(original_html)
 
-    # Work backwards so earlier positions remain stable after insertion.
-    pairs = list(zip(quotes, vcite_objects))
-    pairs.sort(key=lambda pair: pair[0].position, reverse=True)
+    # Group quotes by their text_exact — multi-cite splits share claim text
+    # and must share a single wrapper with multiple badges (one per source).
+    groups: dict[str, list] = {}
+    for q, obj in zip(quotes, vcite_objects):
+        groups.setdefault(q.text_exact, []).append((q, obj))
 
-    # Step 1: Insert inline marks (span + badge) only — no panels yet.
-    for quote, vcite_obj in pairs:
-        body_html = _inject_one(body_html, quote, vcite_obj)
+    # Work backwards (by earliest position in each group) so earlier
+    # positions remain stable after insertion.
+    group_items = sorted(
+        groups.items(),
+        key=lambda g: min(q.position for q, _ in g[1]),
+        reverse=True,
+    )
+
+    # Step 1: Insert inline marks (span + N badges) — no panels yet.
+    for text_exact, members in group_items:
+        body_html = _inject_group(body_html, members)
 
     # Step 2: Collect all panels into a single container placed before </body>.
     # This avoids invalid <div> inside <p> nesting entirely.
@@ -259,6 +269,84 @@ def _verify_url(vcite_obj) -> str:
     if vcite_obj.source.url:
         return html.escape(vcite_obj.source.url)
     return "#"
+
+
+def _inject_group(body_html: str, members: list) -> str:
+    """Inject a single span wrapping the shared claim text + one badge per citation.
+
+    For multi-cite groups (e.g., "claim (A, 2020; B, 2021)"), all members
+    share the same text_exact but cite different sources. They must share
+    a single inline wrapper with multiple badges.
+    """
+    # Use the first member's quote for locating the text; the wrapper's
+    # data-vcite holds the FIRST id; additional badges link to the rest.
+    first_quote, first_obj = members[0]
+    all_ids = [obj.id for _, obj in members]
+
+    badges = "".join(
+        f'<sup class="vcite-badge" data-vcite="{obj.id}" '
+        f'onclick="toggleVcite(this)">v</sup>'
+        for _, obj in members
+    )
+
+    target_text = first_quote.text_exact
+
+    def _wrap(match_text: str, start: int, end: int) -> str:
+        inline_mark = (
+            f'<span class="vcite-mark" data-vcite="{all_ids[0]}" '
+            f'data-vcite-ids="{",".join(all_ids)}" '
+            f'onclick="toggleVcite(this)">{match_text}</span>'
+            f'{badges}'
+        )
+        return body_html[:start] + inline_mark + body_html[end:]
+
+    # First attempt: exact literal match.
+    idx = body_html.find(target_text)
+    if idx >= 0:
+        return _wrap(target_text, idx, idx + len(target_text))
+
+    # Second: HTML-escaped variant.
+    escaped_target = html.escape(target_text)
+    idx = body_html.find(escaped_target)
+    if idx >= 0:
+        return _wrap(escaped_target, idx, idx + len(escaped_target))
+
+    # Third: whitespace-insensitive regex match. This handles the common
+    # case where the plain-text extraction collapsed newlines to spaces
+    # but the source HTML contains "word\n word" (newline + space).
+    words = target_text.split()
+    if len(words) >= 3:
+        # Any whitespace/tags between words
+        pattern = r"\s+".join(re.escape(w) for w in words)
+        match = re.search(pattern, body_html)
+        if match:
+            return _wrap(match.group(0), match.start(), match.end())
+
+        # Tag-tolerant: allow inline tags between words
+        tag_gap = r"(?:\s*<[^>]+>\s*)*\s+"
+        pattern = tag_gap.join(re.escape(w) for w in words)
+        match = re.search(pattern, body_html)
+        if match:
+            return _wrap(match.group(0), match.start(), match.end())
+
+    # Fourth: anchor-based fallback for very long claims.
+    if len(words) >= 4:
+        start_anchor = " ".join(words[0:4])
+        for trim in range(0, min(4, len(words) - 4)):
+            end_words = words[-(4 - trim):] if trim == 0 else words[-(4 - trim):-trim]
+            end_anchor = " ".join(end_words)
+            start_idx = body_html.find(start_anchor)
+            if start_idx < 0:
+                continue
+            search_region = body_html[start_idx:start_idx + len(target_text) + 200]
+            end_idx_rel = search_region.find(end_anchor)
+            if end_idx_rel >= 0:
+                end_pos = start_idx + end_idx_rel + len(end_anchor)
+                matched = body_html[start_idx:end_pos]
+                if abs(len(matched) - len(target_text)) < len(target_text) * 0.3:
+                    return _wrap(matched, start_idx, end_pos)
+
+    return body_html
 
 
 def _inject_one(body_html: str, quote, vcite_obj) -> str:
@@ -459,13 +547,34 @@ def _strip_existing_vcite(html_str: str) -> str:
                         break
                     pos += close_m.end()
 
-    # Remove JSON-LD blocks containing VCiteCitation
-    html_str = re.sub(
-        r'<script\s+type="application/ld\+json">\s*\[?\s*\{[^}]*VCiteCitation.*?</script>',
-        "",
-        html_str,
-        flags=re.DOTALL,
-    )
+    # Remove JSON-LD blocks containing VCiteCitation. Iterate so we can
+    # check the full content (not just the start) for "VCiteCitation", which
+    # may appear after nested braces in source/target sub-objects.
+    def _strip_vcite_jsonld(s: str) -> str:
+        out = []
+        i = 0
+        pattern = re.compile(
+            r'<script\s+type="application/ld\+json">', re.IGNORECASE
+        )
+        while True:
+            m = pattern.search(s, i)
+            if not m:
+                out.append(s[i:])
+                break
+            end = s.find("</script>", m.end())
+            if end < 0:
+                out.append(s[i:])
+                break
+            block = s[m.start():end + len("</script>")]
+            if "VCiteCitation" in block:
+                # Drop this block
+                out.append(s[i:m.start()])
+            else:
+                out.append(s[i:end + len("</script>")])
+            i = end + len("</script>")
+        return "".join(out)
+
+    html_str = _strip_vcite_jsonld(html_str)
 
     # Remove <style> blocks containing vcite- classes
     html_str = re.sub(

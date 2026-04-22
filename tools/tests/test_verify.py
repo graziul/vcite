@@ -439,7 +439,7 @@ class TestLoadCitations:
         if not katina_path.exists():
             pytest.skip("Katina example not found")
         loaded = load_citations_from_html(katina_path)
-        assert len(loaded) == 32  # known count after multi-cite splitting
+        assert len(loaded) == 34  # known count after sentence-based extraction
         assert all(c.verify() for c in loaded), "All Katina citations should pass internal hash check"
 
 

@@ -53,6 +53,66 @@ _INLINE_CITE_RE = re.compile(
 # Exclude \n from matches to prevent cross-paragraph grabs.
 _STRAIGHT_QUOTE_RE = re.compile(r'"([^"\n]{%d,}?)"' % MIN_QUOTE_LEN)
 _CURLY_QUOTE_RE = re.compile(r"\u201c([^\u201d\n]{%d,}?)\u201d" % MIN_QUOTE_LEN)
+def _split_sentences(text: str) -> list[tuple[str, int, int]]:
+    """Split text into sentences, treating parenthetical content as atomic.
+
+    A sentence ends at `.`, `!`, or `?` followed by whitespace or end —
+    but only at depth 0 (not inside parens). Also respects paragraph
+    breaks (double newline).
+
+    Returns list of (sentence_text, start_pos, end_pos) tuples.
+    """
+    sentences = []
+    start = 0
+    depth = 0
+    i = 0
+    n = len(text)
+    while i < n:
+        ch = text[i]
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth = max(0, depth - 1)
+        elif depth == 0:
+            # Paragraph break = sentence break
+            if ch == "\n" and i + 1 < n and text[i + 1] == "\n":
+                sent = text[start:i].strip()
+                if sent:
+                    sentences.append((sent, start, i))
+                # skip the blank line
+                while i < n and text[i] == "\n":
+                    i += 1
+                start = i
+                continue
+            # Sentence terminator followed by whitespace/end
+            if ch in ".!?" and (i + 1 >= n or text[i + 1] in " \t\n"):
+                # Don't split on common abbreviations (Dr., Fig., et al.)
+                # Look at the word ending at i
+                word_start = i
+                while word_start > start and text[word_start - 1] not in " \t\n":
+                    word_start -= 1
+                word = text[word_start:i + 1]
+                if word.lower() in ("dr.", "mr.", "mrs.", "ms.", "fig.", "al.",
+                                    "no.", "vol.", "pp.", "e.g.", "i.e.",
+                                    "cf.", "etc.", "jr.", "sr.", "st."):
+                    i += 1
+                    continue
+                end = i + 1
+                sent = text[start:end].strip()
+                if sent:
+                    sentences.append((sent, start, end))
+                start = end
+        i += 1
+
+    # Capture any trailing text
+    if start < n:
+        sent = text[start:].strip()
+        if sent:
+            sentences.append((sent, start, n))
+
+    return sentences
+
+
 def _split_multicite(hint_inner: str) -> list[str]:
     """Split a multi-cite like 'Lin, 2015; Newell, 2021' into components.
 
@@ -227,21 +287,35 @@ def _extract_claim_sentence(text: str, cite_start: int) -> tuple[str, int, int]:
 
     Walks backward from the citation to find the sentence start (period,
     paragraph boundary, or semicolon), then forward to find the end.
-    Returns (sentence_text, start_pos, end_pos).
+    Parentheticals (including nested citations like "(Smith et al., 2020)")
+    are treated as atomic — periods inside them do not count as sentence
+    boundaries. Returns (sentence_text, start_pos, end_pos).
     """
-    # Walk backward to find sentence start
+    # Walk backward to find sentence start, skipping over parentheticals
     sent_start = cite_start
-    for i in range(cite_start - 1, max(cite_start - 500, -1), -1):
-        if i < 0:
-            sent_start = 0
-            break
+    i = cite_start - 1
+    limit = max(cite_start - 500, -1)
+    while i > limit:
         ch = text[i]
+        # If we hit a close paren, skip to the matching open paren
+        if ch == ")":
+            depth = 1
+            j = i - 1
+            while j > limit and depth > 0:
+                if text[j] == ")":
+                    depth += 1
+                elif text[j] == "(":
+                    depth -= 1
+                j -= 1
+            i = j
+            continue
         if ch in (".", "!", "?") and i < cite_start - 2:
             sent_start = i + 1
             break
         if ch == "\n" and i < cite_start - 1 and (i == 0 or text[i - 1] == "\n"):
             sent_start = i + 1
             break
+        i -= 1
     else:
         sent_start = max(cite_start - 500, 0)
 
@@ -312,117 +386,85 @@ def extract_quotes_html(html_content: str) -> list[ExtractedQuote]:
                 )
             )
 
-    # --- Pass 2: Paraphrased claims with (Author, Year) citations ---
-    # Collect all positions covered by Pass 1 quotes (with margin)
-    covered_ranges = []
-    for q in quotes:
-        covered_ranges.append((q.position - 50, q.position + len(q.text_exact) + 200))
+    # --- Pass 2: Sentence-based citation extraction ---
+    # Split text into sentences (skipping periods inside parentheticals),
+    # then find all citations in each sentence. Each citation becomes
+    # one ExtractedQuote; multi-cite groups produce one quote per source.
 
-    def is_covered(pos):
-        return any(lo <= pos <= hi for lo, hi in covered_ranges)
-
-    for match in _AUTHOR_YEAR_RE.finditer(plain_text):
-        cite_text = match.group(0)  # e.g., "(Savage & Monroy-Hernández, 2018)"
-        cite_start = match.start()
-
-        # Skip if this citation is inside a range already covered by a direct quote
-        if is_covered(cite_start):
-            continue
-
-        # Extract the sentence/clause this citation is attributed to
-        sentence, sent_start, sent_end = _extract_claim_sentence(plain_text, cite_start)
-
-        # Remove the citation marker itself from the claim text
-        claim_text = sentence.replace(cite_text, "").strip()
-        # Clean up trailing/leading punctuation artifacts
-        claim_text = re.sub(r"^\s*[,;.]\s*", "", claim_text)
-        claim_text = re.sub(r"\s*[,;]\s*$", "", claim_text)
-        claim_text = claim_text.strip()
-
-        if not claim_text or len(claim_text) < 15:
-            continue
-
-        before, after = _extract_context(plain_text, sent_start, sent_end)
-        paragraph = _find_paragraph(plain_text, cite_start)
-
-        # Split multi-cites like "Lin, 2015; Newell, 2021" into one
-        # ExtractedQuote per component so each source gets its own VCITE.
-        hint_inner = match.group(1)
-        components = _split_multicite(hint_inner)
-
-        for ci, component in enumerate(components):
-            # Dedupe on (claim_text, component) — the same claim cited to
-            # different sources is two genuine citations, not a duplicate.
-            key = (claim_text, component)
-            if key in seen_texts:
-                continue
-            seen_texts.add(key)
-
-            quotes.append(
-                ExtractedQuote(
-                    text_exact=claim_text,
-                    text_before=before,
-                    text_after=after,
-                    citation_hint=component,
-                    paragraph_context=paragraph,
-                    # offset position slightly per component so render order is stable
-                    position=sent_start + ci,
-                )
-            )
-
-    # --- Pass 3: Inline citations like "Erdos (2016)" or "Carroll et al. (2019)" ---
-    # Only skip if the EXACT citation location was already captured by Pass 1
-    # (inside a direct quote). Pass 2 parenthetical citations near inline
-    # citations should not block inline extraction — they are separate citations.
-    pass1_ranges = []
-    for q in quotes[:len(quotes)]:  # snapshot of all Pass 1+2 quotes
-        pass1_ranges.append((q.position, q.position + len(q.text_exact)))
+    pass1_ranges = [(q.position, q.position + len(q.text_exact)) for q in quotes]
 
     def _inside_pass1_quote(pos):
         return any(lo <= pos <= hi for lo, hi in pass1_ranges
-                   if hi - lo > 40)  # only direct-quote ranges
+                   if hi - lo > 40)
 
-    for match in _INLINE_CITE_RE.finditer(plain_text):
-        author_name = match.group(1)
-        years = match.group(2)
-        cite_start = match.start()
-
-        if _inside_pass1_quote(cite_start):
+    for sent_text, sent_start, sent_end in _split_sentences(plain_text):
+        if not sent_text.strip():
             continue
 
-        sentence, sent_start, sent_end = _extract_claim_sentence(plain_text, cite_start)
-        # Remove the inline citation from the claim text
-        cite_full = f"{author_name} ({years})"
-        claim_text = sentence.replace(cite_full, "").strip()
-        claim_text = re.sub(r"^\s*[,;.]\s*", "", claim_text)
-        claim_text = re.sub(r"\s*[,;]\s*$", "", claim_text)
-        claim_text = claim_text.strip()
+        # Collect all citation matches in this sentence
+        sent_cites = []  # list of (abs_pos, cite_text, hint_components)
 
-        if not claim_text or len(claim_text) < 15:
-            continue
-
-        # Handle "Author (2019; 2021)" as multi-cite too
-        year_list = [y.strip() for y in years.split(";") if re.match(r"\d{4}", y.strip())]
-        before, after = _extract_context(plain_text, sent_start, sent_end)
-        paragraph = _find_paragraph(plain_text, cite_start)
-
-        for yi, year in enumerate(year_list):
-            component = f"{author_name}, {year}"
-            key = (claim_text, component)
-            if key in seen_texts:
+        for m in _AUTHOR_YEAR_RE.finditer(sent_text):
+            abs_pos = sent_start + m.start()
+            if _inside_pass1_quote(abs_pos):
                 continue
-            seen_texts.add(key)
+            sent_cites.append((abs_pos, m.group(0), _split_multicite(m.group(1))))
 
-            quotes.append(
-                ExtractedQuote(
-                    text_exact=claim_text,
-                    text_before=before,
-                    text_after=after,
-                    citation_hint=component,
-                    paragraph_context=paragraph,
-                    position=sent_start + yi,
+        for m in _INLINE_CITE_RE.finditer(sent_text):
+            abs_pos = sent_start + m.start()
+            if _inside_pass1_quote(abs_pos):
+                continue
+            author = m.group(1)
+            years = m.group(2)
+            components = [
+                f"{author}, {y.strip()}"
+                for y in years.split(";")
+                if re.match(r"\d{4}", y.strip())
+            ]
+            sent_cites.append((abs_pos, m.group(0), components))
+
+        if not sent_cites:
+            continue
+
+        # Use the full sentence verbatim as text_exact, INCLUDING the
+        # citation markers. This is the simplest invariant: the rendered
+        # span wraps the sentence exactly as it appears in the article.
+        # The VCITE evidence panel will show this same text (with its
+        # citation markers) as what the author wrote.
+        claim_text = sent_text.strip()
+        # Only trim leading/trailing punctuation-whitespace artifacts, not
+        # interior whitespace (which must match the article HTML verbatim).
+        claim_text = re.sub(r"^[\s]+", "", claim_text)
+        claim_text = re.sub(r"[\s]+$", "", claim_text)
+
+        if len(claim_text) < 15:
+            continue
+
+        before, after = _extract_context(plain_text, sent_start, sent_end)
+        paragraph = _find_paragraph(plain_text, sent_start)
+
+        # Emit one ExtractedQuote per citation component. All share the
+        # same claim_text but have different citation_hints. The rendering
+        # layer groups them into a single inline wrapper with N badges.
+        component_idx = 0
+        for abs_pos, _, components in sorted(sent_cites):
+            for component in components:
+                key = (claim_text, component)
+                if key in seen_texts:
+                    continue
+                seen_texts.add(key)
+                quotes.append(
+                    ExtractedQuote(
+                        text_exact=claim_text,
+                        text_before=before,
+                        text_after=after,
+                        citation_hint=component,
+                        paragraph_context=paragraph,
+                        # Stable position that preserves component order
+                        position=sent_start + component_idx,
+                    )
                 )
-            )
+                component_idx += 1
 
     # Sort by position in the document
     quotes.sort(key=lambda q: q.position)
