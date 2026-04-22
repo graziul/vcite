@@ -29,11 +29,16 @@ Author: Chris Graziul / IDEP. **NOT** a University of Chicago project.
 6. **JSON-LD namespace**: All properties map to `https://vcite.pub/ns/v1/` URIs
 
 ## Version Status
-- Spec version: **0.1** (DRAFT — not for citation)
-- Hash algorithm: **STABLE** (no breaking changes planned)
-- Data model: **DRAFT** (additive changes only, no field removals)
-- Serializations: **DRAFT** (feedback welcome)
-- Namespace: `https://vcite.pub/ns/v1/` (domain registration pending)
+- Spec version: **0.1** (**0.1-STABLE** — safe to cite)
+- Stable since: **2026-04-22**
+- Hash algorithm: **FROZEN** (any change requires SemVer major bump to 1.0)
+- Data model: **FROZEN at field level** (additive OPTIONAL fields allowed; no removals, renames, or semantic changes in 0.x)
+- Relation vocabulary: **FROZEN** base seven values; `x-*` extension namespace open
+- Conformance levels (L1/L2/L3): **FROZEN**
+- `captured_by` enum (`author`|`tool`|`model`): **FROZEN**
+- Serializations (Markdown, LaTeX, plain-text): **DRAFT** (canonical JSON is stable; feedback welcome)
+- Namespace: `https://vcite.pub/ns/v1/` (domain registration pending — URL may change)
+- Governance: IDEP stewardship (open for change before 1.0)
 
 ## Running Tests
 ```bash

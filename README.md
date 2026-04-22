@@ -3,7 +3,7 @@
 > An open specification for embedding passage-level, cryptographically
 > verifiable citations in any document format.
 
-**Version**: 0.1.0 (Draft)
+**Version**: 0.1.0 (0.1-STABLE, stable since 2026-04-22 — safe to cite)
 **Author**: Chris Graziul, Illinois Data Equity Project (IDEP)
 **License**: CC-BY 4.0 (specification) / MIT (implementations)
 **Spec**: [SPEC.md](SPEC.md) | **Schema**: [JSON Schema](schema/vcite.schema.json)

@@ -2,7 +2,8 @@
 title: "VCITE: Verified Citation with Inline Text Evidence"
 version: "0.1"
 date: 2026-03-30
-status: DRAFT — not for citation. Circulate for comment.
+status: "0.1-STABLE — hash algorithm and core data model frozen; serializations and governance still draft. Safe to cite and implement against."
+stable_since: 2026-04-22
 author: Chris Graziul, Illinois Data Equity Project (IDEP)
 license: CC-BY 4.0 — free to implement, extend, and cite
 ---
@@ -374,6 +375,72 @@ VCITE defines three conformance levels to accommodate the range of authoring con
 | **L3 -- Enhanced** | L2 + `fragment_url`, `archive_url`, `char_start`, `char_end` | scite enrichment | Academic publishing, AI output, legal |
 
 A citation object claims a conformance level by including all REQUIRED fields for that level. Objects that include fields from higher levels without meeting all requirements of that level are not conformant at the higher level but MUST be processed by renderers as conformant at the highest level whose requirements they do meet.
+
+---
+
+## Stability & compatibility commitments
+
+As of `stable_since: 2026-04-22`, VCITE 0.1 is declared **0.1-STABLE**. The
+items below are FROZEN within the 0.x line. Conforming implementations and
+downstream adopters MAY rely on them without fear of silent breakage. Items
+marked **open for change** may still evolve in response to community feedback
+before 1.0.
+
+### FROZEN
+
+- **Hash algorithm (§5.2).** The normalization procedure, input construction
+  (`padded_before | text_exact | padded_after`), 50-code-point context window,
+  NFC normalization, whitespace-collapse regex `[\t\n\r ]+`, SHA-256 digest,
+  and `sha256:` prefix are FROZEN. Any change MUST increment the SemVer major
+  version. To preserve backward compatibility, citation objects produced under
+  a prior hash algorithm MUST continue to verify against the rules that were
+  current at their `captured_at` timestamp; a future version MAY only change
+  the rules applied to newly minted objects.
+- **Core data model (§4).** The field names, types, required/optional status,
+  and semantics of `VCiteCitation`, `VCiteSource`, and `VCiteTarget` — as
+  defined in §4.1, §4.2, and §4.3 — are FROZEN at the field level. No field
+  MAY be removed, renamed, retyped, or have its semantics altered within the
+  0.x line. Additive changes (new OPTIONAL fields) are permitted and MUST
+  default to omitted in all serializations so that consumers unaware of the
+  new field remain conformant.
+- **Relation vocabulary (§4.4).** The base seven values — `supports`,
+  `contradicts`, `defines`, `quantifies`, `contextualizes`, `method`,
+  `cautions` — are FROZEN in both membership and meaning. The `x-*`
+  extension namespace remains open; new base values MUST NOT be introduced
+  outside the `x-*` namespace until 1.0.
+- **Conformance levels (§8).** The L1, L2, and L3 definitions and their
+  required-field sets are FROZEN. An object that conforms to Lₙ under 0.1
+  MUST continue to conform to Lₙ under all 0.x releases.
+- **`captured_by` enumeration (§4.1).** The allowed values are FROZEN at
+  `"author"`, `"tool"`, and `"model"`. Implementations MUST reject other
+  values.
+- **Test vectors (§5.3).** The four mandatory test vectors SV1–SV4 are
+  FROZEN. Their inputs and expected hashes MUST NOT change within the 0.x
+  line. Additional vectors MAY be added.
+
+### Open for change (may evolve before 1.0)
+
+- The JSON-LD context URL is `https://vcite.pub/ns/v1/` pending domain
+  registration; the concrete URL MAY change, but the property names it maps
+  MUST continue to align with §4.
+- Optional serialization formats for Markdown (§6.2), LaTeX (§6.3), and
+  plain text / AI output (§6.4) remain DRAFT and MAY evolve in response to
+  implementer feedback. The canonical JSON form (§4) is stable.
+- Enrichment field conventions (§7) remain open for new integration layers.
+- The governance model (§9) may shift to a W3C Community Group or
+  independent foundation before 1.0.
+
+### Process for FROZEN changes
+
+Any change to a FROZEN item constitutes a breaking change and MUST:
+
+1. Increment the SemVer major version (i.e., be part of a 1.0 or later
+   release).
+2. Publish a migration path describing how existing objects are to be
+   re-verified or re-serialized.
+3. Be reflected by an update to `test-suite/vectors.yaml` with new vectors
+   covering the change, without removing or altering existing mandatory
+   vectors (the old vectors document the prior major version).
 
 ---
 
