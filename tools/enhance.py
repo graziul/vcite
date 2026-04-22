@@ -23,6 +23,7 @@ sys.path.insert(0, str(TOOLS_DIR))
 from vcite import compute_hash, VCiteCitation, VCiteSource, VCiteTarget
 from parsers.html_parser import extract_quotes_html, ExtractedQuote
 from parsers.md_parser import extract_quotes_md
+from parsers.latex_parser import extract_quotes_latex
 from metadata import resolve_citation, SourceMetadata
 
 
@@ -130,6 +131,8 @@ def enhance_article(
         quotes = extract_quotes_html(content)
     elif input_path.suffix in (".md", ".markdown"):
         quotes = extract_quotes_md(content)
+    elif input_path.suffix in (".tex", ".latex"):
+        quotes = extract_quotes_latex(content)
     else:
         _log(f"Unsupported format: {input_path.suffix}")
         sys.exit(1)
@@ -163,6 +166,8 @@ def enhance_article(
         _render_enhanced_html(content, quotes, vcite_objects, output_path)
     elif fmt == "md":
         _render_enhanced_md(content, quotes, vcite_objects, output_path)
+    elif fmt == "tex":
+        _render_enhanced_tex(content, quotes, vcite_objects, output_path)
 
     _log(f"\nWrote {output_path} ({len(vcite_objects)} VCITE citations)")
 
@@ -209,6 +214,32 @@ def _render_enhanced_md(
     output_path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def _render_enhanced_tex(
+    original_tex: str,
+    quotes: list[ExtractedQuote],
+    vcite_objects: list[VCiteCitation],
+    output_path: Path,
+):
+    """Append a VCITE metadata block inside a LaTeX comment.
+
+    Full LaTeX rendering (wrapping each quote in \\begin{vcitepassage}
+    macros, emitting \\vcite calls) is out of scope for the extraction
+    pass; for now we round-trip the source and emit the JSON-LD manifest
+    as a trailing comment block, which LaTeX will ignore at typeset time
+    but downstream tools can parse.
+    """
+    data = [c.to_dict() for c in vcite_objects]
+    json_str = json.dumps(data, indent=2, ensure_ascii=False)
+    # Prefix every line with "% " so the JSON is a legal LaTeX comment.
+    commented = "\n".join("% " + line for line in json_str.split("\n"))
+    block = (
+        "\n\n% ====== VCITE metadata (auto-generated) ======\n"
+        f"{commented}\n"
+        "% ====== end VCITE metadata ======\n"
+    )
+    output_path.write_text(original_tex.rstrip() + block, encoding="utf-8")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Enhance citations with VCITE passage-level verification"
@@ -221,7 +252,7 @@ def main():
     )
     parser.add_argument(
         "--format",
-        choices=["html", "md", "json"],
+        choices=["html", "md", "tex", "json"],
         default=None,
         help="Output format (default: infer from output extension)",
     )
@@ -255,6 +286,8 @@ def main():
             fmt = "json"
         elif output_path.suffix in (".md", ".markdown"):
             fmt = "md"
+        elif output_path.suffix in (".tex", ".latex"):
+            fmt = "tex"
         elif output_path.suffix == ".json":
             fmt = "json"
         else:

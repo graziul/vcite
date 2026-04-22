@@ -1,0 +1,41 @@
+% Example LaTeX article exercising the VCITE latex_parser.py extractor.
+% Contains: one quote block with citation, one \enquote with natbib,
+% one TeX double-quote, one quote inside a footnote (should be SKIPPED
+% because footnote contents are masked), and one math block with text
+% that looks like a quote (should also be SKIPPED).
+
+\documentclass{article}
+\usepackage{csquotes}
+\usepackage{natbib}
+
+\begin{document}
+
+\section{Introduction}
+
+Recent work has examined scholarly link rot. As \citet{zittrain2014perma}
+documented,
+\begin{quote}
+over seventy percent of the URLs provided in articles published in the
+Harvard Law Review did not lead to originally cited information
+\end{quote}
+which raises serious questions about archival integrity.
+
+The Columbia Journalism Review likewise finds \enquote{AI search tools
+are unreliable for sourcing and verification tasks} \citep{lim2025aisearch},
+and the pattern holds across multiple evaluations.
+
+A more pointed critique argues ``the scholarly record is fraying at the
+edges because citations point to documents that no longer exist''
+\citep{smith2023decay}, echoing earlier concerns.
+
+This sentence contains a footnote\footnote{Inside this footnote we say
+``this quoted passage should not be extracted by the parser''} that
+should be transparent to the extractor.
+
+The equation
+\begin{equation}
+E = mc^2 \text{ and ``this fake quote must not be extracted''}
+\end{equation}
+similarly should not yield a quote.
+
+\end{document}
