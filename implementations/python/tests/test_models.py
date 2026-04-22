@@ -73,6 +73,12 @@ class TestVCiteCitationCreation:
         with pytest.raises(ValueError, match="captured_by must be"):
             _make_citation(captured_by="robot")
 
+    def test_all_valid_captured_by(self):
+        # SPEC §4.1 allows author | tool | model
+        for value in ("author", "tool", "model"):
+            c = _make_citation(captured_by=value)
+            assert c.captured_by == value
+
     def test_all_valid_relations(self):
         for rel in ("supports", "contradicts", "defines", "quantifies",
                      "contextualizes", "method", "cautions"):

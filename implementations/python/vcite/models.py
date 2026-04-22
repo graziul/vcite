@@ -65,7 +65,7 @@ class VCiteCitation:
     target: VCiteTarget
     relation: str
     captured_at: str  # ISO 8601
-    captured_by: str  # "author" or "model"
+    captured_by: str  # "author" | "tool" | "model" (spec §4.1)
     enrichment: Optional[dict] = None
 
     def __post_init__(self):
@@ -73,9 +73,10 @@ class VCiteCitation:
             "x-"
         ):
             raise ValueError(f"Invalid relation: {self.relation}")
-        if self.captured_by not in ("author", "model"):
+        if self.captured_by not in ("author", "tool", "model"):
             raise ValueError(
-                f"captured_by must be 'author' or 'model', got: {self.captured_by}"
+                "captured_by must be 'author', 'tool', or 'model'; got: "
+                f"{self.captured_by}"
             )
 
     def to_dict(self) -> dict:
