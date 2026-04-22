@@ -23,7 +23,11 @@ MIN_QUOTE_LEN = 20
 # Citation hint patterns
 # Matches (Author, Year), (Author & Author, Year), (Author et al., Year),
 # (ACRONYM, Year), (O'Brien et al., Year), multi-cite with ; separators
-_NAME_CHAR = r"[A-Za-z'\u2019]"  # letters, apostrophe, right single quote
+# Name characters: ASCII letters, Latin-1/Extended accents (e.g. \u00e9 \u00f1 \u00e1),
+# apostrophe, right single quote (\u2019), hyphen (for hyphenated surnames
+# like Monroy-Hern\u00e1ndez, Rodriguez-Lonebear). The \u00c0-\u024f range
+# covers Latin-1 Supplement + Latin Extended-A/B.
+_NAME_CHAR = r"[A-Za-z\u00c0-\u024f'\u2019\-]"
 _AUTHOR_YEAR_RE = re.compile(
     r"\(("
     rf"[A-Z]{_NAME_CHAR}+(?:\s(?:&|and)\s[A-Z]{_NAME_CHAR}+)*"
