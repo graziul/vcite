@@ -91,60 +91,226 @@ a:hover { text-decoration: underline; }
   margin-bottom: 6px;
 }
 
-/* ── Passage block inside panel ─────────────────────────────────────── */
+/* ── Source block ───────────────────────────────────────────────────── */
 
-.vcite-passage {
+.vcite-source-block {
   background: #fff;
   border-radius: 4px;
   padding: 10px 12px;
   margin-bottom: 8px;
-  font-style: italic;
   color: #333;
 }
 
-.vcite-passage .ctx {
-  color: #aaa;
-  font-style: normal;
+.vcite-source-title {
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 4px;
 }
 
-/* ── Metadata row (relation pill + hash) ────────────────────────────── */
+.vcite-source-meta {
+  font-size: 12px;
+  color: var(--vcite-muted);
+  margin-bottom: 6px;
+}
+
+.vcite-source-locator {
+  font-size: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.vcite-source-locator .vcite-locator-note {
+  color: var(--vcite-muted);
+  font-style: italic;
+}
+
+/* ── Metadata row (relation pill + conformance) ─────────────────────── */
 
 .vcite-meta-row {
   display: flex;
-  gap: 16px;
+  gap: 8px;
   flex-wrap: wrap;
-  font-size: 11px;
-  color: var(--vcite-muted);
+  margin-bottom: 10px;
 }
 
 .vcite-relation {
   font-size: 9px;
   font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
   padding: 2px 6px;
   border-radius: 3px;
   background: #e8eeff;
   color: var(--vcite-border);
 }
 
-.vcite-hash {
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 10px;
-  color: #888;
+.vcite-conformance {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: #eef2f7;
+  color: #556;
 }
 
-/* ── Verify link ────────────────────────────────────────────────────── */
+/* ── Fingerprint block ──────────────────────────────────────────────── */
+
+.vcite-fingerprint {
+  background: #fff;
+  border: 1px dashed #d0d8e8;
+  border-radius: 4px;
+  padding: 10px 12px;
+}
+
+.vcite-fingerprint-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--vcite-muted);
+  margin-bottom: 4px;
+}
+
+.vcite-hash-full {
+  display: block;
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 11px;
+  color: #334;
+  word-break: break-all;
+  background: #f6f8fb;
+  padding: 4px 6px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+
+.vcite-fingerprint-explain {
+  margin: 0;
+  font-size: 12px;
+  color: #445;
+  line-height: 1.45;
+}
+
+.vcite-fingerprint-explain em {
+  font-style: normal;
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 11px;
+  background: #eef2f7;
+  padding: 0 3px;
+  border-radius: 2px;
+}
+
+/* ── Source / archive links ─────────────────────────────────────────── */
 
 .vcite-link {
-  display: inline-block;
-  margin-top: 6px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--vcite-border);
   text-decoration: none;
+  border-bottom: 1px dotted var(--vcite-border);
 }
 
 .vcite-link:hover {
-  text-decoration: underline;
+  border-bottom-style: solid;
+}
+
+/* ── Verification & strain badges ───────────────────────────────────── */
+
+.vcite-verify,
+.vcite-strain {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: help;
+}
+
+.vcite-verify-glyph,
+.vcite-strain-glyph {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.vcite-verify--ok     { background: #e6f4ea; color: #1e6e36; }
+.vcite-verify--info   { background: #e3ecff; color: #1d4ed8; }
+.vcite-verify--warn   { background: #fff4e5; color: #8a4b00; }
+.vcite-verify--drift  { background: #fde8e8; color: #9b1c1c; }
+.vcite-verify--fail   { background: #fde8e8; color: #9b1c1c; }
+.vcite-verify--muted  { background: #eef2f7; color: #556; }
+
+.vcite-strain--ok     { background: #e6f4ea; color: #1e6e36; }
+.vcite-strain--warn   { background: #fff4e5; color: #8a4b00; }
+.vcite-strain--drift  { background: #fde8e8; color: #9b1c1c; }
+.vcite-strain--fail   { background: #fde8e8; color: #9b1c1c; }
+.vcite-strain--muted  { background: #eef2f7; color: #556; }
+
+.vcite-verify-date,
+.vcite-strain-score {
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ── Collapsible enrichment detail ──────────────────────────────────── */
+
+.vcite-enrichment {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #445;
+}
+
+.vcite-enrichment summary {
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--vcite-muted);
+  padding: 4px 0;
+  user-select: none;
+}
+
+.vcite-enrichment summary:hover {
+  color: var(--vcite-border);
+}
+
+.vcite-enrichment-dl {
+  margin: 4px 0 0;
+  padding: 8px 10px;
+  background: #fff;
+  border: 1px solid #eef2f7;
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 12px;
+}
+
+.vcite-enrichment-dl dt {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--vcite-muted);
+  padding-top: 2px;
+}
+
+.vcite-enrichment-dl dd {
+  margin: 0;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.vcite-claim-context {
+  font-style: italic;
+  color: #334;
 }
 
 /* ── Banner ─────────────────────────────────────────────────────────── */
@@ -190,6 +356,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -214,6 +390,16 @@ a:hover { text-decoration: underline; }
     "relation": "method",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -238,6 +424,16 @@ a:hover { text-decoration: underline; }
     "relation": "method",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -261,6 +457,17 @@ a:hover { text-decoration: underline; }
     "relation": "cautions",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)",
+          "L1 citation: no context windows or source URL for verification"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -285,6 +492,16 @@ a:hover { text-decoration: underline; }
     "relation": "cautions",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -309,6 +526,16 @@ a:hover { text-decoration: underline; }
     "relation": "quantifies",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -339,6 +566,16 @@ a:hover { text-decoration: underline; }
     "relation": "quantifies",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -364,6 +601,17 @@ a:hover { text-decoration: underline; }
     "relation": "quantifies",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)",
+          "L1 citation: no context windows or source URL for verification"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -394,6 +642,16 @@ a:hover { text-decoration: underline; }
     "relation": "method",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -421,6 +679,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -447,6 +715,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -474,6 +752,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -500,6 +788,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -527,6 +825,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -552,6 +860,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -578,6 +896,16 @@ a:hover { text-decoration: underline; }
     "relation": "contextualizes",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -603,6 +931,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -628,6 +966,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -653,6 +1001,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -679,6 +1037,16 @@ a:hover { text-decoration: underline; }
     "relation": "quantifies",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -705,6 +1073,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -729,6 +1107,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -754,6 +1142,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -777,6 +1175,17 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)",
+          "L1 citation: no context windows or source URL for verification"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -800,6 +1209,17 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)",
+          "L1 citation: no context windows or source URL for verification"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -826,6 +1246,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -849,6 +1279,17 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)",
+          "L1 citation: no context windows or source URL for verification"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -872,6 +1313,17 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)",
+          "L1 citation: no context windows or source URL for verification"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -898,6 +1350,16 @@ a:hover { text-decoration: underline; }
     "relation": "quantifies",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -923,6 +1385,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -948,6 +1420,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -973,6 +1455,16 @@ a:hover { text-decoration: underline; }
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -997,6 +1489,16 @@ a:hover { text-decoration: underline; }
     "relation": "method",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   },
@@ -1022,6 +1524,16 @@ a:hover { text-decoration: underline; }
     "relation": "quantifies",
     "captured_at": "2026-04-11T00:00:00Z",
     "captured_by": "model",
+    "enrichment": {
+      "verification": {
+        "status": "internal-only",
+        "internal_hash_valid": true,
+        "checked_at": "2026-04-22T20:37:48Z",
+        "warnings": [
+          "AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"
+        ]
+      }
+    },
     "@context": "https://vcite.pub/ns/v1/",
     "@type": "VCiteCitation"
   }
@@ -1030,6 +1542,18 @@ a:hover { text-decoration: underline; }
 </head>
 <body>
 <article>
+<div class="vcite-banner">
+  <strong>VCITE-enhanced article.</strong> Each <span style="background:var(--vcite-bg);border-bottom:2px solid var(--vcite-border);padding:1px 3px">highlighted passage</span> carries a
+  SHA-256 fingerprint (34 in this article) linking its exact wording to a
+  cited source. Click a passage to open its evidence chain &mdash; source, relation,
+  and the full hash. Anyone can fetch the source, locate the passage, and recompute
+  the hash to prove the wording hasn&rsquo;t been altered. Hash integrity is not
+  claim validity: that the source actually substantiates the claim remains the
+  reader&rsquo;s judgment. <a href="https://github.com/graziul/vcite">What is VCITE?</a>
+</div>
+
+
+
 <header>
 <h1>Confronting the Challenges of Sensitive Open Data</h1>
 <div class="meta">
@@ -1188,8 +1712,8 @@ contexts around the world (e.g., Australia, see Lovett et al., 2020).</span><sup
 aspects of indigenous data sovereignty in the United States as an 
 example.</p><p>The FAIR principles—published in 2016 to promote best 
 practices in scientific data sharing—are designed to make data 
-“<span class="vcite-mark" data-vcite="vcite-018" data-vcite-ids="vcite-018" onclick="toggleVcite(this)">Findable, Accessible, Interoperable, and Reusable</span><sup class="vcite-badge" data-vcite="vcite-018" onclick="toggleVcite(this)">v</sup>” (Wilkinson et al., 
-2016). A complementary set of principles, the CARE 
+“<span class="vcite-mark" data-vcite="vcite-018" data-vcite-ids="vcite-018" onclick="toggleVcite(this)"><span class="vcite-mark" data-vcite="vcite-018" data-vcite-ids="vcite-018" onclick="toggleVcite(this)">Findable, Accessible, Interoperable, and Reusable</span><sup class="vcite-badge" data-vcite="vcite-018" onclick="toggleVcite(this)">v</sup>” (Wilkinson et al., 
+2016).</span> A complementary set of principles, the CARE 
 Principles—“<span class="vcite-mark" data-vcite="vcite-019" data-vcite-ids="vcite-019" onclick="toggleVcite(this)">Collective Benefit, Authority to Control, Responsibility, 
 and Ethics</span><sup class="vcite-badge" data-vcite="vcite-019" onclick="toggleVcite(this)">v</sup>”—were developed by the International Indigenous Data 
 Sovereignty Interest Group, through consultations with Indigenous 
@@ -1381,391 +1905,1497 @@ function toggleVcite(el) {
 
 </script>
 
+<script>
+/* VCITE toggle — expand/collapse evidence panels.
+ *
+ * Panels live in a container at the end of the document to avoid
+ * <div>-inside-<p> nesting issues. When toggled, panels are moved
+ * to appear right after the paragraph containing the clicked citation.
+ *
+ * Multi-cite groups: a single  carries
+ * data-vcite-ids="id1,id2,id3". Clicking the span opens all panels
+ * for the group, stacked. Clicking a specific badge opens that badge's
+ * panel alongside any other panels in the group that are already open.
+ */
+function toggleVcite(el) {
+  // Determine which IDs this click should toggle.
+  // A span wrapper carries data-vcite-ids (all group members).
+  // A badge carries data-vcite (its own id) — clicking it should still
+  // open the whole group so the reader sees every cited source together.
+  var ids = [];
+  if (el.dataset.vciteIds) {
+    ids = el.dataset.vciteIds.split(',').map(function (s) { return s.trim(); });
+  } else if (el.dataset.vcite) {
+    // If this is a badge inside a group wrapper, use the group's ids list.
+    var groupWrap = el.parentElement && el.parentElement.dataset && el.parentElement.dataset.vciteIds
+      ? el.parentElement
+      : el.previousElementSibling;
+    if (groupWrap && groupWrap.dataset && groupWrap.dataset.vciteIds) {
+      ids = groupWrap.dataset.vciteIds.split(',').map(function (s) { return s.trim(); });
+    } else {
+      ids = [el.dataset.vcite];
+    }
+  }
+  if (ids.length === 0) return;
+
+  var panels = ids
+    .map(function (id) { return document.getElementById('panel-' + id); })
+    .filter(function (p) { return p; });
+  if (panels.length === 0) return;
+
+  // Close any other open panels that aren't in this group
+  var selected = {};
+  panels.forEach(function (p) { selected[p.id] = true; });
+  document.querySelectorAll('.vcite-panel.open').forEach(function (p) {
+    if (!selected[p.id]) p.classList.remove('open');
+  });
+
+  // If any panel in the group is closed, open all. Otherwise close all.
+  var anyClosed = panels.some(function (p) { return !p.classList.contains('open'); });
+
+  if (anyClosed) {
+    // Move panels to appear stacked after the enclosing block element
+    var block = el.closest('p, li, blockquote, div:not(.vcite-panel):not(.vcite-panels-container):not(.vcite-banner)');
+    if (block) {
+      var anchor = block;
+      panels.forEach(function (p) {
+        block.parentNode.insertBefore(p, anchor.nextSibling);
+        anchor = p;
+      });
+    }
+    panels.forEach(function (p) { p.classList.add('open'); });
+    panels[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } else {
+    panels.forEach(function (p) { p.classList.remove('open'); });
+  }
+}
+
+</script>
+
+<script>
+/* VCITE toggle — expand/collapse evidence panels.
+ *
+ * Panels live in a container at the end of the document to avoid
+ * <div>-inside-<p> nesting issues. When toggled, panels are moved
+ * to appear right after the paragraph containing the clicked citation.
+ *
+ * Multi-cite groups: a single  carries
+ * data-vcite-ids="id1,id2,id3". Clicking the span opens all panels
+ * for the group, stacked. Clicking a specific badge opens that badge's
+ * panel alongside any other panels in the group that are already open.
+ */
+function toggleVcite(el) {
+  // Determine which IDs this click should toggle.
+  // A span wrapper carries data-vcite-ids (all group members).
+  // A badge carries data-vcite (its own id) — clicking it should still
+  // open the whole group so the reader sees every cited source together.
+  var ids = [];
+  if (el.dataset.vciteIds) {
+    ids = el.dataset.vciteIds.split(',').map(function (s) { return s.trim(); });
+  } else if (el.dataset.vcite) {
+    // If this is a badge inside a group wrapper, use the group's ids list.
+    var groupWrap = el.parentElement && el.parentElement.dataset && el.parentElement.dataset.vciteIds
+      ? el.parentElement
+      : el.previousElementSibling;
+    if (groupWrap && groupWrap.dataset && groupWrap.dataset.vciteIds) {
+      ids = groupWrap.dataset.vciteIds.split(',').map(function (s) { return s.trim(); });
+    } else {
+      ids = [el.dataset.vcite];
+    }
+  }
+  if (ids.length === 0) return;
+
+  var panels = ids
+    .map(function (id) { return document.getElementById('panel-' + id); })
+    .filter(function (p) { return p; });
+  if (panels.length === 0) return;
+
+  // Close any other open panels that aren't in this group
+  var selected = {};
+  panels.forEach(function (p) { selected[p.id] = true; });
+  document.querySelectorAll('.vcite-panel.open').forEach(function (p) {
+    if (!selected[p.id]) p.classList.remove('open');
+  });
+
+  // If any panel in the group is closed, open all. Otherwise close all.
+  var anyClosed = panels.some(function (p) { return !p.classList.contains('open'); });
+
+  if (anyClosed) {
+    // Move panels to appear stacked after the enclosing block element
+    var block = el.closest('p, li, blockquote, div:not(.vcite-panel):not(.vcite-panels-container):not(.vcite-banner)');
+    if (block) {
+      var anchor = block;
+      panels.forEach(function (p) {
+        block.parentNode.insertBefore(p, anchor.nextSibling);
+        anchor = p;
+      });
+    }
+    panels.forEach(function (p) { p.classList.add('open'); });
+    panels[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } else {
+    panels.forEach(function (p) { p.classList.remove('open'); });
+  }
+}
+
+</script>
+
+<script>
+/* VCITE toggle — expand/collapse evidence panels.
+ *
+ * Panels live in a container at the end of the document to avoid
+ * <div>-inside-<p> nesting issues. When toggled, panels are moved
+ * to appear right after the paragraph containing the clicked citation.
+ *
+ * Multi-cite groups: a single  carries
+ * data-vcite-ids="id1,id2,id3". Clicking the span opens all panels
+ * for the group, stacked. Clicking a specific badge opens that badge's
+ * panel alongside any other panels in the group that are already open.
+ */
+function toggleVcite(el) {
+  // Determine which IDs this click should toggle.
+  // A span wrapper carries data-vcite-ids (all group members).
+  // A badge carries data-vcite (its own id) — clicking it should still
+  // open the whole group so the reader sees every cited source together.
+  var ids = [];
+  if (el.dataset.vciteIds) {
+    ids = el.dataset.vciteIds.split(',').map(function (s) { return s.trim(); });
+  } else if (el.dataset.vcite) {
+    // If this is a badge inside a group wrapper, use the group's ids list.
+    var groupWrap = el.parentElement && el.parentElement.dataset && el.parentElement.dataset.vciteIds
+      ? el.parentElement
+      : el.previousElementSibling;
+    if (groupWrap && groupWrap.dataset && groupWrap.dataset.vciteIds) {
+      ids = groupWrap.dataset.vciteIds.split(',').map(function (s) { return s.trim(); });
+    } else {
+      ids = [el.dataset.vcite];
+    }
+  }
+  if (ids.length === 0) return;
+
+  var panels = ids
+    .map(function (id) { return document.getElementById('panel-' + id); })
+    .filter(function (p) { return p; });
+  if (panels.length === 0) return;
+
+  // Close any other open panels that aren't in this group
+  var selected = {};
+  panels.forEach(function (p) { selected[p.id] = true; });
+  document.querySelectorAll('.vcite-panel.open').forEach(function (p) {
+    if (!selected[p.id]) p.classList.remove('open');
+  });
+
+  // If any panel in the group is closed, open all. Otherwise close all.
+  var anyClosed = panels.some(function (p) { return !p.classList.contains('open'); });
+
+  if (anyClosed) {
+    // Move panels to appear stacked after the enclosing block element
+    var block = el.closest('p, li, blockquote, div:not(.vcite-panel):not(.vcite-panels-container):not(.vcite-banner)');
+    if (block) {
+      var anchor = block;
+      panels.forEach(function (p) {
+        block.parentNode.insertBefore(p, anchor.nextSibling);
+        anchor = p;
+      });
+    }
+    panels.forEach(function (p) { p.classList.add('open'); });
+    panels[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } else {
+    panels.forEach(function (p) { p.classList.remove('open'); });
+  }
+}
+
+</script>
+
+<script>
+/* VCITE toggle — expand/collapse evidence panels.
+ *
+ * Panels live in a container at the end of the document to avoid
+ * <div>-inside-<p> nesting issues. When toggled, panels are moved
+ * to appear right after the paragraph containing the clicked citation.
+ *
+ * Multi-cite groups: a single <span class="vcite-mark"> carries
+ * data-vcite-ids="id1,id2,id3". Clicking the span opens all panels
+ * for the group, stacked. Clicking a specific badge opens that badge's
+ * panel alongside any other panels in the group that are already open.
+ */
+function toggleVcite(el) {
+  // Determine which IDs this click should toggle.
+  // A span wrapper carries data-vcite-ids (all group members).
+  // A badge carries data-vcite (its own id) — clicking it should still
+  // open the whole group so the reader sees every cited source together.
+  var ids = [];
+  if (el.dataset.vciteIds) {
+    ids = el.dataset.vciteIds.split(',').map(function (s) { return s.trim(); });
+  } else if (el.dataset.vcite) {
+    // If this is a badge inside a group wrapper, use the group's ids list.
+    var groupWrap = el.parentElement && el.parentElement.dataset && el.parentElement.dataset.vciteIds
+      ? el.parentElement
+      : el.previousElementSibling;
+    if (groupWrap && groupWrap.dataset && groupWrap.dataset.vciteIds) {
+      ids = groupWrap.dataset.vciteIds.split(',').map(function (s) { return s.trim(); });
+    } else {
+      ids = [el.dataset.vcite];
+    }
+  }
+  if (ids.length === 0) return;
+
+  var panels = ids
+    .map(function (id) { return document.getElementById('panel-' + id); })
+    .filter(function (p) { return p; });
+  if (panels.length === 0) return;
+
+  // Close any other open panels that aren't in this group
+  var selected = {};
+  panels.forEach(function (p) { selected[p.id] = true; });
+  document.querySelectorAll('.vcite-panel.open').forEach(function (p) {
+    if (!selected[p.id]) p.classList.remove('open');
+  });
+
+  // If any panel in the group is closed, open all. Otherwise close all.
+  var anyClosed = panels.some(function (p) { return !p.classList.contains('open'); });
+
+  if (anyClosed) {
+    // Move panels to appear stacked after the enclosing block element
+    var block = el.closest('p, li, blockquote, div:not(.vcite-panel):not(.vcite-panels-container):not(.vcite-banner)');
+    if (block) {
+      var anchor = block;
+      panels.forEach(function (p) {
+        block.parentNode.insertBefore(p, anchor.nextSibling);
+        anchor = p;
+      });
+    }
+    panels.forEach(function (p) { p.classList.add('open'); });
+    panels[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } else {
+    panels.forEach(function (p) { p.classList.remove('open'); });
+  }
+}
+
+</script>
+
 <div class="vcite-panels-container" style="display:contents">
 <div class="vcite-panel" id="panel-vcite-001">
   <div class="vcite-panel-label">Verified citation &mdash; Savage &amp; Monroy-Hernández (2018)</div>
-  <div class="vcite-passage"><span class="ctx">he public, often including  sensitive information.</span>When this information is accessible to third  parties, how should we resolve tensions between personal privacy and  government transparency (Savage &amp; Monroy-Hernández, 2018)?<span class="ctx">
 
-In  this article, we’ll use the term “sensitive </span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:8e43e12ff0a4...2daa</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Participatory militias: An analysis of an armed movement to protect communities in Mexico</div>
+    <div class="vcite-source-meta">Savage, S.; Monroy-Hernández, A. &middot; 2018 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1145/3287560.3287577" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1145/3287560.3287577" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:8e43e12ff0a447e2a9b3c7ffb7622a1818ffe25f8eec2f16200d0ac7c1b12daa</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-002">
   <div class="vcite-panel-label">Verified citation &mdash; Lin (2015)</div>
-  <div class="vcite-passage"><span class="ctx">operates in practice  or the data rights at stake.</span>Some even argue this approach has led to  excessive openness that may compromise police operations (Lin, 2015;  Newell, 2021).<span class="ctx">
 
-Furthermore, officer interactions with the publi</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">method</span></span>
-    <span class="vcite-hash">sha256:7cdeb0c5ebd5...d2df</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Police body worn cameras and privacy</div>
+    <div class="vcite-source-meta">Lin, R. &middot; 2015 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://scholarship.law.duke.edu/dltr/vol14/iss1/15/" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://scholarship.law.duke.edu/dltr/vol14/iss1/15/" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">method</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:7cdeb0c5ebd5a02767d3f9d21e1b70a456a21c604407de1a5c45bd6246bad2df</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-003">
   <div class="vcite-panel-label">Verified citation &mdash; Newell (2021)</div>
-  <div class="vcite-passage"><span class="ctx">operates in practice  or the data rights at stake.</span>Some even argue this approach has led to  excessive openness that may compromise police operations (Lin, 2015;  Newell, 2021).<span class="ctx">
 
-Furthermore, officer interactions with the publi</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">method</span></span>
-    <span class="vcite-hash">sha256:7cdeb0c5ebd5...d2df</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Body cameras help monitor police but can invade people&#x27;s privacy</div>
+    <div class="vcite-source-meta">Newell, B. &middot; 2021 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://theconversation.com/body-cameras-help-monitor-police-but-can-invade-peoples-privacy-160846" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://theconversation.com/body-cameras-help-monitor-police-but-can-invade-peoples-privacy-160846" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">method</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:7cdeb0c5ebd5a02767d3f9d21e1b70a456a21c604407de1a5c45bd6246bad2df</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-004">
   <div class="vcite-panel-label">Verified citation &mdash; Erdos (2019)</div>
-  <div class="vcite-passage"><span class="ctx">weighing of interests  (transparency vs. privacy).</span>For at least the last fifteen years,  European jurisprudence has favored the protection of personal privacy  (European Commission v. The Bavarian Lager Co. Ltd., 2010), a principle  that has continued under GDPR, but this approach has led to predictable  concerns about transparency vis-à-vis journalistic access (Erdos, 2019)  as well as highlighted inconsistency across member states (Erdos, 2016).<span class="ctx">
 
-While  the GDPR reflects a substantial differenc</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">cautions</span></span>
-    <span class="vcite-hash">sha256:270ba6c3c559...e8e9</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">European data protection regulation, journalism, and traditional publishers</div>
+    <div class="vcite-source-meta">Erdos, D. &middot; 2019 &middot; academic</div>
+    <div class="vcite-source-locator"><span class="vcite-locator-note">No source link &mdash; document-level reference only.</span></div>
   </div>
-  <a class="vcite-link" href="#" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">cautions</span>
+    <span class="vcite-conformance">Conformance L1</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations) — Warning: L1 citation: no context windows or source URL for verification"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:270ba6c3c559c7f39bba177b76a3ad94ca69b8e2d20322f33b93b38ed2ede8e9</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-005">
   <div class="vcite-panel-label">Verified citation &mdash; Erdos (2016)</div>
-  <div class="vcite-passage"><span class="ctx">weighing of interests  (transparency vs. privacy).</span>For at least the last fifteen years,  European jurisprudence has favored the protection of personal privacy  (European Commission v. The Bavarian Lager Co. Ltd., 2010), a principle  that has continued under GDPR, but this approach has led to predictable  concerns about transparency vis-à-vis journalistic access (Erdos, 2019)  as well as highlighted inconsistency across member states (Erdos, 2016).<span class="ctx">
 
-While  the GDPR reflects a substantial differenc</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">cautions</span></span>
-    <span class="vcite-hash">sha256:270ba6c3c559...e8e9</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">European Union data protection law and media expression: Fundamentally off balance</div>
+    <div class="vcite-source-meta">Erdos, D. &middot; 2016 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1017/S0020589315000512" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1017/S0020589315000512" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">cautions</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:270ba6c3c559c7f39bba177b76a3ad94ca69b8e2d20322f33b93b38ed2ede8e9</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-006">
   <div class="vcite-panel-label">Verified citation &mdash; Dwork (2009)</div>
-  <div class="vcite-passage"><span class="ctx"> contexts.
 
-The Challenge of Sensitive Open Data
-
-</span>The  risks associated with sensitive open data require identifying and  justifying a strategy for negotiating the privacy/utility tradeoff  (Dwork, 2009).<span class="ctx"> The first challenge: for information subject to o</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">quantifies</span></span>
-    <span class="vcite-hash">sha256:2e1d9b70d222...6ca4</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">The differential privacy frontier</div>
+    <div class="vcite-source-meta">Dwork, C. &middot; 2009 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1145/1557019.1557079" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1145/1557019.1557079" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">quantifies</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:2e1d9b70d222c361ce2f44857d0a74cc57d0c6cf745608f2951682e1067f6ca4</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-007">
   <div class="vcite-panel-label">Verified citation &mdash; Dickert et al. (2021)</div>
-  <div class="vcite-passage"><span class="ctx">nsent Requirements for  Emergency Research, 1996).</span>Public research presentations are the most  common method of community consultation and are associated with high  acceptance rates of EFIC studies by community members (Dickert et al.,  2021; Fehr et al., 2015).<span class="ctx"> Other approaches, like surveys, focus groups,  an</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">quantifies</span></span>
-    <span class="vcite-hash">sha256:de2f7efc3312...55f6</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Meeting unique requirements: Community consultation and public disclosure for EFIC research</div>
+    <div class="vcite-source-meta">Dickert, N. W. et al. &middot; 2021 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1111/acem.14264" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1111/acem.14264" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">quantifies</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:de2f7efc3312fef8fe4897c591b3e1881984fc0548a0e12122ce248cca0855f6</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-008">
   <div class="vcite-panel-label">Verified citation &mdash; Fehr et al. (2015)</div>
-  <div class="vcite-passage"><span class="ctx">nsent Requirements for  Emergency Research, 1996).</span>Public research presentations are the most  common method of community consultation and are associated with high  acceptance rates of EFIC studies by community members (Dickert et al.,  2021; Fehr et al., 2015).<span class="ctx"> Other approaches, like surveys, focus groups,  an</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">quantifies</span></span>
-    <span class="vcite-hash">sha256:de2f7efc3312...55f6</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Learning from experience: A systematic review of community consultation acceptance data</div>
+    <div class="vcite-source-meta">Fehr, A. E. et al. &middot; 2015 &middot; academic</div>
+    <div class="vcite-source-locator"><span class="vcite-locator-note">No source link &mdash; document-level reference only.</span></div>
   </div>
-  <a class="vcite-link" href="#" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">quantifies</span>
+    <span class="vcite-conformance">Conformance L1</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations) — Warning: L1 citation: no context windows or source URL for verification"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:de2f7efc3312fef8fe4897c591b3e1881984fc0548a0e12122ce248cca0855f6</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-009">
   <div class="vcite-panel-label">Verified citation &mdash; Dickert et al. (2021)</div>
-  <div class="vcite-passage"><span class="ctx">embers (Dickert et al.,  2021; Fehr et al., 2015).</span>Other approaches, like surveys, focus groups,  and interviews, have also been used (Dickert et al., 2021).<span class="ctx">
 
-Similar  mechanisms for community engagement cou</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">method</span></span>
-    <span class="vcite-hash">sha256:201ca26c5a25...ed50</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Meeting unique requirements: Community consultation and public disclosure for EFIC research</div>
+    <div class="vcite-source-meta">Dickert, N. W. et al. &middot; 2021 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1111/acem.14264" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1111/acem.14264" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">method</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:201ca26c5a256e1d0ce1d9d5653688fd56e1d9c04d60dbcc9e32130b6566ed50</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-010">
   <div class="vcite-panel-label">Verified citation &mdash; Hardinges et al. (2021)</div>
-  <div class="vcite-passage"><span class="ctx">ture, enable communal ownership of such data. How?</span>While data  trusts and similar entities have gained traction as vehicles designed  for responsible data stewardship (Hardinges et al., 2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation (Micheli et al., 2021; Chouldechova et  al., 2023; Irani et al., 2023; Sambasivan et al., 2023).<span class="ctx"> Proven models  for community consultation offer a</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:37cd4a1c378f...ee15</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Data trusts in 2021</div>
+    <div class="vcite-source-meta">Hardinges, J. et al. &middot; 2021 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://www.adalovelaceinstitute.org/report/legal-mechanisms-data-stewardship/" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://www.adalovelaceinstitute.org/report/legal-mechanisms-data-stewardship/" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-011">
   <div class="vcite-panel-label">Verified citation &mdash; Micheli et al. (2021)</div>
-  <div class="vcite-passage"><span class="ctx">ture, enable communal ownership of such data. How?</span>While data  trusts and similar entities have gained traction as vehicles designed  for responsible data stewardship (Hardinges et al., 2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation (Micheli et al., 2021; Chouldechova et  al., 2023; Irani et al., 2023; Sambasivan et al., 2023).<span class="ctx"> Proven models  for community consultation offer a</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:37cd4a1c378f...ee15</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">The datafication of the public sector</div>
+    <div class="vcite-source-meta">Micheli, M. et al. &middot; 2021 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1145/3442188.3445923" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1145/3442188.3445923" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-012">
   <div class="vcite-panel-label">Verified citation &mdash; Chouldechova et al. (2023)</div>
-  <div class="vcite-passage"><span class="ctx">ture, enable communal ownership of such data. How?</span>While data  trusts and similar entities have gained traction as vehicles designed  for responsible data stewardship (Hardinges et al., 2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation (Micheli et al., 2021; Chouldechova et  al., 2023; Irani et al., 2023; Sambasivan et al., 2023).<span class="ctx"> Proven models  for community consultation offer a</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:37cd4a1c378f...ee15</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">A case for rejection</div>
+    <div class="vcite-source-meta">Chouldechova, A. et al. &middot; 2023 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1145/3593013.3594093" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1145/3593013.3594093" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-013">
   <div class="vcite-panel-label">Verified citation &mdash; Irani et al. (2023)</div>
-  <div class="vcite-passage"><span class="ctx">ture, enable communal ownership of such data. How?</span>While data  trusts and similar entities have gained traction as vehicles designed  for responsible data stewardship (Hardinges et al., 2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation (Micheli et al., 2021; Chouldechova et  al., 2023; Irani et al., 2023; Sambasivan et al., 2023).<span class="ctx"> Proven models  for community consultation offer a</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:37cd4a1c378f...ee15</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">The last mile: Where language, culture, and technology meet in data work</div>
+    <div class="vcite-source-meta">Irani, L. et al. &middot; 2023 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1145/3617694.3623261" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1145/3617694.3623261" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-014">
   <div class="vcite-panel-label">Verified citation &mdash; Sambasivan et al. (2023)</div>
-  <div class="vcite-passage"><span class="ctx">ture, enable communal ownership of such data. How?</span>While data  trusts and similar entities have gained traction as vehicles designed  for responsible data stewardship (Hardinges et al., 2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation (Micheli et al., 2021; Chouldechova et  al., 2023; Irani et al., 2023; Sambasivan et al., 2023).<span class="ctx"> Proven models  for community consultation offer a</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:37cd4a1c378f...ee15</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Re-imagining algorithmic fairness in India and beyond</div>
+    <div class="vcite-source-meta">Sambasivan, N. et al. &middot; 2023 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1145/3593013.3593989" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1145/3593013.3593989" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-015">
   <div class="vcite-panel-label">Verified citation &mdash; Kukutai &amp; Taylor (2016)</div>
-  <div class="vcite-passage"><span class="ctx">open data.
 
-Learning from Indigenous Communities
-
-</span>Data  sovereignty is a critical issue for indigenous communities wary of  extractive practices, a conversation that predates current debates  (Kukutai and Taylor, 2016).<span class="ctx"> We speak about the American context here,  which </span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:53ecebc513a7...1483</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Indigenous data sovereignty: Toward an agenda</div>
+    <div class="vcite-source-meta">Kukutai, T.; Taylor, J. &middot; 2016 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://www.jstor.org/stable/j.ctt1q1crgf" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://www.jstor.org/stable/j.ctt1q1crgf" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:53ecebc513a7f61473b2cf375225549c4a3e7fbef27eef881d4ed08598a31483</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-016">
   <div class="vcite-panel-label">Verified citation &mdash; Carroll et al. (2020)</div>
-  <div class="vcite-passage"><span class="ctx">dates current debates  (Kukutai and Taylor, 2016).</span>We speak about the American context here,  which is influenced by Canadian efforts to support First Nations  (Carroll et al., 2020), but the tensions involved emerge in multiple  contexts around the world (e.g., Australia, see Lovett et al., 2020).<span class="ctx"> We  cannot speak to these contexts individually b</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">contextualizes</span></span>
-    <span class="vcite-hash">sha256:7b113070a44a...a0a1</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">The CARE Principles for Indigenous Data Governance</div>
+    <div class="vcite-source-meta">Carroll, S. R. et al. &middot; 2020 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://openscholarshippress.pubpub.org/pub/xx3kj9rv" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://openscholarshippress.pubpub.org/pub/xx3kj9rv" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">contextualizes</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:7b113070a44a17345243b372276f7f96c578a25866aeeb0041007a2bbbbea0a1</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-017">
   <div class="vcite-panel-label">Verified citation &mdash; Wilkinson &amp; al. (2016)</div>
-  <div class="vcite-passage"><span class="ctx">sovereignty in the United States as an  example.
 
-</span>The FAIR principles—published in 2016 to promote best  practices in scientific data sharing—are designed to make data  “Findable, Accessible, Interoperable, and Reusable” (Wilkinson et al.,  2016).<span class="ctx"> A complementary set of principles, the CARE  Prin</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:b96c8e401e99...790f</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">The FAIR guiding principles for scientific data management and stewardship</div>
+    <div class="vcite-source-meta">Wilkinson, M. D.; et al. &middot; 2016 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1038/sdata.2016.18" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1038/sdata.2016.18" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:b96c8e401e99cde15f338cfe110eb19c2c392cbabf74a784861d4708c1bb790f</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-018">
   <div class="vcite-panel-label">Verified citation &mdash; Wilkinson &amp; al. (2016)</div>
-  <div class="vcite-passage"><span class="ctx">cientific data sharing—are designed to make data  </span>Findable, Accessible, Interoperable, and Reusable<span class="ctx"> (Wilkinson et al.,  2016). A complementary set of</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:3b773ddaecdb...8157</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">The FAIR guiding principles for scientific data management and stewardship</div>
+    <div class="vcite-source-meta">Wilkinson, M. D.; et al. &middot; 2016 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1038/sdata.2016.18" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1038/sdata.2016.18" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:3b773ddaecdb21db47a45be68f695aebe2c035f0015c5439751c184afb568157</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-019">
   <div class="vcite-panel-label">Verified citation &mdash; Wilkinson &amp; al. (2016)</div>
-  <div class="vcite-passage"><span class="ctx">lementary set of principles, the CARE  Principles—</span>Collective Benefit, Authority to Control, Responsibility,  and Ethics<span class="ctx">—were developed by the International Indigenous Da</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:7060a73d5de2...e667</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">The FAIR guiding principles for scientific data management and stewardship</div>
+    <div class="vcite-source-meta">Wilkinson, M. D.; et al. &middot; 2016 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1038/sdata.2016.18" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1038/sdata.2016.18" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:7060a73d5de27ce5c72fef08c0570efd54dd32ddf39bb8c5a82bd606a9a7e667</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-020">
   <div class="vcite-panel-label">Verified citation &mdash; Carroll et al. (2020)</div>
-  <div class="vcite-passage"><span class="ctx">y use of data belonging to Indigenous communities.</span>According to  their authors, the CARE Principles integrate Indigenous worldviews that  center “people” and “purpose” to address critical gaps in conventional  data frameworks by ensuring that Indigenous Peoples benefit from data  activities and maintain control over their data (Carroll et al., 2020).<span class="ctx">
 
-Join our community!Subscribe to the Katina Newsl</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">quantifies</span></span>
-    <span class="vcite-hash">sha256:f0edab78d6a6...095a</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">The CARE Principles for Indigenous Data Governance</div>
+    <div class="vcite-source-meta">Carroll, S. R. et al. &middot; 2020 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://openscholarshippress.pubpub.org/pub/xx3kj9rv" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://openscholarshippress.pubpub.org/pub/xx3kj9rv" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">quantifies</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:f0edab78d6a61cf0849a154d09d700804880c2d12deab1a812e337f8e954095a</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-021">
   <div class="vcite-panel-label">Verified citation &mdash; Carroll et al. (2019)</div>
-  <div class="vcite-passage"><span class="ctx">our community!Subscribe to the Katina Newsletter
 
-</span>Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing (Carroll, 2019;  Rodriguez-Lonebear, 2016; Rainie et al., 2017; NCAIPRC, 2017; NCAI,  2018).<span class="ctx"> In turn, tribes developed and adapted governance </span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:fb0ea1b33c0c...2e6f</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Indigenous data governance: Strategies from United States Native nations</div>
+    <div class="vcite-source-meta">Carroll, S. R. et al. &middot; 2019 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.5334/dsj-2019-031" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.5334/dsj-2019-031" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:fb0ea1b33c0c7abf8fed4b585edf4a21f637c7eea9da1edee77109bc3eb82e6f</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-022">
   <div class="vcite-panel-label">Verified citation &mdash; Rodriguez-Lonebear (2016)</div>
-  <div class="vcite-passage"><span class="ctx">our community!Subscribe to the Katina Newsletter
 
-</span>Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing (Carroll, 2019;  Rodriguez-Lonebear, 2016; Rainie et al., 2017; NCAIPRC, 2017; NCAI,  2018).<span class="ctx"> In turn, tribes developed and adapted governance </span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:fb0ea1b33c0c...2e6f</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Building a data revolution in Indian country</div>
+    <div class="vcite-source-meta">Rodriguez-Lonebear, D. &middot; 2016 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.22459/CAEPR38.11.2016.1" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.22459/CAEPR38.11.2016.1" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:fb0ea1b33c0c7abf8fed4b585edf4a21f637c7eea9da1edee77109bc3eb82e6f</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-023">
   <div class="vcite-panel-label">Verified citation &mdash; Rainie &amp; al. (2017)</div>
-  <div class="vcite-passage"><span class="ctx">our community!Subscribe to the Katina Newsletter
 
-</span>Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing (Carroll, 2019;  Rodriguez-Lonebear, 2016; Rainie et al., 2017; NCAIPRC, 2017; NCAI,  2018).<span class="ctx"> In turn, tribes developed and adapted governance </span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:fb0ea1b33c0c...2e6f</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Data as strategic resource: Self-determination and the data challenge for US Indigenous nations</div>
+    <div class="vcite-source-meta">Rainie, S. C.; et al. &middot; 2017 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.18584/iipj.2017.8.2.1" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.18584/iipj.2017.8.2.1" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:fb0ea1b33c0c7abf8fed4b585edf4a21f637c7eea9da1edee77109bc3eb82e6f</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-024">
   <div class="vcite-panel-label">Verified citation &mdash; NCAIPRC (2017)</div>
-  <div class="vcite-passage"><span class="ctx">our community!Subscribe to the Katina Newsletter
 
-</span>Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing (Carroll, 2019;  Rodriguez-Lonebear, 2016; Rainie et al., 2017; NCAIPRC, 2017; NCAI,  2018).<span class="ctx"> In turn, tribes developed and adapted governance </span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:fb0ea1b33c0c...2e6f</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Recommendations from tribal experiences with tribal censuses and surveys</div>
+    <div class="vcite-source-meta">NCAIPRC &middot; 2017 &middot; academic</div>
+    <div class="vcite-source-locator"><span class="vcite-locator-note">No source link &mdash; document-level reference only.</span></div>
   </div>
-  <a class="vcite-link" href="#" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L1</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations) — Warning: L1 citation: no context windows or source URL for verification"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:fb0ea1b33c0c7abf8fed4b585edf4a21f637c7eea9da1edee77109bc3eb82e6f</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-025">
   <div class="vcite-panel-label">Verified citation &mdash; NCAI (2018)</div>
-  <div class="vcite-passage"><span class="ctx">our community!Subscribe to the Katina Newsletter
 
-</span>Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing (Carroll, 2019;  Rodriguez-Lonebear, 2016; Rainie et al., 2017; NCAIPRC, 2017; NCAI,  2018).<span class="ctx"> In turn, tribes developed and adapted governance </span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:fb0ea1b33c0c...2e6f</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Resolution KAN-18-011: Support of US Indigenous data sovereignty</div>
+    <div class="vcite-source-meta">NCAI &middot; 2018 &middot; academic</div>
+    <div class="vcite-source-locator"><span class="vcite-locator-note">No source link &mdash; document-level reference only.</span></div>
   </div>
-  <a class="vcite-link" href="#" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L1</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations) — Warning: L1 citation: no context windows or source URL for verification"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:fb0ea1b33c0c7abf8fed4b585edf4a21f637c7eea9da1edee77109bc3eb82e6f</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-026">
   <div class="vcite-panel-label">Verified citation &mdash; Carroll et al. (2019)</div>
-  <div class="vcite-passage"><span class="ctx">ernance mechanisms for  improved data stewardship.</span>Carroll et al. (2019) describe several case  studies of tribal data governance.<span class="ctx"> We highlight two relevant cases:
 
-In  2014, the N</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:417724c77e3d...cb8e</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Indigenous data governance: Strategies from United States Native nations</div>
+    <div class="vcite-source-meta">Carroll, S. R. et al. &middot; 2019 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.5334/dsj-2019-031" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.5334/dsj-2019-031" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:417724c77e3dcc22eea81753abb154ea92730dcc9d18c02dba7c33ea8eafcb8e</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-027">
   <div class="vcite-panel-label">Verified citation &mdash; NCAIPRC (2017)</div>
-  <div class="vcite-passage"><span class="ctx">ata governance. We highlight two relevant cases:
 
-</span>In  2014, the National Congress of American Indians Policy Research Center  (NCAIPRC) organized for five tribes to each pilot a unique  community-based data project (NCAIPRC, 2017).<span class="ctx"> One community, the Pueblo  of Laguna, developed p</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:6eb3947492f2...589e</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Recommendations from tribal experiences with tribal censuses and surveys</div>
+    <div class="vcite-source-meta">NCAIPRC &middot; 2017 &middot; academic</div>
+    <div class="vcite-source-locator"><span class="vcite-locator-note">No source link &mdash; document-level reference only.</span></div>
   </div>
-  <a class="vcite-link" href="#" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L1</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations) — Warning: L1 citation: no context windows or source URL for verification"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:6eb3947492f2ca370504a37f5ec17b2e615c2294833d29807227b691e631589e</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-028">
   <div class="vcite-panel-label">Verified citation &mdash; NCAIPRC (2017)</div>
-  <div class="vcite-passage"><span class="ctx">the project led to increased census participation.</span>The  software remains tribe owned and will support future data collections  (NCAIPRC, 2017).<span class="ctx"> As Carroll et al. (2019) explain, this example  d</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:d305d7a84a4c...6fda</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Recommendations from tribal experiences with tribal censuses and surveys</div>
+    <div class="vcite-source-meta">NCAIPRC &middot; 2017 &middot; academic</div>
+    <div class="vcite-source-locator"><span class="vcite-locator-note">No source link &mdash; document-level reference only.</span></div>
   </div>
-  <a class="vcite-link" href="#" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L1</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations) — Warning: L1 citation: no context windows or source URL for verification"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:d305d7a84a4cf6bcd095dff299a02b2769eab0b57f320bfecf90c14ade936fda</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-029">
   <div class="vcite-panel-label">Verified citation &mdash; Carroll et al. (2019)</div>
-  <div class="vcite-passage"><span class="ctx"> support future data collections  (NCAIPRC, 2017).</span>As Carroll et al. (2019) explain, this example  demonstrates that tribes can independently manage data and utilize  external expertise to develop technology that reflects their priorities.<span class="ctx">
 
-Other  tribal organizations have promoted meanin</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">quantifies</span></span>
-    <span class="vcite-hash">sha256:b3511ca1f0d2...64ef</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Indigenous data governance: Strategies from United States Native nations</div>
+    <div class="vcite-source-meta">Carroll, S. R. et al. &middot; 2019 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.5334/dsj-2019-031" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.5334/dsj-2019-031" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">quantifies</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:b3511ca1f0d26f9b91a1cf314f2b44361e87f5efb94182675007de3fdbda64ef</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-030">
   <div class="vcite-panel-label">Verified citation &mdash; O&#x27;Brien &amp; al. (2024)</div>
-  <div class="vcite-passage"><span class="ctx"> Board reviews local community research studies.
 
-</span>The  application of the CARE Principles has been proposed across various  domains, such as earth science (O’Brien et al., 2024), ecology (Jennings  et al., 2023) and archeology (Gupta et al., 2023).<span class="ctx"> Initiatives to  integrate these principles into r</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:38cab8285299...ea87</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Earth science data repositories: Implementing the CARE principles</div>
+    <div class="vcite-source-meta">O&#x27;Brien, M.; et al. &middot; 2024 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.5334/dsj-2024-037" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.5334/dsj-2024-037" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:38cab8285299001b3d8730b987a96b2d5f05e65a04f2442d3f6e4044fb3cea87</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-031">
   <div class="vcite-panel-label">Verified citation &mdash; Jennings &amp; al. (2023)</div>
-  <div class="vcite-passage"><span class="ctx"> Board reviews local community research studies.
 
-</span>The  application of the CARE Principles has been proposed across various  domains, such as earth science (O’Brien et al., 2024), ecology (Jennings  et al., 2023) and archeology (Gupta et al., 2023).<span class="ctx"> Initiatives to  integrate these principles into r</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:38cab8285299...ea87</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">Applying the CARE Principles for Indigenous Data Governance to ecology and biodiversity research</div>
+    <div class="vcite-source-meta">Jennings, L.; et al. &middot; 2023 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1038/s41559-023-02161-2" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1038/s41559-023-02161-2" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:38cab8285299001b3d8730b987a96b2d5f05e65a04f2442d3f6e4044fb3cea87</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-032">
   <div class="vcite-panel-label">Verified citation &mdash; Gupta &amp; al. (2023)</div>
-  <div class="vcite-passage"><span class="ctx"> Board reviews local community research studies.
 
-</span>The  application of the CARE Principles has been proposed across various  domains, such as earth science (O’Brien et al., 2024), ecology (Jennings  et al., 2023) and archeology (Gupta et al., 2023).<span class="ctx"> Initiatives to  integrate these principles into r</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">supports</span></span>
-    <span class="vcite-hash">sha256:38cab8285299...ea87</span>
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">The CARE Principles and the reuse, sharing, and curation of Indigenous data in Canadian archaeology</div>
+    <div class="vcite-source-meta">Gupta, N.; et al. &middot; 2023 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1017/aap.2022.33" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1017/aap.2022.33" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">supports</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:38cab8285299001b3d8730b987a96b2d5f05e65a04f2442d3f6e4044fb3cea87</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-033">
   <div class="vcite-panel-label">Verified citation &mdash; Costantine (2022)</div>
-  <div class="vcite-passage"><span class="ctx"> developed independently across the Global  South.</span>The Swakopmund Protocol established collective ownership and  benefit-sharing requirements for traditional knowledge across nine  African nations (Costantine, 2022).<span class="ctx"> India’s Traditional Knowledge  Digital Library, o</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">method</span></span>
-    <span class="vcite-hash">sha256:9ff7fc6845fa...4ebe</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">The Swakopmund protocol for the protection of expressions of folklore</div>
+    <div class="vcite-source-meta">Costantine, J. &middot; 2022 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1093/jiplp/jpac088" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1093/jiplp/jpac088" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">method</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:9ff7fc6845fa58492d5d51222099d1d5fb0a6ca83364905269fd5184a83c4ebe</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 <div class="vcite-panel" id="panel-vcite-034">
   <div class="vcite-panel-label">Verified citation &mdash; Couldry &amp; Mejias (2021)</div>
-  <div class="vcite-passage"><span class="ctx">thing suggests making these  changes will be easy.</span>But failing to act would leave in place a system  that centralizes sensitive open data in ways that parallel what Couldry  and Mejias (2021) call “data colonialism” in corporate contexts,  extracting value from peoples’ information while withholding its  benefits from data rights holders.<span class="ctx"> Given the unique public value of  sensitive open </span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">quantifies</span></span>
-    <span class="vcite-hash">sha256:430a1868ae60...c1b0</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">The decolonial turn in data and technology research</div>
+    <div class="vcite-source-meta">Couldry, N.; Mejias, U. A. &middot; 2021 &middot; academic</div>
+    <div class="vcite-source-locator"><a class="vcite-link" href="https://doi.org/10.1080/1369118X.2021.1986102" target="_blank" rel="noopener">Open source &#x2197;</a> <span class="vcite-locator-note">(document-level; no page or section provided)</span></div>
   </div>
-  <a class="vcite-link" href="https://doi.org/10.1080/1369118X.2021.1986102" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">quantifies</span>
+    <span class="vcite-conformance">Conformance L2</span>
+    <span class="vcite-verify vcite-verify--info" title="Warning: AI-generated citation without archive_url (spec B5 recommends L3 for model citations)"><span class="vcite-verify-glyph">&#x229C;</span> Internal hash OK &middot; <span class="vcite-verify-date">2026-04-22</span></span>
+    
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">sha256:430a1868ae60391bdee2a53eea794f9b4223eddcc7d601ff6d2d6f2f1080c1b0</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  <details class="vcite-enrichment">
+  <summary>Verification &amp; strain details</summary>
+  <dl class="vcite-enrichment-dl">
+    <dt>Verification</dt>
+    <dd>Internal hash OK at 2026-04-22</dd>
+  </dl>
+</details>
 </div>
 
 </div>

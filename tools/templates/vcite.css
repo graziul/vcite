@@ -65,60 +65,226 @@
   margin-bottom: 6px;
 }
 
-/* ── Passage block inside panel ─────────────────────────────────────── */
+/* ── Source block ───────────────────────────────────────────────────── */
 
-.vcite-passage {
+.vcite-source-block {
   background: #fff;
   border-radius: 4px;
   padding: 10px 12px;
   margin-bottom: 8px;
-  font-style: italic;
   color: #333;
 }
 
-.vcite-passage .ctx {
-  color: #aaa;
-  font-style: normal;
+.vcite-source-title {
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 4px;
 }
 
-/* ── Metadata row (relation pill + hash) ────────────────────────────── */
+.vcite-source-meta {
+  font-size: 12px;
+  color: var(--vcite-muted);
+  margin-bottom: 6px;
+}
+
+.vcite-source-locator {
+  font-size: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.vcite-source-locator .vcite-locator-note {
+  color: var(--vcite-muted);
+  font-style: italic;
+}
+
+/* ── Metadata row (relation pill + conformance) ─────────────────────── */
 
 .vcite-meta-row {
   display: flex;
-  gap: 16px;
+  gap: 8px;
   flex-wrap: wrap;
-  font-size: 11px;
-  color: var(--vcite-muted);
+  margin-bottom: 10px;
 }
 
 .vcite-relation {
   font-size: 9px;
   font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
   padding: 2px 6px;
   border-radius: 3px;
   background: #e8eeff;
   color: var(--vcite-border);
 }
 
-.vcite-hash {
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 10px;
-  color: #888;
+.vcite-conformance {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: #eef2f7;
+  color: #556;
 }
 
-/* ── Verify link ────────────────────────────────────────────────────── */
+/* ── Fingerprint block ──────────────────────────────────────────────── */
+
+.vcite-fingerprint {
+  background: #fff;
+  border: 1px dashed #d0d8e8;
+  border-radius: 4px;
+  padding: 10px 12px;
+}
+
+.vcite-fingerprint-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--vcite-muted);
+  margin-bottom: 4px;
+}
+
+.vcite-hash-full {
+  display: block;
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 11px;
+  color: #334;
+  word-break: break-all;
+  background: #f6f8fb;
+  padding: 4px 6px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+
+.vcite-fingerprint-explain {
+  margin: 0;
+  font-size: 12px;
+  color: #445;
+  line-height: 1.45;
+}
+
+.vcite-fingerprint-explain em {
+  font-style: normal;
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 11px;
+  background: #eef2f7;
+  padding: 0 3px;
+  border-radius: 2px;
+}
+
+/* ── Source / archive links ─────────────────────────────────────────── */
 
 .vcite-link {
-  display: inline-block;
-  margin-top: 6px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--vcite-border);
   text-decoration: none;
+  border-bottom: 1px dotted var(--vcite-border);
 }
 
 .vcite-link:hover {
-  text-decoration: underline;
+  border-bottom-style: solid;
+}
+
+/* ── Verification & strain badges ───────────────────────────────────── */
+
+.vcite-verify,
+.vcite-strain {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: help;
+}
+
+.vcite-verify-glyph,
+.vcite-strain-glyph {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.vcite-verify--ok     { background: #e6f4ea; color: #1e6e36; }
+.vcite-verify--info   { background: #e3ecff; color: #1d4ed8; }
+.vcite-verify--warn   { background: #fff4e5; color: #8a4b00; }
+.vcite-verify--drift  { background: #fde8e8; color: #9b1c1c; }
+.vcite-verify--fail   { background: #fde8e8; color: #9b1c1c; }
+.vcite-verify--muted  { background: #eef2f7; color: #556; }
+
+.vcite-strain--ok     { background: #e6f4ea; color: #1e6e36; }
+.vcite-strain--warn   { background: #fff4e5; color: #8a4b00; }
+.vcite-strain--drift  { background: #fde8e8; color: #9b1c1c; }
+.vcite-strain--fail   { background: #fde8e8; color: #9b1c1c; }
+.vcite-strain--muted  { background: #eef2f7; color: #556; }
+
+.vcite-verify-date,
+.vcite-strain-score {
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ── Collapsible enrichment detail ──────────────────────────────────── */
+
+.vcite-enrichment {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #445;
+}
+
+.vcite-enrichment summary {
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--vcite-muted);
+  padding: 4px 0;
+  user-select: none;
+}
+
+.vcite-enrichment summary:hover {
+  color: var(--vcite-border);
+}
+
+.vcite-enrichment-dl {
+  margin: 4px 0 0;
+  padding: 8px 10px;
+  background: #fff;
+  border: 1px solid #eef2f7;
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 12px;
+}
+
+.vcite-enrichment-dl dt {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--vcite-muted);
+  padding-top: 2px;
+}
+
+.vcite-enrichment-dl dd {
+  margin: 0;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.vcite-claim-context {
+  font-style: italic;
+  color: #334;
 }
 
 /* ── Banner ─────────────────────────────────────────────────────────── */

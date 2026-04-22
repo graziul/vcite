@@ -5,6 +5,24 @@
 > sheaf formalization are initial implementations for validation against
 > annotated corpora. Do not use for automated editorial decisions.
 
+> **KNOWN GAP (2026-04-22)** — The strain model in this document assumes
+> `target.text_exact` is the **source passage**. In the current
+> `tools/enhance.py` extractor, `text_exact` is set to the **citing-article
+> sentence** that contains the citation, so `compute_local_strain(citation,
+> claiming_context)` ends up comparing two slices of the citing document,
+> not source against claim. Strain numbers from that pipeline measure
+> "context divergence within the citing article," which is not what this
+> design specifies.
+>
+> To produce DESIGN-aligned strain, either (a) run verification online so the
+> matched passage from the source is available and then compute
+> `strain(matched_source_passage, text_exact_from_article)`, or (b) change
+> the extractor to set `text_exact` to a quoted span that truly lives in the
+> source. Until one of these lands, `tools/enrich.py` emits strain as an
+> optional signal that renderers may choose to suppress. The verification
+> pipeline (`enrichment.verification`) is not subject to this gap — it's
+> purely a hash/fetch check and is correct today.
+
 ## 1. What Is Strain?
 
 Every citation creates a relationship between two texts:

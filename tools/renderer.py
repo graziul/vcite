@@ -159,12 +159,15 @@ def build_evidence_panel(vcite_obj, quote) -> str:
     return template.format(
         id=vcite_obj.id,
         author_label=_author_label(vcite_obj),
-        text_before=html.escape(vcite_obj.target.text_before),
-        text_exact=html.escape(vcite_obj.target.text_exact),
-        text_after=html.escape(vcite_obj.target.text_after),
+        source_title=_source_title(vcite_obj),
+        source_meta=_source_meta(vcite_obj),
+        locator_html=_locator_html(vcite_obj),
         relation=html.escape(vcite_obj.relation),
-        hash_display=_truncate_hash(vcite_obj.target.hash),
-        verify_url=_verify_url(vcite_obj),
+        conformance_level=vcite_obj.conformance_level,
+        hash_full=html.escape(vcite_obj.target.hash),
+        verification_badge=_verification_badge(vcite_obj),
+        strain_badge=_strain_badge(vcite_obj),
+        enrichment_detail=_enrichment_detail_block(vcite_obj),
     )
 
 
@@ -180,14 +183,19 @@ def build_vcite_js() -> str:
 
 def build_vcite_banner(count: int) -> str:
     """Return the VCITE explanation banner HTML."""
+    swatch = (
+        '<span style="background:var(--vcite-bg);border-bottom:2px solid '
+        'var(--vcite-border);padding:1px 3px">highlighted passage</span>'
+    )
     return (
         '<div class="vcite-banner">\n'
-        "  <strong>VCITE-enhanced article.</strong> This version carries "
-        f"{count} passage-level\n"
-        "  cryptographic fingerprints. Click any\n"
-        '  <span style="background:var(--vcite-bg);border-bottom:2px solid '
-        'var(--vcite-border);padding:1px 3px">highlighted passage</span>\n'
-        "  to see its evidence chain. "
+        f"  <strong>VCITE-enhanced article.</strong> Each {swatch} carries a\n"
+        f"  SHA-256 fingerprint ({count} in this article) linking its exact wording to a\n"
+        "  cited source. Click a passage to open its evidence chain &mdash; source, relation,\n"
+        "  and the full hash. Anyone can fetch the source, locate the passage, and recompute\n"
+        "  the hash to prove the wording hasn&rsquo;t been altered. Hash integrity is not\n"
+        "  claim validity: that the source actually substantiates the claim remains the\n"
+        "  reader&rsquo;s judgment. "
         '<a href="https://github.com/graziul/vcite">What is VCITE?</a>\n'
         "</div>"
     )
@@ -206,22 +214,6 @@ def _load_template(name: str) -> str:
         path = TEMPLATE_DIR / name
         _template_cache[name] = path.read_text(encoding="utf-8")
     return _template_cache[name]
-
-
-def _truncate_hash(full_hash: str) -> str:
-    """Truncate a hash for display: first 12 + '...' + last 4.
-
-    Input may be 'sha256:abcdef...' or bare hex.  We preserve the
-    'sha256:' prefix and truncate only the hex portion.
-    """
-    if ":" in full_hash:
-        prefix, hex_part = full_hash.split(":", 1)
-        if len(hex_part) > 16:
-            return f"{prefix}:{hex_part[:12]}...{hex_part[-4:]}"
-        return full_hash
-    if len(full_hash) > 16:
-        return f"{full_hash[:12]}...{full_hash[-4:]}"
-    return full_hash
 
 
 def _author_label(vcite_obj) -> str:
@@ -259,16 +251,344 @@ def _surname(name: str) -> str:
     return parts[-1] if parts else name
 
 
-def _verify_url(vcite_obj) -> str:
-    """Build the verification URL from DOI or URL."""
-    if vcite_obj.source.doi:
-        doi = vcite_obj.source.doi
-        if doi.startswith("http"):
-            return html.escape(doi)
-        return html.escape(f"https://doi.org/{doi}")
-    if vcite_obj.source.url:
-        return html.escape(vcite_obj.source.url)
-    return "#"
+def _source_title(vcite_obj) -> str:
+    """Return the full source title, HTML-escaped; fallback if missing."""
+    title = (vcite_obj.source.title or "").strip()
+    if not title or title.lower() == "unknown":
+        return '<span class="vcite-locator-note">Title not resolved</span>'
+    return html.escape(title)
+
+
+def _source_meta(vcite_obj) -> str:
+    """Build the dot-separated authors / venue / year line."""
+    src = vcite_obj.source
+    parts: list[str] = []
+
+    if src.authors:
+        if len(src.authors) == 1:
+            parts.append(html.escape(src.authors[0]))
+        elif len(src.authors) == 2:
+            parts.append(html.escape("; ".join(src.authors)))
+        else:
+            parts.append(html.escape(src.authors[0]) + " et al.")
+
+    if src.venue:
+        parts.append(html.escape(src.venue))
+
+    if src.year:
+        parts.append(str(src.year))
+
+    if src.source_type:
+        parts.append(html.escape(src.source_type))
+
+    return " &middot; ".join(parts) if parts else (
+        '<span class="vcite-locator-note">No bibliographic metadata</span>'
+    )
+
+
+def _doi_url(doi: str) -> str:
+    """Normalize a DOI to a doi.org URL."""
+    doi = doi.strip()
+    if doi.startswith("http"):
+        return doi
+    return f"https://doi.org/{doi}"
+
+
+def _locator_html(vcite_obj) -> str:
+    """Build the links/locator row pointing the reader INTO the cited source.
+
+    Prefers the most specific pointer available:
+      fragment_url  →  deep-link to the passage
+      page_ref      →  page marker
+      section       →  section marker
+    Always shows a canonical source link (DOI preferred, then URL).
+    Adds an archive link when archive_url is set.
+    If nothing is available, shows an honest note.
+    """
+    src = vcite_obj.source
+    tgt = vcite_obj.target
+    bits: list[str] = []
+
+    # Specific locators within the source
+    if tgt.fragment_url:
+        bits.append(
+            f'<a class="vcite-link" href="{html.escape(tgt.fragment_url)}" '
+            'target="_blank" rel="noopener">Open passage &#x2197;</a>'
+        )
+    if tgt.page_ref:
+        bits.append(
+            '<span class="vcite-locator-note">p.&nbsp;'
+            f"{html.escape(tgt.page_ref)}</span>"
+        )
+    if tgt.section:
+        bits.append(
+            '<span class="vcite-locator-note">&sect;&nbsp;'
+            f"{html.escape(tgt.section)}</span>"
+        )
+
+    # Canonical source link
+    canonical_label = "Open source &#x2197;"
+    if src.doi:
+        bits.append(
+            f'<a class="vcite-link" href="{html.escape(_doi_url(src.doi))}" '
+            f'target="_blank" rel="noopener">{canonical_label}</a>'
+        )
+    elif src.url:
+        bits.append(
+            f'<a class="vcite-link" href="{html.escape(src.url)}" '
+            f'target="_blank" rel="noopener">{canonical_label}</a>'
+        )
+
+    # Archived copy
+    if src.archive_url:
+        bits.append(
+            f'<a class="vcite-link" href="{html.escape(src.archive_url)}" '
+            'target="_blank" rel="noopener">Archived copy &#x2197;</a>'
+        )
+
+    if not bits:
+        return (
+            '<span class="vcite-locator-note">No source link &mdash; '
+            "document-level reference only.</span>"
+        )
+
+    # If we only have a canonical link (no specific locator), note that the
+    # pointer is to the document, not a passage location inside it.
+    has_specific_locator = bool(tgt.fragment_url or tgt.page_ref or tgt.section)
+    if not has_specific_locator:
+        bits.append(
+            '<span class="vcite-locator-note">(document-level; no page '
+            "or section provided)</span>"
+        )
+
+    return " ".join(bits)
+
+
+# ---------------------------------------------------------------------------
+# Enrichment -> panel badges & detail
+# ---------------------------------------------------------------------------
+
+
+_VERIFY_LABELS: dict[str, tuple[str, str, str]] = {
+    # status -> (css-modifier, glyph, label)
+    "verified":           ("ok",    "&#x2713;", "Source-verified"),
+    "internal-only":      ("info",  "&#x229C;", "Internal hash OK"),
+    "partial":            ("warn",  "&#x25D0;", "Partial match"),
+    "source-drift":       ("drift", "&#x26A0;", "Source drift"),
+    "internal-mismatch":  ("fail",  "&#x2717;", "Internal hash mismatch"),
+    "unreachable":        ("muted", "&#x003F;", "Source unreachable"),
+    "not-checked":        ("muted", "&#x2026;", "Not verified"),
+}
+
+
+def _verification_enrichment(vcite_obj) -> dict | None:
+    """Return the ``verification`` sub-object if present, else None."""
+    enrichment = getattr(vcite_obj, "enrichment", None) or {}
+    v = enrichment.get("verification") if isinstance(enrichment, dict) else None
+    return v if isinstance(v, dict) else None
+
+
+def _strain_enrichment(vcite_obj) -> dict | None:
+    """Return the ``strain`` sub-object if present, else None."""
+    enrichment = getattr(vcite_obj, "enrichment", None) or {}
+    s = enrichment.get("strain") if isinstance(enrichment, dict) else None
+    return s if isinstance(s, dict) else None
+
+
+def _verification_badge(vcite_obj) -> str:
+    """Render a compact verification badge for the meta row.
+
+    Returns empty string if no verification enrichment is present — the
+    panel then just shows the source link + hash, unchanged from the
+    un-verified flow.
+    """
+    v = _verification_enrichment(vcite_obj)
+    if not v:
+        return ""
+    status = v.get("status") or "not-checked"
+    modifier, glyph, label = _VERIFY_LABELS.get(
+        status, _VERIFY_LABELS["not-checked"],
+    )
+    checked_at = v.get("checked_at", "")
+    title = _verification_title(v)
+    return (
+        f'<span class="vcite-verify vcite-verify--{modifier}" title="{title}">'
+        f'<span class="vcite-verify-glyph">{glyph}</span> {label}'
+        + (f' &middot; <span class="vcite-verify-date">{_short_date(checked_at)}</span>'
+           if checked_at else "")
+        + "</span>"
+    )
+
+
+def _verification_title(v: dict) -> str:
+    """Assemble the tooltip text (browser title= attribute) for the badge."""
+    parts: list[str] = []
+    if v.get("match_type"):
+        sim = v.get("match_similarity")
+        if isinstance(sim, (int, float)) and sim < 1.0:
+            parts.append(f"Match: {v['match_type']} ({sim:.2f})")
+        else:
+            parts.append(f"Match: {v['match_type']}")
+    if v.get("source_hash_valid") is True:
+        parts.append("Source hash recomputed and matched")
+    elif v.get("source_hash_valid") is False:
+        parts.append("Source hash recomputed — DIFFERS from captured hash")
+    if v.get("source_checked_url"):
+        parts.append(f"Source: {v['source_checked_url']}")
+    if v.get("fetch_error"):
+        parts.append(f"Fetch error: {v['fetch_error']}")
+    warnings = v.get("warnings") or []
+    for w in warnings:
+        parts.append(f"Warning: {w}")
+    # title attribute is single-line; use " — " as separator
+    return html.escape(" — ".join(parts)) if parts else ""
+
+
+_STRAIN_BANDS: dict[str, tuple[str, str]] = {
+    "low":      ("ok",   "Low claim distance"),
+    "moderate": ("warn", "Moderate claim distance"),
+    "high":     ("drift", "High claim distance"),
+    "extreme":  ("fail", "Extreme claim distance"),
+}
+
+
+def _strain_badge(vcite_obj) -> str:
+    """Render a compact strain badge. Only shown when strain enrichment exists.
+
+    Displayed as a supplementary signal next to the verification badge.
+    """
+    s = _strain_enrichment(vcite_obj)
+    if not s:
+        return ""
+    band = str(s.get("band") or "").lower()
+    modifier, label = _STRAIN_BANDS.get(band, ("muted", f"Strain: {band}"))
+    score = s.get("score")
+    score_str = f"{score:.2f}" if isinstance(score, (int, float)) else ""
+    title = _strain_title(s)
+    return (
+        f'<span class="vcite-strain vcite-strain--{modifier}" title="{title}">'
+        f'<span class="vcite-strain-glyph">&#x223F;</span> {label}'
+        + (f' &middot; <span class="vcite-strain-score">{score_str}</span>'
+           if score_str else "")
+        + "</span>"
+    )
+
+
+def _strain_title(s: dict) -> str:
+    parts: list[str] = []
+    method = s.get("method") or ""
+    calibrated = s.get("calibrated")
+    discipline = s.get("discipline") or ""
+    if method:
+        parts.append(f"Method: {method}")
+    if calibrated and discipline:
+        parts.append(f"Calibrated for {discipline}")
+    elif discipline:
+        parts.append(f"Discipline context: {discipline}")
+    # Components (lexical)
+    comps = s.get("components") or {}
+    if comps:
+        keep = ("jaccard_overlap", "rouge_l", "idf_overlap",
+                "bigram_divergence", "embedding_distance",
+                "nli_entailment", "nli_contradiction")
+        summarized = ", ".join(
+            f"{k}={comps[k]:.2f}" if isinstance(comps.get(k), (int, float))
+            else f"{k}={comps[k]}"
+            for k in keep if k in comps
+        )
+        if summarized:
+            parts.append(summarized)
+    parts.append(
+        "Lexical signal only — does not certify claim validity"
+    )
+    return html.escape(" — ".join(parts))
+
+
+def _enrichment_detail_block(vcite_obj) -> str:
+    """Render a collapsible details block with verification + strain specifics.
+
+    Only rendered when at least one of the two sub-objects is present.
+    """
+    v = _verification_enrichment(vcite_obj)
+    s = _strain_enrichment(vcite_obj)
+    if not v and not s:
+        return ""
+
+    rows: list[str] = []
+
+    if v:
+        status = v.get("status") or "not-checked"
+        _, _, label = _VERIFY_LABELS.get(status, _VERIFY_LABELS["not-checked"])
+        rows.append("<dt>Verification</dt>")
+        rows.append(
+            f'<dd>{html.escape(label)} at '
+            f'{html.escape(_short_date(v.get("checked_at", "")) or "?")}</dd>'
+        )
+        if v.get("source_checked_url"):
+            rows.append("<dt>Source checked</dt>")
+            rows.append(
+                f'<dd><a class="vcite-link" href="{html.escape(v["source_checked_url"])}" '
+                f'target="_blank" rel="noopener">'
+                f'{html.escape(v["source_checked_url"])}</a></dd>'
+            )
+        if v.get("match_type"):
+            match_line = v["match_type"]
+            sim = v.get("match_similarity")
+            if isinstance(sim, (int, float)) and sim < 1.0:
+                match_line = f"{match_line} (similarity {sim:.2f})"
+            rows.append("<dt>Passage match</dt>")
+            rows.append(f"<dd>{html.escape(match_line)}</dd>")
+        if v.get("source_hash_valid") is True:
+            rows.append("<dt>Source hash</dt>")
+            rows.append("<dd>Recomputed; matches captured hash</dd>")
+        elif v.get("source_hash_valid") is False:
+            rows.append("<dt>Source hash</dt>")
+            rec = v.get("source_hash_recomputed", "")
+            rows.append(
+                "<dd>Recomputed; <strong>differs</strong> from captured hash"
+                + (f' &middot; <code>{html.escape(rec)}</code>' if rec else "")
+                + "</dd>"
+            )
+        if v.get("fetch_error"):
+            rows.append("<dt>Fetch note</dt>")
+            rows.append(f'<dd>{html.escape(v["fetch_error"])}</dd>')
+
+    if s:
+        rows.append("<dt>Claim distance (strain)</dt>")
+        score = s.get("score")
+        score_str = f"{score:.3f}" if isinstance(score, (int, float)) else "?"
+        band = html.escape(str(s.get("band") or ""))
+        method = html.escape(str(s.get("method") or "lexical"))
+        calibrated = " · calibrated" if s.get("calibrated") else ""
+        discipline = html.escape(str(s.get("discipline") or ""))
+        rows.append(
+            f"<dd>{score_str} ({band}) &middot; method: {method}{calibrated}"
+            + (f" &middot; {discipline}" if discipline else "")
+            + "</dd>"
+        )
+        claim = s.get("claiming_context")
+        if claim:
+            rows.append("<dt>Claiming context</dt>")
+            truncated = claim if len(claim) <= 400 else claim[:400] + "…"
+            rows.append(
+                f'<dd class="vcite-claim-context">{html.escape(truncated)}</dd>'
+            )
+
+    rows_html = "\n    ".join(rows)
+    return (
+        '<details class="vcite-enrichment">\n'
+        '  <summary>Verification &amp; strain details</summary>\n'
+        f'  <dl class="vcite-enrichment-dl">\n    {rows_html}\n  </dl>\n'
+        "</details>"
+    )
+
+
+def _short_date(iso: str) -> str:
+    """Trim an ISO-8601 timestamp to the date for display."""
+    if not iso:
+        return ""
+    # Accept both "2026-04-22T10:15:00Z" and "2026-04-22"
+    return iso.split("T", 1)[0][:10]
 
 
 def _inject_group(body_html: str, members: list) -> str:

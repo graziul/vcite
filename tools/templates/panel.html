@@ -1,9 +1,29 @@
 <div class="vcite-panel" id="panel-{id}">
   <div class="vcite-panel-label">Verified citation &mdash; {author_label}</div>
-  <div class="vcite-passage"><span class="ctx">{text_before}</span>{text_exact}<span class="ctx">{text_after}</span></div>
-  <div class="vcite-meta-row">
-    <span><span class="vcite-relation">{relation}</span></span>
-    <span class="vcite-hash">{hash_display}</span>
+
+  <div class="vcite-source-block">
+    <div class="vcite-source-title">{source_title}</div>
+    <div class="vcite-source-meta">{source_meta}</div>
+    <div class="vcite-source-locator">{locator_html}</div>
   </div>
-  <a class="vcite-link" href="{verify_url}" target="_blank" rel="noopener">Verify in source &#x2197;</a>
+
+  <div class="vcite-meta-row">
+    <span class="vcite-relation">{relation}</span>
+    <span class="vcite-conformance">Conformance L{conformance_level}</span>
+    {verification_badge}
+    {strain_badge}
+  </div>
+
+  <div class="vcite-fingerprint">
+    <div class="vcite-fingerprint-label">Passage fingerprint (SHA-256)</div>
+    <code class="vcite-hash-full">{hash_full}</code>
+    <p class="vcite-fingerprint-explain">
+      Computed over NFC-normalized <em>text-before&nbsp;+&nbsp;passage&nbsp;+&nbsp;text-after</em>.
+      Anyone who fetches the source and locates the passage can recompute this hash; a match
+      proves the wording is byte-exact. Integrity only &mdash; whether the source substantiates
+      the claim is still for you to check at the source.
+    </p>
+  </div>
+
+  {enrichment_detail}
 </div>
