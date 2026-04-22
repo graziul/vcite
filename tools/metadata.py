@@ -38,6 +38,7 @@ class SourceMetadata:
     venue: Optional[str]
     source_type: str  # academic, journalism, web, grey
     oa_url: Optional[str] = None  # Open access full-text URL from Unpaywall
+    archive_url: Optional[str] = None  # Wayback Machine / Perma.cc snapshot
 
 
 def _make_request(url: str) -> Optional[dict]:

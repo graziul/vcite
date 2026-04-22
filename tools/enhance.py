@@ -26,6 +26,7 @@ from parsers.md_parser import extract_quotes_md
 from parsers.latex_parser import extract_quotes_latex
 from metadata import resolve_citation, SourceMetadata
 from fragment_url import build_text_fragment_url
+from archive import snapshot_source, lookup_existing_snapshot
 
 
 def _log(msg: str):
@@ -52,6 +53,7 @@ def _build_vcite_object(
         year=metadata.year if metadata else None,
         doi=metadata.doi if metadata else None,
         url=metadata.url if metadata else None,
+        archive_url=metadata.archive_url if metadata else None,
         venue=metadata.venue if metadata else None,
         source_type=metadata.source_type if metadata else "academic",
     )
@@ -142,13 +144,16 @@ def enhance_article(
     fmt: str = "html",
     skip_metadata: bool = False,
     no_fragment_url: bool = False,
+    archive_mode: str = "off",
 ):
     """Main enhancement pipeline.
 
     1. Parse input to extract quoted passages
     2. Resolve citation hints to metadata (unless --no-metadata)
-    3. Build VCITE objects
-    4. Render output
+    3. Optionally request/lookup Wayback Machine snapshots (``archive_mode``):
+       "off" (default), "snapshot" (lookup + SPN POST), or "lookup" (no POST).
+    4. Build VCITE objects
+    5. Render output
     """
     content = input_path.read_text(encoding="utf-8")
 
@@ -166,6 +171,13 @@ def enhance_article(
     _log(f"Found {len(quotes)} quoted passages")
 
     # 2. Resolve citations to metadata and build VCITE objects
+    if archive_mode != "off" and skip_metadata:
+        _log(
+            "    Note: --archive/--archive-lookup-only has no effect with "
+            "--no-metadata (no URL to archive); skipping archival."
+        )
+        archive_mode = "off"
+
     vcite_objects: list[VCiteCitation] = []
     for i, quote in enumerate(quotes):
         _log(f"  [{i + 1}/{len(quotes)}] {quote.text_exact[:60]}...")
@@ -181,6 +193,23 @@ def enhance_article(
                 )
             else:
                 _log("    -> No metadata found")
+
+        # 2b. Optionally attach a Wayback Machine archive_url.
+        if archive_mode != "off" and metadata and not metadata.archive_url:
+            archive_target = metadata.url or (
+                f"https://doi.org/{metadata.doi}" if metadata.doi else None
+            )
+            if archive_target:
+                if archive_mode == "lookup":
+                    snap = lookup_existing_snapshot(archive_target)
+                else:
+                    snap = snapshot_source(archive_target)
+                _log(
+                    "    Archiving: "
+                    f"{archive_target} -> {snap if snap else '(failed)'}"
+                )
+                if snap:
+                    metadata.archive_url = snap
 
         citation = _build_vcite_object(
             i, quote, metadata, generate_fragment_url=not no_fragment_url
@@ -297,7 +326,35 @@ def main():
             "(escape hatch for deterministic test output)"
         ),
     )
+    parser.add_argument(
+        "--archive",
+        action="store_true",
+        help=(
+            "Populate source.archive_url via archive.org (lookup + Save Page "
+            "Now fallback). Save Page Now may take 30-60s per URL and is "
+            "anonymous/unauthenticated (rate-limited). Requires metadata "
+            "resolution; ignored under --no-metadata."
+        ),
+    )
+    parser.add_argument(
+        "--archive-lookup-only",
+        action="store_true",
+        help=(
+            "Like --archive but only queries the Wayback `available` API — "
+            "never triggers Save Page Now. Suitable for CI and reproducible "
+            "runs. Mutually exclusive with --archive."
+        ),
+    )
     args = parser.parse_args()
+
+    if args.archive and args.archive_lookup_only:
+        _log("--archive and --archive-lookup-only are mutually exclusive")
+        sys.exit(1)
+    archive_mode = (
+        "snapshot" if args.archive
+        else "lookup" if args.archive_lookup_only
+        else "off"
+    )
 
     input_path = Path(args.input)
     if not input_path.exists():
@@ -340,6 +397,7 @@ def main():
         fmt,
         skip_metadata=args.no_metadata,
         no_fragment_url=args.no_fragment_url,
+        archive_mode=archive_mode,
     )
 
 
