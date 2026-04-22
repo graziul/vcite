@@ -25,6 +25,7 @@ from parsers.html_parser import extract_quotes_html, ExtractedQuote
 from parsers.md_parser import extract_quotes_md
 from parsers.latex_parser import extract_quotes_latex
 from metadata import resolve_citation, SourceMetadata
+from fragment_url import build_text_fragment_url
 
 
 def _log(msg: str):
@@ -36,8 +37,15 @@ def _build_vcite_object(
     index: int,
     quote: ExtractedQuote,
     metadata: SourceMetadata | None,
+    generate_fragment_url: bool = True,
 ) -> VCiteCitation:
-    """Build a VCiteCitation from an extracted quote and optional metadata."""
+    """Build a VCiteCitation from an extracted quote and optional metadata.
+
+    When ``generate_fragment_url`` is True (default), a W3C Text Fragment
+    URL is computed heuristically from the best available source URL and
+    attached to ``target.fragment_url``. Set to False for deterministic
+    test output.
+    """
     source = VCiteSource(
         title=metadata.title if metadata else "Unknown",
         authors=metadata.authors if metadata else [],
@@ -53,6 +61,23 @@ def _build_vcite_object(
         text_before=quote.text_before[-50:] if quote.text_before else "",
         text_after=quote.text_after[:50] if quote.text_after else "",
     )
+
+    if generate_fragment_url:
+        # Source URL precedence: metadata.url -> doi.org resolver.
+        base_url: str | None = None
+        if metadata and metadata.url:
+            base_url = metadata.url
+        elif metadata and metadata.doi:
+            base_url = f"https://doi.org/{metadata.doi}"
+        if base_url:
+            fragment = build_text_fragment_url(
+                base_url,
+                target.text_exact,
+                target.text_before,
+                target.text_after,
+            )
+            if fragment:
+                target.fragment_url = fragment
 
     relation = infer_relation(quote)
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -116,6 +141,7 @@ def enhance_article(
     output_path: Path,
     fmt: str = "html",
     skip_metadata: bool = False,
+    no_fragment_url: bool = False,
 ):
     """Main enhancement pipeline.
 
@@ -156,7 +182,9 @@ def enhance_article(
             else:
                 _log("    -> No metadata found")
 
-        citation = _build_vcite_object(i, quote, metadata)
+        citation = _build_vcite_object(
+            i, quote, metadata, generate_fragment_url=not no_fragment_url
+        )
         vcite_objects.append(citation)
 
     # 3. Render output
@@ -261,6 +289,14 @@ def main():
         action="store_true",
         help="Skip CrossRef/Unpaywall metadata lookup (offline mode)",
     )
+    parser.add_argument(
+        "--no-fragment-url",
+        action="store_true",
+        help=(
+            "Skip W3C Text Fragment URL generation for target.fragment_url "
+            "(escape hatch for deterministic test output)"
+        ),
+    )
     args = parser.parse_args()
 
     input_path = Path(args.input)
@@ -298,7 +334,13 @@ def main():
         _log("Stdout output (-) only supported with --format json")
         sys.exit(1)
 
-    enhance_article(input_path, output_path, fmt, skip_metadata=args.no_metadata)
+    enhance_article(
+        input_path,
+        output_path,
+        fmt,
+        skip_metadata=args.no_metadata,
+        no_fragment_url=args.no_fragment_url,
+    )
 
 
 if __name__ == "__main__":

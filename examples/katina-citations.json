@@ -16,7 +16,8 @@
       "text_exact": "When this information is accessible to third  parties, how should we resolve tensions between personal privacy and  government transparency (Savage & Monroy-Hernández, 2018)?",
       "text_before": "he public, often including  sensitive information.",
       "text_after": "\n\nIn  this article, we’ll use the term “sensitive ",
-      "hash": "sha256:8e43e12ff0a447e2a9b3c7ffb7622a1818ffe25f8eec2f16200d0ac7c1b12daa"
+      "hash": "sha256:8e43e12ff0a447e2a9b3c7ffb7622a1818ffe25f8eec2f16200d0ac7c1b12daa",
+      "fragment_url": "https://doi.org/10.1145/3287560.3287577#:~:text=including%20sensitive%20information.-,When%20this%20information,%26%20Monroy-Hern%C3%A1ndez%2C%202018%29%3F,-In%20this%20article%2C"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -39,7 +40,8 @@
       "text_exact": "Some even argue this approach has led to  excessive openness that may compromise police operations (Lin, 2015;  Newell, 2021).",
       "text_before": "operates in practice  or the data rights at stake.",
       "text_after": "\n\nFurthermore, officer interactions with the publi",
-      "hash": "sha256:7cdeb0c5ebd5a02767d3f9d21e1b70a456a21c604407de1a5c45bd6246bad2df"
+      "hash": "sha256:7cdeb0c5ebd5a02767d3f9d21e1b70a456a21c604407de1a5c45bd6246bad2df",
+      "fragment_url": "https://scholarship.law.duke.edu/dltr/vol14/iss1/15/#:~:text=rights%20at%20stake.-,Some%20even%20argue,2015%3B%20Newell%2C%202021%29.,-Furthermore%2C%20officer%20interactions"
     },
     "relation": "method",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -62,7 +64,8 @@
       "text_exact": "Some even argue this approach has led to  excessive openness that may compromise police operations (Lin, 2015;  Newell, 2021).",
       "text_before": "operates in practice  or the data rights at stake.",
       "text_after": "\n\nFurthermore, officer interactions with the publi",
-      "hash": "sha256:7cdeb0c5ebd5a02767d3f9d21e1b70a456a21c604407de1a5c45bd6246bad2df"
+      "hash": "sha256:7cdeb0c5ebd5a02767d3f9d21e1b70a456a21c604407de1a5c45bd6246bad2df",
+      "fragment_url": "https://theconversation.com/body-cameras-help-monitor-police-but-can-invade-peoples-privacy-160846#:~:text=rights%20at%20stake.-,Some%20even%20argue,2015%3B%20Newell%2C%202021%29.,-Furthermore%2C%20officer%20interactions"
     },
     "relation": "method",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -107,7 +110,8 @@
       "text_exact": "For at least the last fifteen years,  European jurisprudence has favored the protection of personal privacy  (European Commission v. The Bavarian Lager Co. Ltd., 2010), a principle  that has continued under GDPR, but this approach has led to predictable  concerns about transparency vis-à-vis journalistic access (Erdos, 2019)  as well as highlighted inconsistency across member states (Erdos, 2016).",
       "text_before": "weighing of interests  (transparency vs. privacy).",
       "text_after": "\n\nWhile  the GDPR reflects a substantial differenc",
-      "hash": "sha256:270ba6c3c559c7f39bba177b76a3ad94ca69b8e2d20322f33b93b38ed2ede8e9"
+      "hash": "sha256:270ba6c3c559c7f39bba177b76a3ad94ca69b8e2d20322f33b93b38ed2ede8e9",
+      "fragment_url": "https://doi.org/10.1017/S0020589315000512#:~:text=%28transparency%20vs.%20privacy%29.-,For%20at%20least,states%20%28Erdos%2C%202016%29.,-While%20the%20GDPR"
     },
     "relation": "cautions",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -130,7 +134,8 @@
       "text_exact": "The  risks associated with sensitive open data require identifying and  justifying a strategy for negotiating the privacy/utility tradeoff  (Dwork, 2009).",
       "text_before": " contexts.\n\nThe Challenge of Sensitive Open Data\n\n",
       "text_after": " The first challenge: for information subject to o",
-      "hash": "sha256:2e1d9b70d222c361ce2f44857d0a74cc57d0c6cf745608f2951682e1067f6ca4"
+      "hash": "sha256:2e1d9b70d222c361ce2f44857d0a74cc57d0c6cf745608f2951682e1067f6ca4",
+      "fragment_url": "https://doi.org/10.1145/1557019.1557079#:~:text=Sensitive%20Open%20Data-,The%20risks%20associated,tradeoff%20%28Dwork%2C%202009%29.,-The%20first%20challenge%3A"
     },
     "relation": "quantifies",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -159,7 +164,8 @@
       "text_exact": "Public research presentations are the most  common method of community consultation and are associated with high  acceptance rates of EFIC studies by community members (Dickert et al.,  2021; Fehr et al., 2015).",
       "text_before": "nsent Requirements for  Emergency Research, 1996).",
       "text_after": " Other approaches, like surveys, focus groups,  an",
-      "hash": "sha256:de2f7efc3312fef8fe4897c591b3e1881984fc0548a0e12122ce248cca0855f6"
+      "hash": "sha256:de2f7efc3312fef8fe4897c591b3e1881984fc0548a0e12122ce248cca0855f6",
+      "fragment_url": "https://doi.org/10.1111/acem.14264#:~:text=Emergency%20Research%2C%201996%29.-,Public%20research%20presentations,et%20al.%2C%202015%29.,-Other%20approaches%2C%20like"
     },
     "relation": "quantifies",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -212,7 +218,8 @@
       "text_exact": "Other approaches, like surveys, focus groups,  and interviews, have also been used (Dickert et al., 2021).",
       "text_before": "embers (Dickert et al.,  2021; Fehr et al., 2015).",
       "text_after": "\n\nSimilar  mechanisms for community engagement cou",
-      "hash": "sha256:201ca26c5a256e1d0ce1d9d5653688fd56e1d9c04d60dbcc9e32130b6566ed50"
+      "hash": "sha256:201ca26c5a256e1d0ce1d9d5653688fd56e1d9c04d60dbcc9e32130b6566ed50",
+      "fragment_url": "https://doi.org/10.1111/acem.14264#:~:text=et%20al.%2C%202015%29.-,Other%20approaches%2C%20like,et%20al.%2C%202021%29.,-Similar%20mechanisms%20for"
     },
     "relation": "method",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -238,7 +245,8 @@
       "text_exact": "While data  trusts and similar entities have gained traction as vehicles designed  for responsible data stewardship (Hardinges et al., 2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation (Micheli et al., 2021; Chouldechova et  al., 2023; Irani et al., 2023; Sambasivan et al., 2023).",
       "text_before": "ture, enable communal ownership of such data. How?",
       "text_after": " Proven models  for community consultation offer a",
-      "hash": "sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15"
+      "hash": "sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15",
+      "fragment_url": "https://www.adalovelaceinstitute.org/report/legal-mechanisms-data-stewardship/#:~:text=such%20data.%20How%3F-,While%20data%20trusts,et%20al.%2C%202023%29.,-Proven%20models%20for"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -263,7 +271,8 @@
       "text_exact": "While data  trusts and similar entities have gained traction as vehicles designed  for responsible data stewardship (Hardinges et al., 2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation (Micheli et al., 2021; Chouldechova et  al., 2023; Irani et al., 2023; Sambasivan et al., 2023).",
       "text_before": "ture, enable communal ownership of such data. How?",
       "text_after": " Proven models  for community consultation offer a",
-      "hash": "sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15"
+      "hash": "sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15",
+      "fragment_url": "https://doi.org/10.1145/3442188.3445923#:~:text=such%20data.%20How%3F-,While%20data%20trusts,et%20al.%2C%202023%29.,-Proven%20models%20for"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -289,7 +298,8 @@
       "text_exact": "While data  trusts and similar entities have gained traction as vehicles designed  for responsible data stewardship (Hardinges et al., 2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation (Micheli et al., 2021; Chouldechova et  al., 2023; Irani et al., 2023; Sambasivan et al., 2023).",
       "text_before": "ture, enable communal ownership of such data. How?",
       "text_after": " Proven models  for community consultation offer a",
-      "hash": "sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15"
+      "hash": "sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15",
+      "fragment_url": "https://doi.org/10.1145/3593013.3594093#:~:text=such%20data.%20How%3F-,While%20data%20trusts,et%20al.%2C%202023%29.,-Proven%20models%20for"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -314,7 +324,8 @@
       "text_exact": "While data  trusts and similar entities have gained traction as vehicles designed  for responsible data stewardship (Hardinges et al., 2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation (Micheli et al., 2021; Chouldechova et  al., 2023; Irani et al., 2023; Sambasivan et al., 2023).",
       "text_before": "ture, enable communal ownership of such data. How?",
       "text_after": " Proven models  for community consultation offer a",
-      "hash": "sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15"
+      "hash": "sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15",
+      "fragment_url": "https://doi.org/10.1145/3617694.3623261#:~:text=such%20data.%20How%3F-,While%20data%20trusts,et%20al.%2C%202023%29.,-Proven%20models%20for"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -340,7 +351,8 @@
       "text_exact": "While data  trusts and similar entities have gained traction as vehicles designed  for responsible data stewardship (Hardinges et al., 2021), securing  community buy-in to these solutions is difficult, especially in light of  the potential for exploitation (Micheli et al., 2021; Chouldechova et  al., 2023; Irani et al., 2023; Sambasivan et al., 2023).",
       "text_before": "ture, enable communal ownership of such data. How?",
       "text_after": " Proven models  for community consultation offer a",
-      "hash": "sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15"
+      "hash": "sha256:37cd4a1c378f70813db25e2fe628fb389c1667876988df7954d67d804e8aee15",
+      "fragment_url": "https://doi.org/10.1145/3593013.3593989#:~:text=such%20data.%20How%3F-,While%20data%20trusts,et%20al.%2C%202023%29.,-Proven%20models%20for"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -364,7 +376,8 @@
       "text_exact": "Data  sovereignty is a critical issue for indigenous communities wary of  extractive practices, a conversation that predates current debates  (Kukutai and Taylor, 2016).",
       "text_before": "open data.\n\nLearning from Indigenous Communities\n\n",
       "text_after": " We speak about the American context here,  which ",
-      "hash": "sha256:53ecebc513a7f61473b2cf375225549c4a3e7fbef27eef881d4ed08598a31483"
+      "hash": "sha256:53ecebc513a7f61473b2cf375225549c4a3e7fbef27eef881d4ed08598a31483",
+      "fragment_url": "https://www.jstor.org/stable/j.ctt1q1crgf#:~:text=from%20Indigenous%20Communities-,Data%20sovereignty%20is,and%20Taylor%2C%202016%29.,-We%20speak%20about"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -389,7 +402,8 @@
       "text_exact": "We speak about the American context here,  which is influenced by Canadian efforts to support First Nations  (Carroll et al., 2020), but the tensions involved emerge in multiple  contexts around the world (e.g., Australia, see Lovett et al., 2020).",
       "text_before": "dates current debates  (Kukutai and Taylor, 2016).",
       "text_after": " We  cannot speak to these contexts individually b",
-      "hash": "sha256:7b113070a44a17345243b372276f7f96c578a25866aeeb0041007a2bbbbea0a1"
+      "hash": "sha256:7b113070a44a17345243b372276f7f96c578a25866aeeb0041007a2bbbbea0a1",
+      "fragment_url": "https://openscholarshippress.pubpub.org/pub/xx3kj9rv#:~:text=and%20Taylor%2C%202016%29.-,We%20speak%20about,et%20al.%2C%202020%29.,-We%20cannot%20speak"
     },
     "relation": "contextualizes",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -413,7 +427,8 @@
       "text_exact": "The FAIR principles—published in 2016 to promote best  practices in scientific data sharing—are designed to make data  “Findable, Accessible, Interoperable, and Reusable” (Wilkinson et al.,  2016).",
       "text_before": "sovereignty in the United States as an  example.\n\n",
       "text_after": " A complementary set of principles, the CARE  Prin",
-      "hash": "sha256:b96c8e401e99cde15f338cfe110eb19c2c392cbabf74a784861d4708c1bb790f"
+      "hash": "sha256:b96c8e401e99cde15f338cfe110eb19c2c392cbabf74a784861d4708c1bb790f",
+      "fragment_url": "https://doi.org/10.1038/sdata.2016.18#:~:text=as%20an%20example.-,The%20FAIR%20principles%E2%80%94published,et%20al.%2C%202016%29.,-A%20complementary%20set"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -437,7 +452,8 @@
       "text_exact": "Findable, Accessible, Interoperable, and Reusable",
       "text_before": "cientific data sharing—are designed to make data  ",
       "text_after": " (Wilkinson et al.,  2016). A complementary set of",
-      "hash": "sha256:3b773ddaecdb21db47a45be68f695aebe2c035f0015c5439751c184afb568157"
+      "hash": "sha256:3b773ddaecdb21db47a45be68f695aebe2c035f0015c5439751c184afb568157",
+      "fragment_url": "https://doi.org/10.1038/sdata.2016.18#:~:text=to%20make%20data-,Findable%2C%20Accessible%2C%20Interoperable%2C%20and%20Reusable,-%28Wilkinson%20et%20al.%2C"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -461,7 +477,8 @@
       "text_exact": "Collective Benefit, Authority to Control, Responsibility,  and Ethics",
       "text_before": "lementary set of principles, the CARE  Principles—",
       "text_after": "—were developed by the International Indigenous Da",
-      "hash": "sha256:7060a73d5de27ce5c72fef08c0570efd54dd32ddf39bb8c5a82bd606a9a7e667"
+      "hash": "sha256:7060a73d5de27ce5c72fef08c0570efd54dd32ddf39bb8c5a82bd606a9a7e667",
+      "fragment_url": "https://doi.org/10.1038/sdata.2016.18#:~:text=the%20CARE%20Principles%E2%80%94-,Collective%20Benefit%2C%20Authority,Responsibility%2C%20and%20Ethics,-%E2%80%94were%20developed%20by"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -486,7 +503,8 @@
       "text_exact": "According to  their authors, the CARE Principles integrate Indigenous worldviews that  center “people” and “purpose” to address critical gaps in conventional  data frameworks by ensuring that Indigenous Peoples benefit from data  activities and maintain control over their data (Carroll et al., 2020).",
       "text_before": "y use of data belonging to Indigenous communities.",
       "text_after": "\n\nJoin our community!Subscribe to the Katina Newsl",
-      "hash": "sha256:f0edab78d6a61cf0849a154d09d700804880c2d12deab1a812e337f8e954095a"
+      "hash": "sha256:f0edab78d6a61cf0849a154d09d700804880c2d12deab1a812e337f8e954095a",
+      "fragment_url": "https://openscholarshippress.pubpub.org/pub/xx3kj9rv#:~:text=to%20Indigenous%20communities.-,According%20to%20their,et%20al.%2C%202020%29.,-Join%20our%20community%21Subscribe"
     },
     "relation": "quantifies",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -511,7 +529,8 @@
       "text_exact": "Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing (Carroll, 2019;  Rodriguez-Lonebear, 2016; Rainie et al., 2017; NCAIPRC, 2017; NCAI,  2018).",
       "text_before": "our community!Subscribe to the Katina Newsletter\n\n",
       "text_after": " In turn, tribes developed and adapted governance ",
-      "hash": "sha256:fb0ea1b33c0c7abf8fed4b585edf4a21f637c7eea9da1edee77109bc3eb82e6f"
+      "hash": "sha256:fb0ea1b33c0c7abf8fed4b585edf4a21f637c7eea9da1edee77109bc3eb82e6f",
+      "fragment_url": "https://doi.org/10.5334/dsj-2019-031#:~:text=the%20Katina%20Newsletter-,Prior%20to%20development,2017%3B%20NCAI%2C%202018%29.,-In%20turn%2C%20tribes"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -534,7 +553,8 @@
       "text_exact": "Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing (Carroll, 2019;  Rodriguez-Lonebear, 2016; Rainie et al., 2017; NCAIPRC, 2017; NCAI,  2018).",
       "text_before": "our community!Subscribe to the Katina Newsletter\n\n",
       "text_after": " In turn, tribes developed and adapted governance ",
-      "hash": "sha256:fb0ea1b33c0c7abf8fed4b585edf4a21f637c7eea9da1edee77109bc3eb82e6f"
+      "hash": "sha256:fb0ea1b33c0c7abf8fed4b585edf4a21f637c7eea9da1edee77109bc3eb82e6f",
+      "fragment_url": "https://doi.org/10.22459/CAEPR38.11.2016.1#:~:text=the%20Katina%20Newsletter-,Prior%20to%20development,2017%3B%20NCAI%2C%202018%29.,-In%20turn%2C%20tribes"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -558,7 +578,8 @@
       "text_exact": "Prior  to development of the CARE Principles, there was a growing awareness of  Indigenous data sovereignty and governance among tribes, often driven  by the expansion of data-intensive projects and increased advocacy for  data supporting tribal values and wellbeing (Carroll, 2019;  Rodriguez-Lonebear, 2016; Rainie et al., 2017; NCAIPRC, 2017; NCAI,  2018).",
       "text_before": "our community!Subscribe to the Katina Newsletter\n\n",
       "text_after": " In turn, tribes developed and adapted governance ",
-      "hash": "sha256:fb0ea1b33c0c7abf8fed4b585edf4a21f637c7eea9da1edee77109bc3eb82e6f"
+      "hash": "sha256:fb0ea1b33c0c7abf8fed4b585edf4a21f637c7eea9da1edee77109bc3eb82e6f",
+      "fragment_url": "https://doi.org/10.18584/iipj.2017.8.2.1#:~:text=the%20Katina%20Newsletter-,Prior%20to%20development,2017%3B%20NCAI%2C%202018%29.,-In%20turn%2C%20tribes"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -627,7 +648,8 @@
       "text_exact": "Carroll et al. (2019) describe several case  studies of tribal data governance.",
       "text_before": "ernance mechanisms for  improved data stewardship.",
       "text_after": " We highlight two relevant cases:\n\nIn  2014, the N",
-      "hash": "sha256:417724c77e3dcc22eea81753abb154ea92730dcc9d18c02dba7c33ea8eafcb8e"
+      "hash": "sha256:417724c77e3dcc22eea81753abb154ea92730dcc9d18c02dba7c33ea8eafcb8e",
+      "fragment_url": "https://doi.org/10.5334/dsj-2019-031#:~:text=improved%20data%20stewardship.-,Carroll%20et%20al.,tribal%20data%20governance.,-We%20highlight%20two"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -696,7 +718,8 @@
       "text_exact": "As Carroll et al. (2019) explain, this example  demonstrates that tribes can independently manage data and utilize  external expertise to develop technology that reflects their priorities.",
       "text_before": " support future data collections  (NCAIPRC, 2017).",
       "text_after": "\n\nOther  tribal organizations have promoted meanin",
-      "hash": "sha256:b3511ca1f0d26f9b91a1cf314f2b44361e87f5efb94182675007de3fdbda64ef"
+      "hash": "sha256:b3511ca1f0d26f9b91a1cf314f2b44361e87f5efb94182675007de3fdbda64ef",
+      "fragment_url": "https://doi.org/10.5334/dsj-2019-031#:~:text=collections%20%28NCAIPRC%2C%202017%29.-,As%20Carroll%20et,reflects%20their%20priorities.,-Other%20tribal%20organizations"
     },
     "relation": "quantifies",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -720,7 +743,8 @@
       "text_exact": "The  application of the CARE Principles has been proposed across various  domains, such as earth science (O’Brien et al., 2024), ecology (Jennings  et al., 2023) and archeology (Gupta et al., 2023).",
       "text_before": " Board reviews local community research studies.\n\n",
       "text_after": " Initiatives to  integrate these principles into r",
-      "hash": "sha256:38cab8285299001b3d8730b987a96b2d5f05e65a04f2442d3f6e4044fb3cea87"
+      "hash": "sha256:38cab8285299001b3d8730b987a96b2d5f05e65a04f2442d3f6e4044fb3cea87",
+      "fragment_url": "https://doi.org/10.5334/dsj-2024-037#:~:text=community%20research%20studies.-,The%20application%20of,et%20al.%2C%202023%29.,-Initiatives%20to%20integrate"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -744,7 +768,8 @@
       "text_exact": "The  application of the CARE Principles has been proposed across various  domains, such as earth science (O’Brien et al., 2024), ecology (Jennings  et al., 2023) and archeology (Gupta et al., 2023).",
       "text_before": " Board reviews local community research studies.\n\n",
       "text_after": " Initiatives to  integrate these principles into r",
-      "hash": "sha256:38cab8285299001b3d8730b987a96b2d5f05e65a04f2442d3f6e4044fb3cea87"
+      "hash": "sha256:38cab8285299001b3d8730b987a96b2d5f05e65a04f2442d3f6e4044fb3cea87",
+      "fragment_url": "https://doi.org/10.1038/s41559-023-02161-2#:~:text=community%20research%20studies.-,The%20application%20of,et%20al.%2C%202023%29.,-Initiatives%20to%20integrate"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -768,7 +793,8 @@
       "text_exact": "The  application of the CARE Principles has been proposed across various  domains, such as earth science (O’Brien et al., 2024), ecology (Jennings  et al., 2023) and archeology (Gupta et al., 2023).",
       "text_before": " Board reviews local community research studies.\n\n",
       "text_after": " Initiatives to  integrate these principles into r",
-      "hash": "sha256:38cab8285299001b3d8730b987a96b2d5f05e65a04f2442d3f6e4044fb3cea87"
+      "hash": "sha256:38cab8285299001b3d8730b987a96b2d5f05e65a04f2442d3f6e4044fb3cea87",
+      "fragment_url": "https://doi.org/10.1017/aap.2022.33#:~:text=community%20research%20studies.-,The%20application%20of,et%20al.%2C%202023%29.,-Initiatives%20to%20integrate"
     },
     "relation": "supports",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -791,7 +817,8 @@
       "text_exact": "The Swakopmund Protocol established collective ownership and  benefit-sharing requirements for traditional knowledge across nine  African nations (Costantine, 2022).",
       "text_before": " developed independently across the Global  South.",
       "text_after": " India’s Traditional Knowledge  Digital Library, o",
-      "hash": "sha256:9ff7fc6845fa58492d5d51222099d1d5fb0a6ca83364905269fd5184a83c4ebe"
+      "hash": "sha256:9ff7fc6845fa58492d5d51222099d1d5fb0a6ca83364905269fd5184a83c4ebe",
+      "fragment_url": "https://doi.org/10.1093/jiplp/jpac088#:~:text=the%20Global%20South.-,The%20Swakopmund%20Protocol,nations%20%28Costantine%2C%202022%29.,-India%E2%80%99s%20Traditional%20Knowledge"
     },
     "relation": "method",
     "captured_at": "2026-04-11T00:00:00Z",
@@ -815,7 +842,8 @@
       "text_exact": "But failing to act would leave in place a system  that centralizes sensitive open data in ways that parallel what Couldry  and Mejias (2021) call “data colonialism” in corporate contexts,  extracting value from peoples’ information while withholding its  benefits from data rights holders.",
       "text_before": "thing suggests making these  changes will be easy.",
       "text_after": " Given the unique public value of  sensitive open ",
-      "hash": "sha256:430a1868ae60391bdee2a53eea794f9b4223eddcc7d601ff6d2d6f2f1080c1b0"
+      "hash": "sha256:430a1868ae60391bdee2a53eea794f9b4223eddcc7d601ff6d2d6f2f1080c1b0",
+      "fragment_url": "https://doi.org/10.1080/1369118X.2021.1986102#:~:text=will%20be%20easy.-,But%20failing%20to,data%20rights%20holders.,-Given%20the%20unique"
     },
     "relation": "quantifies",
     "captured_at": "2026-04-11T00:00:00Z",
