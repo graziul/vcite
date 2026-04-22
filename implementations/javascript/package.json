@@ -5,10 +5,12 @@
   "type": "module",
   "main": "src/hash.mjs",
   "exports": {
-    ".": "./src/hash.mjs"
+    ".": "./src/hash.mjs",
+    "./models": "./src/models.mjs",
+    "./verify": "./src/verify.mjs"
   },
   "scripts": {
-    "test": "node --test tests/hash.test.mjs"
+    "test": "node --test tests/"
   },
   "author": "Chris Graziul",
   "license": "MIT",

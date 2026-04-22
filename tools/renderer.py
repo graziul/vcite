@@ -910,13 +910,34 @@ def _strip_existing_vcite(html_str: str) -> str:
         flags=re.DOTALL,
     )
 
-    # Remove <script> blocks containing toggleVcite
-    html_str = re.sub(
-        r"<script>[^<]*toggleVcite[^<]*</script>",
-        "",
-        html_str,
-        flags=re.DOTALL,
-    )
+    # Remove <script> blocks whose body contains toggleVcite. Use a stateful
+    # scan rather than a naive regex, because bundled IIFE bodies contain
+    # literal '<' characters (e.g., comparisons, arrow fns) that would break
+    # a [^<]* boundary. We only strip <script> tags without a type attribute
+    # (our injected VCITE JS is untyped) and leave application/ld+json
+    # blocks alone (they're handled above by _strip_vcite_jsonld).
+    def _strip_vcite_script(s: str) -> str:
+        out: list[str] = []
+        i = 0
+        pattern = re.compile(r"<script\s*>", re.IGNORECASE)
+        while True:
+            m = pattern.search(s, i)
+            if not m:
+                out.append(s[i:])
+                break
+            end = s.find("</script>", m.end())
+            if end < 0:
+                out.append(s[i:])
+                break
+            block = s[m.start() : end + len("</script>")]
+            if "toggleVcite" in block or "attachVerifyButtons" in block:
+                out.append(s[i : m.start()])
+            else:
+                out.append(s[i : end + len("</script>")])
+            i = end + len("</script>")
+        return "".join(out)
+
+    html_str = _strip_vcite_script(html_str)
 
     # Clean up extra blank lines
     html_str = re.sub(r"\n{3,}", "\n\n", html_str)

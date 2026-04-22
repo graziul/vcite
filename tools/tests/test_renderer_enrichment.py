@@ -199,3 +199,55 @@ def test_strain_tooltip_notes_lexical_only_caveat():
     }
     html = _render(_make_citation(enrichment=enrichment))
     assert "does not certify claim validity" in html
+
+
+# ---------------------------------------------------------------------------
+# Re-enhancement: stripping old VCITE markup must handle bundled IIFE bodies
+# ---------------------------------------------------------------------------
+
+
+def test_re_enhancement_strips_script_bodies_containing_angle_brackets():
+    """Regression: _strip_existing_vcite previously used a [^<]* regex that
+    failed to match script blocks whose body contains '<' characters (e.g.,
+    bundled IIFEs with comparisons, arrow fns, or embedded JSON). Multiple
+    runs of the renderer accumulated duplicate toggleVcite definitions in
+    the rendered HTML.
+    """
+    from renderer import render_enhanced_html
+    fragment = (
+        "<html><head></head><body>"
+        "<script>\n"
+        "function toggleVcite(el) {\n"
+        "  if (el.idx < 10) return;  // angle bracket in body\n"
+        "  var s = '<!-- comment -->';\n"
+        "}\n"
+        "</script>"
+        "<p>A passage to verify here.</p>"
+        "</body></html>"
+    )
+    c = _make_citation()
+    quote = _Quote("A passage to verify here.")
+    out = render_enhanced_html(fragment, [quote], [c])
+    # Exactly one definition of toggleVcite must remain (the freshly injected one).
+    assert out.count("function toggleVcite") == 1
+
+
+def test_re_enhancement_strips_bundled_iife():
+    """attachVerifyButtons IIFE must also be stripped on re-render."""
+    from renderer import render_enhanced_html
+    fragment = (
+        "<html><head></head><body>"
+        "<script>\n"
+        "(function () {\n"
+        "  function attachVerifyButtons(doc) { /* old version */ }\n"
+        "  for (var i = 0; i < 5; i++) {}\n"
+        "})();\n"
+        "</script>"
+        "<p>A passage to verify here.</p>"
+        "</body></html>"
+    )
+    c = _make_citation()
+    quote = _Quote("A passage to verify here.")
+    out = render_enhanced_html(fragment, [quote], [c])
+    # Exactly one attachVerifyButtons definition (from the freshly-injected IIFE).
+    assert out.count("function attachVerifyButtons") == 1
